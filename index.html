@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ريادة الأعمال الرقمية - المدونة الرائدة في الوطن العربي</title>
+    <meta name="description" content="المدونة الرائدة في الوطن العربي لريادة الأعمال الرقمية والربح من الإنترنت. محتوى احترافي وحصري لتحقيق النجاح المالي عبر الإنترنت.">
+    <meta name="keywords" content="ريادة الأعمال, الربح من الإنترنت, التجارة الإلكترونية, التسويق الرقمي, العمل الحر">
+    <meta name="author" content="ريادة الأعمال الرقمية">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="ريادة الأعمال الرقمية - المدونة الرائدة في الوطن العربي">
+    <meta property="og:description" content="المدونة الرائدة في الوطن العربي لريادة الأعمال الرقمية والربح من الإنترنت">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://digital-entrepreneurship.com">
+    <meta property="og:image" content="https://digital-entrepreneurship.com/images/og-image.jpg">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ريادة الأعمال الرقمية">
+    <meta name="twitter:description" content="المدونة الرائدة في الوطن العربي لريادة الأعمال الرقمية">
+    <meta name="twitter:image" content="https://digital-entrepreneurship.com/images/twitter-card.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "ريادة الأعمال الرقمية",
+        "description": "المدونة الرائدة في الوطن العربي لريادة الأعمال الرقمية والربح من الإنترنت",
+        "url": "https://digital-entrepreneurship.com",
+        "author": {
+            "@type": "Organization",
+            "name": "فريق ريادة الأعمال الرقمية"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "ريادة الأعمال الرقمية",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://digital-entrepreneurship.com/images/logo.png"
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>جاري التحميل...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a href="index.html" class="logo">
+                        <img src="images/logo.svg" alt="ريادة الأعمال الرقمية" class="logo-img">
+                        <span class="logo-text">ريادة الأعمال الرقمية</span>
+                    </a>
+                </div>
+                
+                <div class="navbar-menu" id="navbar-menu">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link active">الرئيسية</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle">المقالات</a>
+                            <div class="dropdown-menu">
+                                <a href="category.html?cat=entrepreneurship" class="dropdown-item">ريادة الأعمال</a>
+                                <a href="category.html?cat=ecommerce" class="dropdown-item">التجارة الإلكترونية</a>
+                                <a href="category.html?cat=marketing" class="dropdown-item">التسويق الرقمي</a>
+                                <a href="category.html?cat=freelancing" class="dropdown-item">العمل الحر</a>
+                                <a href="category.html?cat=investment" class="dropdown-item">الاستثمار الرقمي</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a href="courses.html" class="nav-link">الدورات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="tools.html" class="nav-link">الأدوات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="about.html" class="nav-link">من نحن</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="contact.html" class="nav-link">تواصل معنا</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="navbar-actions">
+                    <button class="search-toggle" id="search-toggle" aria-label="البحث">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+                    <button class="theme-toggle" id="theme-toggle" aria-label="تبديل الوضع">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="القائمة">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        
+        <!-- Search Overlay -->
+        <div class="search-overlay" id="search-overlay">
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="ابحث في المقالات والدورات..." autocomplete="off">
+                    <button class="search-btn" id="search-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="search-suggestions" id="search-suggestions"></div>
+                <button class="search-close" id="search-close">إغلاق</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progress-bar"></div>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-background">
+                <div class="hero-gradient"></div>
+                <div class="hero-pattern"></div>
+            </div>
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">
+                            <span class="highlight">المدونة الرائدة</span>
+                            <br>في ريادة الأعمال الرقمية
+                        </h1>
+                        <p class="hero-description">
+                            اكتشف أسرار النجاح في العالم الرقمي مع محتوى حصري واستراتيجيات مجربة لتحقيق الاستقلال المالي والنجاح في ريادة الأعمال عبر الإنترنت.
+                        </p>
+                        <div class="hero-actions">
+                            <a href="#featured-articles" class="btn btn-primary btn-lg">
+                                استكشف المقالات
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M7 17L17 7M17 7H7M17 7V17"></path>
+                                </svg>
+                            </a>
+                            <a href="#newsletter" class="btn btn-outline btn-lg">
+                                اشترك في النشرة
+                            </a>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="hero-image">
+                            <img src="images/hero-illustration.svg" alt="ريادة الأعمال الرقمية" loading="lazy">
+                        </div>
+                        <div class="floating-cards">
+                            <div class="floating-card card-1">
+                                <div class="card-icon">💰</div>
+                                <div class="card-text">+500% نمو في الأرباح</div>
+                            </div>
+                            <div class="floating-card card-2">
+                                <div class="card-icon">🚀</div>
+                                <div class="card-text">10,000+ رائد أعمال</div>
+                            </div>
+                            <div class="floating-card card-3">
+                                <div class="card-icon">📈</div>
+                                <div class="card-text">استراتيجيات مجربة</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="50000">0</div>
+                        <div class="stat-label">قارئ نشط</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="1200">0</div>
+                        <div class="stat-label">مقال احترافي</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="25">0</div>
+                        <div class="stat-label">دورة تدريبية</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" data-count="98">0</div>
+                        <div class="stat-label">% نسبة الرضا</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Articles Section -->
+        <section class="featured-articles" id="featured-articles">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">المقالات المميزة</h2>
+                    <p class="section-description">
+                        اكتشف أحدث المقالات والاستراتيجيات المجربة في عالم ريادة الأعمال الرقمية
+                    </p>
+                </div>
+                
+                <div class="articles-grid" id="featured-articles-grid">
+                    <!-- Articles will be loaded here by JavaScript -->
+                </div>
+                
+                <div class="section-footer">
+                    <a href="articles.html" class="btn btn-outline">
+                        عرض جميع المقالات
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 17L17 7M17 7H7M17 7V17"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="categories">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">تصفح حسب الفئة</h2>
+                    <p class="section-description">
+                        اختر المجال الذي يهمك واكتشف محتوى متخصص ومفصل
+                    </p>
+                </div>
+                
+                <div class="categories-grid">
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                <path d="M2 17l10 5 10-5"></path>
+                                <path d="M2 12l10 5 10-5"></path>
+                            </svg>
+                        </div>
+                        <h3 class="category-title">ريادة الأعمال</h3>
+                        <p class="category-description">تعلم كيفية بناء وإدارة مشروعك الناجح من الصفر</p>
+                        <div class="category-stats">
+                            <span class="articles-count">250+ مقال</span>
+                        </div>
+                        <a href="category.html?cat=entrepreneurship" class="category-link">
+                            استكشف الآن
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M7 17L17 7M17 7H7M17 7V17"></path>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                                <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                                <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                            </svg>
+                        </div>
+                        <h3 class="category-title">التجارة الإلكترونية</h3>
+                        <p class="category-description">دليلك الشامل لبناء متجر إلكتروني ناجح ومربح</p>
+                        <div class="category-stats">
+                            <span class="articles-count">180+ مقال</span>
+                        </div>
+                        <a href="category.html?cat=ecommerce" class="category-link">
+                            استكشف الآن
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M7 17L17 7M17 7H7M17 7V17"></path>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                <polyline points="3.27,6.96 12,12.01 20.73,6.96"></polyline>
+                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                            </svg>
+                        </div>
+                        <h3 class="category-title">التسويق الرقمي</h3>
+                        <p class="category-description">استراتيجيات التسويق الحديثة لنمو أعمالك الرقمية</p>
+                        <div class="category-stats">
+                            <span class="articles-count">320+ مقال</span>
+                        </div>
+                        <a href="category.html?cat=marketing" class="category-link">
+                            استكشف الآن
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M7 17L17 7M17 7H7M17 7V17"></path>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                            </svg>
+                        </div>
+                        <h3 class="category-title">العمل الحر</h3>
+                        <p class="category-description">كيفية بناء مهنة ناجحة في العمل الحر والاستقلالية المالية</p>
+                        <div class="category-stats">
+                            <span class="articles-count">200+ مقال</span>
+                        </div>
+                        <a href="category.html?cat=freelancing" class="category-link">
+                            استكشف الآن
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M7 17L17 7M17 7H7M17 7V17"></path>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="1" x2="12" y2="23"></line>
+                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                            </svg>
+                        </div>
+                        <h3 class="category-title">الاستثمار الرقمي</h3>
+                        <p class="category-description">دليلك للاستثمار الذكي في الأصول والعملات الرقمية</p>
+                        <div class="category-stats">
+                            <span class="articles-count">150+ مقال</span>
+                        </div>
+                        <a href="category.html?cat=investment" class="category-link">
+                            استكشف الآن
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M7 17L17 7M17 7H7M17 7V17"></path>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="category-title">الأدوات والموارد</h3>
+                        <p class="category-description">أفضل الأدوات والموارد لتطوير أعمالك الرقمية</p>
+                        <div class="category-stats">
+                            <span class="articles-count">100+ أداة</span>
+                        </div>
+                        <a href="tools.html" class="category-link">
+                            استكشف الآن
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M7 17L17 7M17 7H7M17 7V17"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter" id="newsletter">
+            <div class="container">
+                <div class="newsletter-content">
+                    <div class="newsletter-text">
+                        <h2 class="newsletter-title">
+                            <span class="highlight">انضم إلى</span> 50,000+ رائد أعمال
+                        </h2>
+                        <p class="newsletter-description">
+                            احصل على أحدث المقالات والاستراتيجيات والفرص الحصرية مباشرة في بريدك الإلكتروني. نشرة أسبوعية مليئة بالقيمة والإلهام.
+                        </p>
+                        <div class="newsletter-benefits">
+                            <div class="benefit-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20,6 9,17 4,12"></polyline>
+                                </svg>
+                                <span>محتوى حصري غير منشور</span>
+                            </div>
+                            <div class="benefit-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20,6 9,17 4,12"></polyline>
+                                </svg>
+                                <span>استراتيجيات مجربة ومختبرة</span>
+                            </div>
+                            <div class="benefit-item">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="20,6 9,17 4,12"></polyline>
+                                </svg>
+                                <span>فرص استثمارية وشراكات</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="newsletter-form">
+                        <form id="newsletter-form" class="form">
+                            <div class="form-group">
+                                <input type="text" id="newsletter-name" name="name" placeholder="الاسم الكامل" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" id="newsletter-email" name="email" placeholder="البريد الإلكتروني" required>
+                            </div>
+                            <div class="form-group">
+                                <select id="newsletter-interest" name="interest" required>
+                                    <option value="">اختر مجال اهتمامك</option>
+                                    <option value="entrepreneurship">ريادة الأعمال</option>
+                                    <option value="ecommerce">التجارة الإلكترونية</option>
+                                    <option value="marketing">التسويق الرقمي</option>
+                                    <option value="freelancing">العمل الحر</option>
+                                    <option value="investment">الاستثمار الرقمي</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg btn-full">
+                                <span class="btn-text">اشترك مجاناً الآن</span>
+                                <span class="btn-loading">جاري الاشتراك...</span>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13"></path>
+                                </svg>
+                            </button>
+                            <p class="form-note">
+                                بالاشتراك، أنت توافق على 
+                                <a href="privacy.html">سياسة الخصوصية</a> 
+                                و 
+                                <a href="terms.html">شروط الاستخدام</a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="testimonials">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">ماذا يقول قراؤنا</h2>
+                    <p class="section-description">
+                        آراء وتجارب حقيقية من رواد الأعمال الذين حققوا النجاح معنا
+                    </p>
+                </div>
+                
+                <div class="testimonials-slider" id="testimonials-slider">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <div class="testimonial-rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <p class="testimonial-text">
+                                "بفضل المحتوى الاستثنائي في هذه المدونة، تمكنت من زيادة أرباح متجري الإلكتروني بنسبة 300% في أقل من 6 أشهر. الاستراتيجيات عملية ومجربة."
+                            </p>
+                            <div class="testimonial-author">
+                                <img src="images/testimonials/author-1.jpg" alt="أحمد محمد" class="author-avatar">
+                                <div class="author-info">
+                                    <h4 class="author-name">أحمد محمد</h4>
+                                    <p class="author-title">مؤسس متجر تك شوب</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <div class="testimonial-rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <p class="testimonial-text">
+                                "كمستقلة، ساعدتني المقالات هنا على تطوير مهاراتي وزيادة أسعاري. الآن أحقق دخلاً شهرياً يفوق 5000 دولار من العمل الحر."
+                            </p>
+                            <div class="testimonial-author">
+                                <img src="images/testimonials/author-2.jpg" alt="فاطمة أحمد" class="author-avatar">
+                                <div class="author-info">
+                                    <h4 class="author-name">فاطمة أحمد</h4>
+                                    <p class="author-title">مصممة جرافيك مستقلة</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <div class="testimonial-rating">
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                                <span class="star">★</span>
+                            </div>
+                            <p class="testimonial-text">
+                                "المحتوى هنا ليس مجرد نظريات، بل خبرات حقيقية وعملية. تمكنت من إطلاق شركتي الناشئة وجمع التمويل الأولي بنجاح."
+                            </p>
+                            <div class="testimonial-author">
+                                <img src="images/testimonials/author-3.jpg" alt="محمد علي" class="author-avatar">
+                                <div class="author-info">
+                                    <h4 class="author-name">محمد علي</h4>
+                                    <p class="author-title">مؤسس تطبيق إدارة المشاريع</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonials-navigation">
+                    <button class="testimonial-prev" id="testimonial-prev">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="15,18 9,12 15,6"></polyline>
+                        </svg>
+                    </button>
+                    <button class="testimonial-next" id="testimonial-next">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="9,18 15,12 9,6"></polyline>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <a href="index.html" class="footer-logo">
+                            <img src="images/logo.svg" alt="ريادة الأعمال الرقمية" class="logo-img">
+                            <span class="logo-text">ريادة الأعمال الرقمية</span>
+                        </a>
+                        <p class="footer-description">
+                            المدونة الرائدة في الوطن العربي لريادة الأعمال الرقمية والربح من الإنترنت. نقدم محتوى احترافي وحصري لتحقيق النجاح المالي عبر الإنترنت.
+                        </p>
+                        <div class="social-links">
+                            <a href="#" class="social-link" aria-label="فيسبوك">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="social-link" aria-label="تويتر">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="social-link" aria-label="لينكد إن">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="social-link" aria-label="يوتيوب">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="about.html">من نحن</a></li>
+                        <li><a href="articles.html">المقالات</a></li>
+                        <li><a href="courses.html">الدورات</a></li>
+                        <li><a href="tools.html">الأدوات</a></li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">الفئات</h3>
+                    <ul class="footer-links">
+                        <li><a href="category.html?cat=entrepreneurship">ريادة الأعمال</a></li>
+                        <li><a href="category.html?cat=ecommerce">التجارة الإلكترونية</a></li>
+                        <li><a href="category.html?cat=marketing">التسويق الرقمي</a></li>
+                        <li><a href="category.html?cat=freelancing">العمل الحر</a></li>
+                        <li><a href="category.html?cat=investment">الاستثمار الرقمي</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3 class="footer-title">الدعم</h3>
+                    <ul class="footer-links">
+                        <li><a href="faq.html">الأسئلة الشائعة</a></li>
+                        <li><a href="privacy.html">سياسة الخصوصية</a></li>
+                        <li><a href="terms.html">شروط الاستخدام</a></li>
+                        <li><a href="sitemap.html">خريطة الموقع</a></li>
+                        <li><a href="contact.html">الدعم الفني</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2025 ريادة الأعمال الرقمية. جميع الحقوق محفوظة.</p>
+                </div>
+                <div class="footer-credits">
+                    <p>تم التطوير بواسطة <a href="#" target="_blank">فريق التطوير</a></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="back-to-top" aria-label="العودة للأعلى">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="18,15 12,9 6,15"></polyline>
+        </svg>
+    </button>
+
+    <!-- JavaScript -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/components.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/newsletter.js"></script>
+    <script src="js/testimonials.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
+
