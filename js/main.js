@@ -673,3 +673,77 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = DigitalEntrepreneurshipBlog;
 }
 
+
+
+  // SEO Enhancement: Add structured data for articles
+  addArticleStructuredData(article) {
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": article.title,
+      "description": article.excerpt,
+      "image": article.image,
+      "author": {
+        "@type": "Person",
+        "name": article.author
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ريادة الأعمال الرقمية",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://alpha-know.vercel.app/images/logo.png"
+        }
+      },
+      "datePublished": article.date,
+      "dateModified": article.date,
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": `https://alpha-know.vercel.app/article/${article.id}`
+      }
+    };
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(structuredData);
+    document.head.appendChild(script);
+  }
+
+  // Performance Enhancement: Lazy load images
+  setupLazyLoading() {
+    const images = document.querySelectorAll('img[data-src]');
+    const imageObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.src = img.dataset.src;
+          img.classList.remove('lazy');
+          imageObserver.unobserve(img);
+        }
+      });
+    });
+
+    images.forEach(img => imageObserver.observe(img));
+  }
+
+  // Accessibility Enhancement: Improve keyboard navigation
+  enhanceKeyboardNavigation() {
+    // Add skip link
+    const skipLink = document.createElement('a');
+    skipLink.href = '#main-content';
+    skipLink.textContent = 'تخطي إلى المحتوى الرئيسي';
+    skipLink.className = 'skip-link';
+    document.body.insertBefore(skipLink, document.body.firstChild);
+
+    // Improve focus management
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Tab') {
+        document.body.classList.add('keyboard-navigation');
+      }
+    });
+
+    document.addEventListener('mousedown', () => {
+      document.body.classList.remove('keyboard-navigation');
+    });
+  }
+

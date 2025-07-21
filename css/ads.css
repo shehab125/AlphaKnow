@@ -1,0 +1,54 @@
+.ad-slot {
+    margin: 20px auto;
+    padding: 15px;
+    background-color: var(--color-background-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    text-align: center;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: var(--color-text-secondary);
+    overflow: hidden;
+}
+
+.ad-slot ins {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.native-ad {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: var(--color-primary-light);
+    border-left: 5px solid var(--color-primary);
+    border-radius: 4px;
+}
+
+.native-ad h3 {
+    margin-top: 0;
+    color: var(--color-primary-dark);
+    font-size: 1.1rem;
+}
+
+.native-ad p {
+    margin-bottom: 0;
+    color: var(--color-text-primary);
+    font-size: 0.95rem;
+}
+
+.native-ad a {
+    color: var(--color-primary);
+    text-decoration: underline;
+}
+
+.affiliate-slot img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+
