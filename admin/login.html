@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - لوحة التحكم | AlphaKnow</title>
+    <meta name="description" content="تسجيل الدخول إلى لوحة تحكم AlphaKnow">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="css/admin.css">
+    
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 2rem;
+        }
+        
+        .login-card {
+            background: var(--admin-bg-primary);
+            border-radius: var(--admin-radius-lg);
+            box-shadow: var(--admin-shadow-xl);
+            padding: 3rem;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+        
+        .login-logo {
+            margin-bottom: 2rem;
+        }
+        
+        .login-logo img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+        }
+        
+        .login-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--admin-text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .login-subtitle {
+            color: var(--admin-text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .login-form {
+            text-align: right;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--admin-text-primary);
+            font-weight: 500;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--admin-border);
+            border-radius: var(--admin-radius);
+            background: var(--admin-bg-secondary);
+            color: var(--admin-text-primary);
+            font-size: 1rem;
+            transition: var(--admin-transition);
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--admin-primary);
+            box-shadow: 0 0 0 3px rgba(var(--admin-primary-rgb), 0.1);
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--admin-primary);
+            color: white;
+            border: none;
+            border-radius: var(--admin-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--admin-transition);
+            margin-bottom: 1rem;
+        }
+        
+        .login-btn:hover {
+            background: var(--admin-primary-dark);
+        }
+        
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .login-links {
+            margin-top: 1.5rem;
+        }
+        
+        .login-links a {
+            color: var(--admin-primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .login-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            background: var(--admin-danger-light);
+            color: var(--admin-danger);
+            padding: 0.75rem;
+            border-radius: var(--admin-radius);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .success-message {
+            background: var(--admin-success-light);
+            color: var(--admin-success);
+            padding: 0.75rem;
+            border-radius: var(--admin-radius);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 0.5rem;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .back-to-site {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--admin-transition);
+        }
+        
+        .back-to-site:hover {
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 768px) {
+            .login-container {
+                padding: 1rem;
+            }
+            
+            .login-card {
+                padding: 2rem;
+            }
+            
+            .back-to-site {
+                top: 1rem;
+                right: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" class="back-to-site">
+        ← العودة للموقع
+    </a>
+    
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-logo">
+                <img src="../images/logo.png" alt="AlphaKnow Logo">
+            </div>
+            
+            <h1 class="login-title">تسجيل الدخول</h1>
+            <p class="login-subtitle">أدخل بياناتك للوصول إلى لوحة التحكم</p>
+            
+            <div id="error-message" class="error-message" style="display: none;"></div>
+            <div id="success-message" class="success-message" style="display: none;"></div>
+            
+            <form class="login-form" id="login-form">
+                <div class="form-group">
+                    <label for="email" class="form-label">البريد الإلكتروني</label>
+                    <input type="email" id="email" name="email" class="form-input" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password" class="form-label">كلمة المرور</label>
+                    <input type="password" id="password" name="password" class="form-input" required>
+                </div>
+                
+                <button type="submit" class="login-btn" id="login-btn">
+                    تسجيل الدخول
+                    <span class="loading-spinner" id="loading-spinner" style="display: none;"></span>
+                </button>
+            </form>
+            
+            <div class="login-links">
+                <a href="#" id="forgot-password">نسيت كلمة المرور؟</a>
+                <br>
+                <a href="#" id="create-account">إنشاء حساب جديد</a>
+                <br>
+                <a href="debug.html" style="color: #666; font-size: 0.8rem;">🔧 تشخيص Firebase</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js"></script>
+    
+    <!-- Firebase Config -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/firebase-service.js"></script>
+    
+    <!-- Login Script -->
+    <script>
+        class LoginManager {
+            constructor() {
+                this.form = document.getElementById('login-form');
+                this.emailInput = document.getElementById('email');
+                this.passwordInput = document.getElementById('password');
+                this.loginBtn = document.getElementById('login-btn');
+                this.loadingSpinner = document.getElementById('loading-spinner');
+                this.errorMessage = document.getElementById('error-message');
+                this.successMessage = document.getElementById('success-message');
+                
+                this.initializeEventListeners();
+                this.checkAuthState();
+            }
+            
+            initializeEventListeners() {
+                this.form.addEventListener('submit', (e) => this.handleLogin(e));
+                
+                // Forgot password
+                document.getElementById('forgot-password').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.showForgotPassword();
+                });
+                
+                // Create account
+                document.getElementById('create-account').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.showCreateAccount();
+                });
+            }
+            
+            checkAuthState() {
+                firebaseService.onAuthStateChanged((user) => {
+                    if (user) {
+                        // User is already logged in, redirect to admin panel
+                        window.location.href = 'index.html';
+                    }
+                });
+            }
+            
+            async handleLogin(e) {
+                e.preventDefault();
+                
+                const email = this.emailInput.value.trim();
+                const password = this.passwordInput.value;
+                
+                if (!email || !password) {
+                    this.showError('يرجى ملء جميع الحقول المطلوبة');
+                    return;
+                }
+                
+                this.setLoading(true);
+                
+                try {
+                    // فحص حالة Firebase أولاً
+                    if (!window.FIREBASE || !window.FIREBASE.auth) {
+                        throw new Error('Firebase غير محمل بشكل صحيح');
+                    }
+                    
+                    console.log('محاولة تسجيل الدخول...', { email });
+                    
+                    const result = await firebaseService.signIn(email, password);
+                    
+                    console.log('نتيجة تسجيل الدخول:', result);
+                    
+                    if (result.success) {
+                        this.showSuccess('تم تسجيل الدخول بنجاح');
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 1000);
+                    } else {
+                        const errorMessage = this.getErrorMessage(result.error);
+                        this.showError(errorMessage);
+                        console.error('خطأ في تسجيل الدخول:', result.error);
+                    }
+                } catch (error) {
+                    console.error('خطأ غير متوقع في تسجيل الدخول:', error);
+                    this.showError(`حدث خطأ أثناء تسجيل الدخول: ${error.message}`);
+                } finally {
+                    this.setLoading(false);
+                }
+            }
+            
+            setLoading(loading) {
+                this.loginBtn.disabled = loading;
+                this.loadingSpinner.style.display = loading ? 'inline-block' : 'none';
+                this.loginBtn.textContent = loading ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول';
+            }
+            
+            showError(message) {
+                this.errorMessage.textContent = message;
+                this.errorMessage.style.display = 'block';
+                this.successMessage.style.display = 'none';
+                
+                setTimeout(() => {
+                    this.errorMessage.style.display = 'none';
+                }, 5000);
+            }
+            
+            showSuccess(message) {
+                this.successMessage.textContent = message;
+                this.successMessage.style.display = 'block';
+                this.errorMessage.style.display = 'none';
+            }
+            
+            getErrorMessage(error) {
+                const errorMessages = {
+                    'auth/user-not-found': 'البريد الإلكتروني غير مسجل',
+                    'auth/wrong-password': 'كلمة المرور غير صحيحة',
+                    'auth/invalid-email': 'البريد الإلكتروني غير صحيح',
+                    'auth/user-disabled': 'تم تعطيل هذا الحساب',
+                    'auth/too-many-requests': 'تم تجاوز عدد المحاولات المسموح، يرجى المحاولة لاحقاً',
+                    'auth/network-request-failed': 'خطأ في الاتصال بالشبكة',
+                    'auth/invalid-credential': 'بيانات الاعتماد غير صحيحة',
+                    'auth/operation-not-allowed': 'تسجيل الدخول بالبريد الإلكتروني غير مفعل',
+                    'auth/weak-password': 'كلمة المرور ضعيفة جداً',
+                    'auth/email-already-in-use': 'البريد الإلكتروني مستخدم بالفعل',
+                    'auth/requires-recent-login': 'يجب إعادة تسجيل الدخول للمتابعة',
+                    'auth/account-exists-with-different-credential': 'يوجد حساب بنفس البريد الإلكتروني بطريقة تسجيل مختلفة'
+                };
+                
+                // إذا كان الخطأ يحتوي على رسالة Firebase الأصلية
+                if (error && error.includes('Firebase:')) {
+                    return error.replace('Firebase:', '').trim();
+                }
+                
+                return errorMessages[error] || `حدث خطأ أثناء تسجيل الدخول: ${error}`;
+            }
+            
+            showForgotPassword() {
+                const email = prompt('أدخل بريدك الإلكتروني لإعادة تعيين كلمة المرور:');
+                if (email) {
+                    // TODO: Implement password reset
+                    alert('سيتم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني');
+                }
+            }
+            
+            showCreateAccount() {
+                const email = prompt('أدخل بريدك الإلكتروني:');
+                const password = prompt('أدخل كلمة مرور قوية:');
+                const displayName = prompt('أدخل اسمك:');
+                
+                if (email && password && displayName) {
+                    // TODO: Implement account creation
+                    alert('سيتم إنشاء الحساب وإرسال تأكيد إلى بريدك الإلكتروني');
+                }
+            }
+        }
+        
+        // Initialize login manager when DOM is ready
+        document.addEventListener('DOMContentLoaded', () => {
+            new LoginManager();
+        });
+    </script>
+</body>
+</html> 

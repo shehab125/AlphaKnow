@@ -1,3 +1,21 @@
+// Fallback loading screen handler - runs immediately
+(function() {
+  // Hide loading screen after 10 seconds maximum as ultimate fallback
+  setTimeout(() => {
+    const loadingScreen = document.getElementById('loading-screen');
+    if (loadingScreen && loadingScreen.style.display !== 'none') {
+      console.warn('Ultimate fallback: Forcing loading screen to hide');
+      loadingScreen.classList.add('hidden');
+      setTimeout(() => {
+        loadingScreen.style.display = 'none';
+        loadingScreen.style.opacity = '0';
+        loadingScreen.style.visibility = 'hidden';
+        loadingScreen.style.pointerEvents = 'none';
+      }, 500);
+    }
+  }, 10000);
+})();
+
 // Main JavaScript File
 class DigitalEntrepreneurshipBlog {
   constructor() {
@@ -12,8 +30,19 @@ class DigitalEntrepreneurshipBlog {
       // Initialize core components
       await this.initializeApp();
       
-      // Load articles data
-      await this.loadArticles();
+      // Load articles data (with timeout and fallback)
+      try {
+        await Promise.race([
+          this.loadArticles(),
+          new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Articles load timeout')), 5000)
+          )
+        ]);
+      } catch (error) {
+        console.warn('Articles failed to load, continuing with fallback data:', error);
+        // Use fallback data or empty state
+        this.articlesData = { featured: [], categories: [] };
+      }
       
       // Setup event listeners
       this.setupEventListeners();
@@ -36,9 +65,6 @@ class DigitalEntrepreneurshipBlog {
       // Setup scroll effects
       this.initializeScrollEffects();
       
-      // Hide loading screen
-      this.hideLoadingScreen();
-      
       // Mark performance end
       UTILS.performance.mark('app-end');
       UTILS.performance.measure('app-initialization', 'app-start', 'app-end');
@@ -47,7 +73,7 @@ class DigitalEntrepreneurshipBlog {
     } catch (error) {
       console.error('❌ Error initializing blog:', error);
       this.handleInitializationError(error);
-    }
+
   }
 
   async initializeApp() {
@@ -67,19 +93,81 @@ class DigitalEntrepreneurshipBlog {
         console.log('Service Worker registration failed:', error);
       }
     }
+    
+
   }
 
   async loadArticles() {
     try {
+      // Try to load from Firebase first
+      if (window.firebaseService) {
+        const result = await firebaseService.getArticles();
+        if (result.success && result.data.length > 0) {
+          this.articlesData = {
+            featured: result.data.filter(article => article.status === 'published').slice(0, 6),
+            categories: []
+          };
+          this.renderFeaturedArticles();
+          this.updateStats();
+          return;
+        }
+      }
+      
+      // Fallback to local JSON file
       const response = await fetch(CONFIG.api.articles);
-      if (!response.ok) throw new Error('Failed to load articles');
+      if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       
       this.articlesData = await response.json();
       this.renderFeaturedArticles();
       this.updateStats();
     } catch (error) {
       console.error('Error loading articles:', error);
-      this.showError('فشل في تحميل المقالات. يرجى إعادة تحميل الصفحة.');
+      
+      // Use fallback data instead of showing error
+      this.articlesData = {
+        featured: [
+          {
+            id: 1,
+            title: 'ريادة الأعمال الرقمية: دليل شامل للمبتدئين',
+            excerpt: 'تعرف على أساسيات ريادة الأعمال الرقمية وكيفية البدء في مشروعك الأول',
+            image: 'images/article-1.jpg',
+            author: { name: 'فريق ريادة الأعمال الرقمية', avatar: 'images/author-avatar.jpg' },
+            publishedAt: '2024-01-15',
+            readTime: 8,
+            views: 1250,
+            category: 'entrepreneurship',
+            slug: 'entrepreneurship-guide'
+          },
+          {
+            id: 2,
+            title: 'التجارة الإلكترونية: من الصفر إلى الربح',
+            excerpt: 'دليل عملي لإنشاء متجر إلكتروني ناجح وتحقيق الأرباح',
+            image: 'images/article-2.jpg',
+            author: { name: 'فريق ريادة الأعمال الرقمية', avatar: 'images/author-avatar.jpg' },
+            publishedAt: '2024-01-10',
+            readTime: 12,
+            views: 980,
+            category: 'ecommerce',
+            slug: 'ecommerce-guide'
+          },
+          {
+            id: 3,
+            title: 'التسويق الرقمي: استراتيجيات فعالة للترويج',
+            excerpt: 'أفضل استراتيجيات التسويق الرقمي لزيادة مبيعاتك ووصولك للعملاء',
+            image: 'images/article-3.jpg',
+            author: { name: 'فريق ريادة الأعمال الرقمية', avatar: 'images/author-avatar.jpg' },
+            publishedAt: '2024-01-05',
+            readTime: 10,
+            views: 1560,
+            category: 'marketing',
+            slug: 'digital-marketing-strategies'
+          }
+        ],
+        categories: []
+      };
+      
+      this.renderFeaturedArticles();
+      this.updateStats();
     }
   }
 
@@ -550,17 +638,7 @@ class DigitalEntrepreneurshipBlog {
     }
   }
 
-  hideLoadingScreen() {
-    const loadingScreen = document.getElementById('loading-screen');
-    if (loadingScreen) {
-      setTimeout(() => {
-        loadingScreen.classList.add('hidden');
-        setTimeout(() => {
-          loadingScreen.style.display = 'none';
-        }, 500);
-      }, 1000);
-    }
-  }
+
 
   updateVisitCount() {
     const visitCount = UTILS.storage.get(CONFIG.storage.visitCount, 0);
@@ -630,12 +708,6 @@ class DigitalEntrepreneurshipBlog {
   handleInitializationError(error) {
     console.error('Initialization error:', error);
     
-    // Hide loading screen
-    const loadingScreen = document.getElementById('loading-screen');
-    if (loadingScreen) {
-      loadingScreen.style.display = 'none';
-    }
-
     // Show error message
     this.showError('حدث خطأ أثناء تحميل الموقع. يرجى إعادة تحميل الصفحة.');
   }

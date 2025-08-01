@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم - AlphaKnow</title>
+    <meta name="description" content="لوحة تحكم إدارة المحتوى - AlphaKnow">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/performance.css">
+    <link rel="stylesheet" href="css/admin.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Quill Editor -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+    
+    <!-- Meta Tags -->
+    <meta property="og:title" content="لوحة التحكم - AlphaKnow">
+    <meta property="og:description" content="لوحة تحكم إدارة المحتوى - AlphaKnow">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://alpha-know.vercel.app/admin">
+    <meta property="og:image" content="https://alpha-know.vercel.app/images/og-image.jpg">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="لوحة التحكم - AlphaKnow">
+    <meta name="twitter:description" content="لوحة تحكم إدارة المحتوى - AlphaKnow">
+    <meta name="twitter:image" content="https://alpha-know.vercel.app/images/twitter-card.jpg">
+</head>
+<body>
+
+
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="admin-header-content">
+            <div class="admin-brand">
+                <a href="../index.html" class="admin-logo">
+                    <img src="../images/logo.png" alt="AlphaKnow Logo" class="admin-logo-img">
+                    <span class="admin-logo-text">AlphaKnow</span>
+                </a>
+                <span class="admin-subtitle">لوحة التحكم</span>
+            </div>
+            
+            <div class="admin-actions">
+                <button class="admin-btn admin-btn-secondary" id="preview-site">
+                    <i class="fas fa-external-link-alt"></i>
+                    معاينة الموقع
+                </button>
+                <a href="debug-admin.html" class="admin-btn admin-btn-secondary" style="margin-left: 0.5rem;">
+                    <i class="fas fa-bug"></i>
+                    تشخيص
+                </a>
+                <div class="admin-user">
+                    <img src="../images/admin-avatar.jpg" alt="المدير" class="admin-avatar">
+                    <span class="admin-username">مدير النظام</span>
+                    <button class="admin-logout" id="admin-logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Admin Sidebar -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+        <nav class="admin-nav">
+            <ul class="admin-nav-list">
+                <li class="admin-nav-item">
+                    <a href="#dashboard" class="admin-nav-link active" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>لوحة التحكم</span>
+                    </a>
+                </li>
+                <li class="admin-nav-item">
+                    <a href="#articles" class="admin-nav-link" data-section="articles">
+                        <i class="fas fa-newspaper"></i>
+                        <span>المقالات</span>
+                        <span class="admin-nav-badge" id="articles-count">0</span>
+                    </a>
+                </li>
+                <li class="admin-nav-item">
+                    <a href="#categories" class="admin-nav-link" data-section="categories">
+                        <i class="fas fa-tags"></i>
+                        <span>الفئات</span>
+                        <span class="admin-nav-badge" id="categories-count">0</span>
+                    </a>
+                </li>
+                <li class="admin-nav-item">
+                    <a href="#media" class="admin-nav-link" data-section="media">
+                        <i class="fas fa-images"></i>
+                        <span>الوسائط</span>
+                    </a>
+                </li>
+                <li class="admin-nav-item">
+                    <a href="#users" class="admin-nav-link" data-section="users">
+                        <i class="fas fa-users"></i>
+                        <span>المستخدمين</span>
+                    </a>
+                </li>
+                <li class="admin-nav-item">
+                    <a href="#analytics" class="admin-nav-link" data-section="analytics">
+                        <i class="fas fa-chart-line"></i>
+                        <span>الإحصائيات</span>
+                    </a>
+                </li>
+                <li class="admin-nav-item">
+                    <a href="#settings" class="admin-nav-link" data-section="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>الإعدادات</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Admin Main Content -->
+    <main class="admin-main" id="admin-main">
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="admin-section active">
+            <div class="admin-section-header">
+                <h1 class="admin-section-title">لوحة التحكم</h1>
+                <p class="admin-section-description">مرحباً بك في لوحة تحكم AlphaKnow</p>
+            </div>
+            
+            <div class="admin-stats-grid">
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <div class="admin-stat-content">
+                        <h3 class="admin-stat-number" id="total-articles">0</h3>
+                        <p class="admin-stat-label">إجمالي المقالات</p>
+                    </div>
+                </div>
+                
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="admin-stat-content">
+                        <h3 class="admin-stat-number" id="total-views">0</h3>
+                        <p class="admin-stat-label">إجمالي المشاهدات</p>
+                    </div>
+                </div>
+                
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="admin-stat-content">
+                        <h3 class="admin-stat-number" id="total-users">0</h3>
+                        <p class="admin-stat-label">إجمالي المستخدمين</p>
+                    </div>
+                </div>
+                
+                <div class="admin-stat-card">
+                    <div class="admin-stat-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <div class="admin-stat-content">
+                        <h3 class="admin-stat-number" id="total-categories">0</h3>
+                        <p class="admin-stat-label">إجمالي الفئات</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="admin-dashboard-grid">
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h3 class="admin-card-title">أحدث المقالات</h3>
+                        <a href="#articles" class="admin-card-link">عرض الكل</a>
+                    </div>
+                    <div class="admin-card-content">
+                        <div class="admin-recent-articles" id="recent-articles">
+                            <!-- Recent articles will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h3 class="admin-card-title">أكثر المقالات مشاهدة</h3>
+                    </div>
+                    <div class="admin-card-content">
+                        <div class="admin-popular-articles" id="popular-articles">
+                            <!-- Popular articles will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Articles Section -->
+        <section id="articles" class="admin-section">
+            <div class="admin-section-header">
+                <h1 class="admin-section-title">إدارة المقالات</h1>
+                <button class="admin-btn admin-btn-primary" id="add-article-btn">
+                    <i class="fas fa-plus"></i>
+                    إضافة مقال جديد
+                </button>
+            </div>
+            
+            <div class="admin-filters">
+                <div class="admin-search">
+                    <input type="text" id="articles-search" placeholder="البحث في المقالات..." class="admin-search-input">
+                    <i class="fas fa-search admin-search-icon"></i>
+                </div>
+                
+                <div class="admin-filter-group">
+                    <select id="category-filter" class="admin-select">
+                        <option value="">جميع الفئات</option>
+                    </select>
+                    
+                    <select id="status-filter" class="admin-select">
+                        <option value="">جميع الحالات</option>
+                        <option value="published">منشور</option>
+                        <option value="draft">مسودة</option>
+                        <option value="archived">مؤرشف</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="admin-table-container">
+                <table class="admin-table" id="articles-table">
+                    <thead>
+                        <tr>
+                            <th>الصورة</th>
+                            <th>العنوان</th>
+                            <th>الفئة</th>
+                            <th>المؤلف</th>
+                            <th>التاريخ</th>
+                            <th>المشاهدات</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="articles-tbody">
+                        <!-- Articles will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="admin-pagination" id="articles-pagination">
+                <!-- Pagination will be generated here -->
+            </div>
+        </section>
+
+        <!-- Article Editor Modal -->
+        <div class="admin-modal" id="article-editor-modal">
+            <div class="admin-modal-content admin-modal-large">
+                <div class="admin-modal-header">
+                    <h2 class="admin-modal-title" id="editor-title">إضافة مقال جديد</h2>
+                    <button class="admin-modal-close" id="close-editor">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="admin-modal-body">
+                    <form id="article-form" class="admin-form">
+                        <div class="admin-form-row">
+                            <div class="admin-form-group">
+                                <label for="article-title" class="admin-form-label">عنوان المقال *</label>
+                                <input type="text" id="article-title" name="title" class="admin-form-input" required>
+                            </div>
+                            
+                            <div class="admin-form-group">
+                                <label for="article-category" class="admin-form-label">الفئة *</label>
+                                <select id="article-category" name="category" class="admin-form-select" required>
+                                    <option value="">اختر الفئة</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="admin-form-row">
+                            <div class="admin-form-group">
+                                <label for="article-excerpt" class="admin-form-label">ملخص المقال</label>
+                                <textarea id="article-excerpt" name="excerpt" class="admin-form-textarea" rows="3"></textarea>
+                            </div>
+                            
+                            <div class="admin-form-group">
+                                <label for="article-image" class="admin-form-label">صورة المقال</label>
+                                <input type="file" id="article-image" name="image" class="admin-form-file" accept="image/*">
+                                <div class="admin-image-preview" id="image-preview"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="admin-form-group">
+                            <label for="article-content" class="admin-form-label">محتوى المقال *</label>
+                            <div id="article-editor" class="admin-editor"></div>
+                        </div>
+                        
+                        <div class="admin-form-row">
+                            <div class="admin-form-group">
+                                <label for="article-tags" class="admin-form-label">العلامات</label>
+                                <input type="text" id="article-tags" name="tags" class="admin-form-input" placeholder="افصل العلامات بفواصل">
+                            </div>
+                            
+                            <div class="admin-form-group">
+                                <label for="article-status" class="admin-form-label">الحالة</label>
+                                <select id="article-status" name="status" class="admin-form-select">
+                                    <option value="draft">مسودة</option>
+                                    <option value="published">منشور</option>
+                                    <option value="archived">مؤرشف</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="admin-form-actions">
+                            <button type="button" class="admin-btn admin-btn-secondary" id="save-draft">حفظ كمسودة</button>
+                            <button type="submit" class="admin-btn admin-btn-primary">نشر المقال</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categories Section -->
+        <section id="categories" class="admin-section">
+            <div class="admin-section-header">
+                <h1 class="admin-section-title">إدارة الفئات</h1>
+                <button class="admin-btn admin-btn-primary" id="add-category-btn">
+                    <i class="fas fa-plus"></i>
+                    إضافة فئة جديدة
+                </button>
+            </div>
+            
+            <div class="admin-categories-grid" id="categories-grid">
+                <!-- Categories will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Media Section -->
+        <section id="media" class="admin-section">
+            <div class="admin-section-header">
+                <h1 class="admin-section-title">إدارة الوسائط</h1>
+                <button class="admin-btn admin-btn-primary" id="upload-media-btn">
+                    <i class="fas fa-upload"></i>
+                    رفع ملفات
+                </button>
+            </div>
+            
+            <div class="admin-media-grid" id="media-grid">
+                <!-- Media files will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Users Section -->
+        <section id="users" class="admin-section">
+            <div class="admin-section-header">
+                <h1 class="admin-section-title">إدارة المستخدمين</h1>
+                <button class="admin-btn admin-btn-primary" id="add-user-btn">
+                    <i class="fas fa-user-plus"></i>
+                    إضافة مستخدم
+                </button>
+            </div>
+            
+            <div class="admin-table-container">
+                <table class="admin-table" id="users-table">
+                    <thead>
+                        <tr>
+                            <th>الصورة</th>
+                            <th>الاسم</th>
+                            <th>البريد الإلكتروني</th>
+                            <th>الدور</th>
+                            <th>تاريخ التسجيل</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-tbody">
+                        <!-- Users will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Analytics Section -->
+        <section id="analytics" class="admin-section">
+            <div class="admin-section-header">
+                <h1 class="admin-section-title">الإحصائيات والتحليلات</h1>
+            </div>
+            
+            <div class="admin-analytics-grid">
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h3 class="admin-card-title">إحصائيات الزيارات</h3>
+                    </div>
+                    <div class="admin-card-content">
+                        <canvas id="visits-chart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h3 class="admin-card-title">أكثر المقالات مشاهدة</h3>
+                    </div>
+                    <div class="admin-card-content">
+                        <canvas id="articles-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings" class="admin-section">
+            <div class="admin-section-header">
+                <h1 class="admin-section-title">إعدادات الموقع</h1>
+            </div>
+            
+            <div class="admin-settings-grid">
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h3 class="admin-card-title">إعدادات عامة</h3>
+                    </div>
+                    <div class="admin-card-content">
+                        <form class="admin-form" id="general-settings-form">
+                            <div class="admin-form-group">
+                                <label for="site-title" class="admin-form-label">عنوان الموقع</label>
+                                <input type="text" id="site-title" name="siteTitle" class="admin-form-input">
+                            </div>
+                            
+                            <div class="admin-form-group">
+                                <label for="site-description" class="admin-form-label">وصف الموقع</label>
+                                <textarea id="site-description" name="siteDescription" class="admin-form-textarea" rows="3"></textarea>
+                            </div>
+                            
+                            <div class="admin-form-group">
+                                <label for="site-logo" class="admin-form-label">شعار الموقع</label>
+                                <input type="file" id="site-logo" name="siteLogo" class="admin-form-file" accept="image/*">
+                            </div>
+                            
+                            <button type="submit" class="admin-btn admin-btn-primary">حفظ الإعدادات</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="admin-card">
+                    <div class="admin-card-header">
+                        <h3 class="admin-card-title">إعدادات SEO</h3>
+                    </div>
+                    <div class="admin-card-content">
+                        <form class="admin-form" id="seo-settings-form">
+                            <div class="admin-form-group">
+                                <label for="meta-keywords" class="admin-form-label">الكلمات المفتاحية</label>
+                                <input type="text" id="meta-keywords" name="metaKeywords" class="admin-form-input">
+                            </div>
+                            
+                            <div class="admin-form-group">
+                                <label for="google-analytics" class="admin-form-label">Google Analytics ID</label>
+                                <input type="text" id="google-analytics" name="googleAnalytics" class="admin-form-input">
+                            </div>
+                            
+                            <button type="submit" class="admin-btn admin-btn-primary">حفظ إعدادات SEO</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js"></script>
+    
+    <!-- JavaScript Files -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <script src="../js/config.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/firebase-service.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/articles.js"></script>
+    <script src="js/categories.js"></script>
+    <script src="js/media.js"></script>
+    <script src="js/users.js"></script>
+    <script src="js/analytics.js"></script>
+    <script src="js/settings.js"></script>
+</body>
+</html> 

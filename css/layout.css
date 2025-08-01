@@ -769,35 +769,5 @@ section {
   transform: translateY(-2px);
 }
 
-/* Loading Screen */
-.loading-screen {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--bg-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: var(--z-modal);
-  opacity: 1;
-  visibility: visible;
-  transition: var(--transition-slow);
-}
 
-.loading-screen.hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-
-.loading-spinner {
-  text-align: center;
-}
-
-.loading-spinner p {
-  margin-top: var(--spacing-4);
-  color: var(--text-secondary);
-  font-weight: var(--font-weight-medium);
-}
 

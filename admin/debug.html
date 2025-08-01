@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تشخيص Firebase - AlphaKnow</title>
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: #f5f5f5;
+            padding: 2rem;
+            direction: rtl;
+        }
+        .debug-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .debug-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .debug-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+        .debug-content {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .status-success {
+            color: #28a745;
+        }
+        .status-error {
+            color: #dc3545;
+        }
+        .test-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0.5rem 0;
+        }
+        .test-btn:hover {
+            background: #0056b3;
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <a href="login.html" class="back-link">← العودة لصفحة تسجيل الدخول</a>
+        
+        <h1>تشخيص Firebase</h1>
+        
+        <div class="debug-section">
+            <div class="debug-title">1. حالة Firebase SDK</div>
+            <div id="firebase-status" class="debug-content">جاري التحقق...</div>
+        </div>
+        
+        <div class="debug-section">
+            <div class="debug-title">2. إعدادات Firebase</div>
+            <div id="firebase-config" class="debug-content">جاري التحقق...</div>
+        </div>
+        
+        <div class="debug-section">
+            <div class="debug-title">3. اختبار الاتصال بـ Firebase</div>
+            <button class="test-btn" onclick="testFirebaseConnection()">اختبار الاتصال</button>
+            <div id="connection-test" class="debug-content">اضغط على الزر أعلاه لاختبار الاتصال</div>
+        </div>
+        
+        <div class="debug-section">
+            <div class="debug-title">4. اختبار المصادقة</div>
+            <button class="test-btn" onclick="testAuthentication()">اختبار المصادقة</button>
+            <div id="auth-test" class="debug-content">اضغط على الزر أعلاه لاختبار المصادقة</div>
+        </div>
+        
+        <div class="debug-section">
+            <div class="debug-title">5. سجل الأخطاء</div>
+            <div id="error-log" class="debug-content">سيتم عرض الأخطاء هنا...</div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js"></script>
+    
+    <!-- Firebase Config -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/firebase-service.js"></script>
+    
+    <script>
+        let errorLog = [];
+        
+        function logError(message, error = null) {
+            const timestamp = new Date().toLocaleString('ar-SA');
+            const logEntry = `[${timestamp}] ${message}${error ? '\n' + error.toString() : ''}`;
+            errorLog.push(logEntry);
+            document.getElementById('error-log').textContent = errorLog.join('\n\n');
+            console.error(message, error);
+        }
+        
+        function updateStatus(elementId, status, message) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `<span class="status-${status}">${message}</span>`;
+        }
+        
+        // 1. فحص حالة Firebase SDK
+        function checkFirebaseSDK() {
+            try {
+                if (typeof firebase !== 'undefined') {
+                    updateStatus('firebase-status', 'success', '✅ Firebase SDK محمل بنجاح');
+                } else {
+                    updateStatus('firebase-status', 'error', '❌ Firebase SDK غير محمل');
+                    logError('Firebase SDK غير محمل');
+                }
+            } catch (error) {
+                updateStatus('firebase-status', 'error', '❌ خطأ في تحميل Firebase SDK');
+                logError('خطأ في تحميل Firebase SDK', error);
+            }
+        }
+        
+        // 2. فحص إعدادات Firebase
+        function checkFirebaseConfig() {
+            try {
+                if (window.FIREBASE && window.FIREBASE.config) {
+                    const config = window.FIREBASE.config;
+                    const configInfo = `✅ إعدادات Firebase محملة بنجاح
+                    
+Project ID: ${config.projectId}
+Auth Domain: ${config.authDomain}
+API Key: ${config.apiKey.substring(0, 10)}...
+Storage Bucket: ${config.storageBucket}`;
+                    
+                    document.getElementById('firebase-config').textContent = configInfo;
+                } else {
+                    updateStatus('firebase-config', 'error', '❌ إعدادات Firebase غير محملة');
+                    logError('إعدادات Firebase غير محملة');
+                }
+            } catch (error) {
+                updateStatus('firebase-config', 'error', '❌ خطأ في إعدادات Firebase');
+                logError('خطأ في إعدادات Firebase', error);
+            }
+        }
+        
+        // 3. اختبار الاتصال بـ Firebase
+        async function testFirebaseConnection() {
+            const testElement = document.getElementById('connection-test');
+            testElement.textContent = 'جاري اختبار الاتصال...';
+            
+            try {
+                // اختبار الاتصال بـ Firestore
+                const db = firebase.firestore();
+                await db.collection('test').doc('test').get();
+                
+                testElement.textContent = '✅ الاتصال بـ Firebase يعمل بشكل صحيح';
+            } catch (error) {
+                testElement.textContent = `❌ فشل الاتصال بـ Firebase:\n${error.message}`;
+                logError('فشل الاتصال بـ Firebase', error);
+            }
+        }
+        
+        // 4. اختبار المصادقة
+        async function testAuthentication() {
+            const testElement = document.getElementById('auth-test');
+            testElement.textContent = 'جاري اختبار المصادقة...';
+            
+            try {
+                const auth = firebase.auth();
+                
+                // اختبار إنشاء مستخدم مؤقت (سيتم حذفه)
+                const testEmail = `test-${Date.now()}@example.com`;
+                const testPassword = 'test123456';
+                
+                const userCredential = await auth.createUserWithEmailAndPassword(testEmail, testPassword);
+                
+                // حذف المستخدم المؤقت
+                await userCredential.user.delete();
+                
+                testElement.textContent = '✅ المصادقة تعمل بشكل صحيح';
+            } catch (error) {
+                testElement.textContent = `❌ فشل اختبار المصادقة:\n${error.message}`;
+                logError('فشل اختبار المصادقة', error);
+            }
+        }
+        
+        // تشغيل الفحوصات عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                checkFirebaseSDK();
+                checkFirebaseConfig();
+            }, 1000);
+        });
+        
+        // التقاط الأخطاء العامة
+        window.addEventListener('error', (event) => {
+            logError('خطأ عام في JavaScript', event.error);
+        });
+        
+        window.addEventListener('unhandledrejection', (event) => {
+            logError('وعد مرفوض غير معالج', event.reason);
+        });
+    </script>
+</body>
+</html> 

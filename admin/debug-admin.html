@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تشخيص لوحة التحكم - AlphaKnow</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .debug-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .back-link {
+            display: inline-block;
+            padding: 15px 25px;
+            background: #4f46e5;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-link:hover {
+            background: #3730a3;
+            transform: translateY(-2px);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #1f2937;
+            margin: 30px 0;
+            font-size: 2.5rem;
+        }
+        
+        .debug-section {
+            background: #f8fafc;
+            margin: 20px;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .debug-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .debug-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .test-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .test-btn:hover {
+            background: #059669;
+            transform: translateY(-1px);
+        }
+        
+        .test-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .article-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            margin-top: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+        }
+        
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-btn:hover {
+            background: #2563eb;
+        }
+        
+        .status-success {
+            color: #059669;
+            font-weight: 600;
+        }
+        
+        .status-error {
+            color: #dc2626;
+            font-weight: 600;
+        }
+        
+        .status-warning {
+            color: #d97706;
+            font-weight: 600;
+        }
+        
+        .status-info {
+            color: #2563eb;
+            font-weight: 600;
+        }
+        
+        .error-log {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+        }
+        
+        .success-log {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #059669;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <a href="index.html" class="back-link">← العودة للوحة التحكم</a>
+        
+        <h1>🔧 تشخيص لوحة التحكم</h1>
+        
+        <div class="debug-section">
+            <div class="debug-title">📊 1. حالة لوحة التحكم</div>
+            <div id="admin-status" class="debug-content">جاري التحقق...</div>
+        </div>
+        
+        <div class="debug-section">
+            <div class="debug-title">🔍 2. فحص زر إضافة المقال</div>
+            <div id="button-test" class="debug-content">جاري فحص الزر...</div>
+            <button class="test-btn" onclick="testAddArticleButton()">اختبار زر إضافة المقال</button>
+        </div>
+        
+        <div class="debug-section">
+            <div class="debug-title">📝 3. فحص نافذة محرر المقالات</div>
+            <div id="modal-test" class="debug-content">جاري فحص النافذة المنبثقة...</div>
+            <button class="test-btn" onclick="testArticleModal()">اختبار فتح نافذة المحرر</button>
+        </div>
+        
+        <div class="debug-section">
+            <div class="debug-title">💾 4. البيانات المحفوظة</div>
+            <div id="stored-data" class="debug-content">جاري التحقق...</div>
+        </div>
+        
+        <div class="debug-section">
+            <div class="debug-title">🧪 5. اختبار إضافة مقال كامل</div>
+            <button class="test-btn" onclick="testCompleteArticleAdd()">اختبار إضافة مقال كامل</button>
+            <div id="complete-test" class="debug-content">اضغط على الزر أعلاه لاختبار إضافة مقال كامل</div>
+        </div>
+        
+        <div class="debug-section">
+            <div class="debug-title">📄 6. إضافة مقال تجريبي</div>
+            <form class="article-form" id="test-article-form">
+                <div class="form-group">
+                    <label class="form-label">عنوان المقال</label>
+                    <input type="text" class="form-input" id="test-title" value="مقال تجريبي للاختبار">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">ملخص المقال</label>
+                    <textarea class="form-textarea" id="test-excerpt">هذا مقال تجريبي لاختبار وظيفة إضافة المقالات في لوحة التحكم.</textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">محتوى المقال</label>
+                    <textarea class="form-textarea" id="test-content">هذا هو محتوى المقال التجريبي. يمكنك تعديل هذا النص حسب الحاجة.</textarea>
+                </div>
+                <button type="submit" class="form-btn">إضافة المقال التجريبي</button>
+            </form>
+        </div>
+        
+        <div class="debug-section">
+            <div class="debug-title">🚨 7. سجل الأخطاء</div>
+            <div id="error-log" class="debug-content error-log">سيتم عرض الأخطاء هنا...</div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js"></script>
+    
+    <!-- Firebase Config -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/firebase-service.js"></script>
+    
+    <script>
+        let errorLog = [];
+        
+        function logError(message, error = null) {
+            const timestamp = new Date().toLocaleTimeString('ar-SA');
+            const errorEntry = `[${timestamp}] ❌ ${message}${error ? `: ${error.message || error}` : ''}`;
+            errorLog.push(errorEntry);
+            updateErrorLog();
+            console.error(message, error);
+        }
+        
+        function logSuccess(message) {
+            const timestamp = new Date().toLocaleTimeString('ar-SA');
+            const successEntry = `[${timestamp}] ✅ ${message}`;
+            errorLog.push(successEntry);
+            updateErrorLog();
+            console.log(message);
+        }
+        
+        function updateErrorLog() {
+            const errorLogElement = document.getElementById('error-log');
+            if (errorLogElement) {
+                errorLogElement.innerHTML = errorLog.slice(-10).join('<br>');
+            }
+        }
+        
+        function updateStatus(elementId, status, message) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.innerHTML = `<span class="status-${status}">${message}</span>`;
+            }
+        }
+        
+        function checkAdminStatus() {
+            try {
+                // Check if admin panel is loaded
+                const adminPanel = window.adminPanel;
+                if (adminPanel) {
+                    updateStatus('admin-status', 'success', '✅ لوحة التحكم محملة بنجاح');
+                    logSuccess('AdminPanel object found');
+                    
+                    // Check if Firebase is available
+                    if (typeof firebaseService !== 'undefined') {
+                        updateStatus('admin-status', 'success', '✅ لوحة التحكم محملة بنجاح | Firebase متاح');
+                        logSuccess('Firebase service available');
+                    } else {
+                        updateStatus('admin-status', 'error', '❌ لوحة التحكم محملة لكن Firebase غير متاح');
+                        logError('Firebase service not available');
+                    }
+                } else {
+                    updateStatus('admin-status', 'error', '❌ لوحة التحكم غير محملة');
+                    logError('AdminPanel object not found');
+                }
+            } catch (error) {
+                updateStatus('admin-status', 'error', '❌ خطأ في فحص لوحة التحكم');
+                logError('Error checking admin status', error);
+            }
+        }
+        
+        function testAddArticleButton() {
+            try {
+                const addButton = document.getElementById('add-article-btn');
+                if (addButton) {
+                    updateStatus('button-test', 'success', '✅ زر إضافة المقال موجود');
+                    logSuccess('Add article button found');
+                    
+                    // Check if button is visible
+                    const rect = addButton.getBoundingClientRect();
+                    if (rect.width > 0 && rect.height > 0) {
+                        updateStatus('button-test', 'success', '✅ زر إضافة المقال موجود ومُعرض');
+                        logSuccess('Add article button is visible');
+                    } else {
+                        updateStatus('button-test', 'warning', '⚠️ زر إضافة المقال موجود لكن قد لا يكون مُعرض');
+                        logError('Add article button may not be visible');
+                    }
+                    
+                    // Check if click event is attached
+                    const events = getEventListeners(addButton);
+                    if (events && events.click && events.click.length > 0) {
+                        updateStatus('button-test', 'success', '✅ زر إضافة المقال موجود ومُعرض ومُربط بحدث النقر');
+                        logSuccess('Add article button has click event listener');
+                    } else {
+                        updateStatus('button-test', 'warning', '⚠️ زر إضافة المقال موجود لكن قد لا يكون مُربط بحدث النقر');
+                        logError('Add article button may not have click event listener');
+                    }
+                } else {
+                    updateStatus('button-test', 'error', '❌ زر إضافة المقال غير موجود');
+                    logError('Add article button not found');
+                }
+            } catch (error) {
+                updateStatus('button-test', 'error', '❌ خطأ في فحص زر إضافة المقال');
+                logError('Error testing add article button', error);
+            }
+        }
+        
+        function testArticleModal() {
+            try {
+                const modal = document.getElementById('article-editor-modal');
+                if (modal) {
+                    updateStatus('modal-test', 'success', '✅ نافذة محرر المقالات موجودة');
+                    logSuccess('Article editor modal found');
+                    
+                    // Try to open the modal
+                    if (window.adminPanel && typeof window.adminPanel.openArticleEditor === 'function') {
+                        window.adminPanel.openArticleEditor();
+                        updateStatus('modal-test', 'success', '✅ نافذة محرر المقالات موجودة وتم فتحها بنجاح');
+                        logSuccess('Article editor modal opened successfully');
+                        
+                        // Close it after 3 seconds
+                        setTimeout(() => {
+                            if (window.adminPanel && typeof window.adminPanel.closeArticleEditor === 'function') {
+                                window.adminPanel.closeArticleEditor();
+                                logSuccess('Article editor modal closed');
+                            }
+                        }, 3000);
+                    } else {
+                        updateStatus('modal-test', 'error', '❌ نافذة محرر المقالات موجودة لكن دالة الفتح غير متاحة');
+                        logError('openArticleEditor function not available');
+                    }
+                } else {
+                    updateStatus('modal-test', 'error', '❌ نافذة محرر المقالات غير موجودة');
+                    logError('Article editor modal not found');
+                }
+            } catch (error) {
+                updateStatus('modal-test', 'error', '❌ خطأ في فحص نافذة محرر المقالات');
+                logError('Error testing article modal', error);
+            }
+        }
+        
+        function checkStoredData() {
+            try {
+                const articles = JSON.parse(localStorage.getItem('articles') || '[]');
+                const categories = JSON.parse(localStorage.getItem('categories') || '[]');
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                
+                let dataInfo = `📊 البيانات المحفوظة:\n\n`;
+                dataInfo += `📄 المقالات: ${articles.length} مقال\n`;
+                dataInfo += `🏷️ الفئات: ${categories.length} فئة\n`;
+                dataInfo += `👥 المستخدمين: ${users.length} مستخدم\n\n`;
+                
+                if (articles.length > 0) {
+                    dataInfo += `📄 آخر المقالات:\n`;
+                    articles.slice(0, 3).forEach((article, index) => {
+                        dataInfo += `${index + 1}. ${article.title}\n`;
+                    });
+                }
+                
+                document.getElementById('stored-data').textContent = dataInfo;
+                logSuccess('Stored data checked successfully');
+            } catch (error) {
+                document.getElementById('stored-data').textContent = '❌ خطأ في قراءة البيانات المحفوظة';
+                logError('Error reading stored data', error);
+            }
+        }
+        
+        function testCompleteArticleAdd() {
+            try {
+                if (!window.adminPanel) {
+                    updateStatus('complete-test', 'error', '❌ لوحة التحكم غير محملة');
+                    logError('AdminPanel not available');
+                    return;
+                }
+                
+                // Create test article data
+                const testArticle = {
+                    title: 'مقال تجريبي للاختبار',
+                    excerpt: 'هذا مقال تجريبي لاختبار وظيفة إضافة المقالات',
+                    content: '<p>محتوى المقال التجريبي</p>',
+                    category: 'technology',
+                    status: 'draft',
+                    tags: ['تجريبي', 'اختبار'],
+                    author: 'فريق AlphaKnow',
+                    date: new Date().toISOString().split('T')[0],
+                    views: 0,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                };
+                
+                // Try to add article using admin panel
+                if (typeof window.adminPanel.saveArticle === 'function') {
+                    updateStatus('complete-test', 'info', '🔄 جاري اختبار إضافة المقال...');
+                    logSuccess('Starting complete article add test');
+                    
+                    // Simulate form data
+                    const form = document.createElement('form');
+                    form.innerHTML = `
+                        <input name="title" value="${testArticle.title}">
+                        <input name="excerpt" value="${testArticle.excerpt}">
+                        <input name="category" value="${testArticle.category}">
+                        <input name="status" value="${testArticle.status}">
+                        <input name="tags" value="${testArticle.tags.join(', ')}">
+                    `;
+                    
+                    // Mock quill editor
+                    if (!window.adminPanel.quill) {
+                        window.adminPanel.quill = {
+                            root: { innerHTML: testArticle.content }
+                        };
+                    }
+                    
+                    // Call saveArticle
+                    window.adminPanel.saveArticle().then(() => {
+                        updateStatus('complete-test', 'success', '✅ تم اختبار إضافة المقال بنجاح');
+                        logSuccess('Complete article add test successful');
+                    }).catch((error) => {
+                        updateStatus('complete-test', 'error', '❌ فشل في اختبار إضافة المقال');
+                        logError('Complete article add test failed', error);
+                    });
+                } else {
+                    updateStatus('complete-test', 'error', '❌ دالة saveArticle غير متاحة');
+                    logError('saveArticle function not available');
+                }
+            } catch (error) {
+                updateStatus('complete-test', 'error', '❌ خطأ في اختبار إضافة المقال الكامل');
+                logError('Error in complete article add test', error);
+            }
+        }
+        
+        // Helper function to get event listeners (simplified)
+        function getEventListeners(element) {
+            // This is a simplified version - in real browsers you'd need to use dev tools
+            return { click: [] }; // Placeholder
+        }
+        
+        // Form submission handler
+        document.getElementById('test-article-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const title = document.getElementById('test-title').value;
+            const excerpt = document.getElementById('test-excerpt').value;
+            const content = document.getElementById('test-content').value;
+            
+            if (!title || !excerpt || !content) {
+                logError('جميع الحقول مطلوبة');
+                return;
+            }
+            
+            try {
+                // Create article object
+                const article = {
+                    id: Date.now(),
+                    title: title,
+                    excerpt: excerpt,
+                    content: `<p>${content}</p>`,
+                    category: 'technology',
+                    status: 'draft',
+                    tags: ['تجريبي'],
+                    author: 'فريق AlphaKnow',
+                    date: new Date().toISOString().split('T')[0],
+                    views: 0,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                };
+                
+                // Add to localStorage
+                const articles = JSON.parse(localStorage.getItem('articles') || '[]');
+                articles.unshift(article);
+                localStorage.setItem('articles', JSON.stringify(articles));
+                
+                logSuccess(`تم إضافة المقال التجريبي: ${title}`);
+                
+                // Clear form
+                document.getElementById('test-title').value = 'مقال تجريبي للاختبار';
+                document.getElementById('test-excerpt').value = 'هذا مقال تجريبي لاختبار وظيفة إضافة المقالات في لوحة التحكم.';
+                document.getElementById('test-content').value = 'هذا هو محتوى المقال التجريبي. يمكنك تعديل هذا النص حسب الحاجة.';
+                
+                // Refresh stored data display
+                checkStoredData();
+                
+            } catch (error) {
+                logError('خطأ في إضافة المقال التجريبي', error);
+            }
+        });
+        
+        // Initialize debug page
+        document.addEventListener('DOMContentLoaded', () => {
+            logSuccess('صفحة التشخيص محملة بنجاح');
+            
+            // Wait a bit for admin panel to load
+            setTimeout(() => {
+                checkAdminStatus();
+                checkStoredData();
+            }, 1000);
+        });
+        
+        // Global error handler
+        window.addEventListener('error', (event) => {
+            logError('خطأ في JavaScript', event.error);
+        });
+        
+        window.addEventListener('unhandledrejection', (event) => {
+            logError('وعد مرفوض', event.reason);
+        });
+    </script>
+</body>
+</html> 
+</html> 
