@@ -55,6 +55,11 @@
             </div>
             
             <div class="admin-actions">
+                <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="القائمة">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
                 <button class="admin-btn admin-btn-secondary" id="preview-site">
                     <i class="fas fa-external-link-alt"></i>
                     معاينة الموقع
@@ -122,6 +127,12 @@
                         <span>الإعدادات</span>
                     </a>
                 </li>
+                <div class="admin-nav-item">
+                    <a href="firebase-test.html" class="admin-nav-link" target="_blank">
+                        <i class="fas fa-fire"></i>
+                        <span>اختبار Firebase</span>
+                    </a>
+                </div>
             </ul>
         </nav>
     </aside>
@@ -133,6 +144,16 @@
             <div class="admin-section-header">
                 <h1 class="admin-section-title">لوحة التحكم</h1>
                 <p class="admin-section-description">مرحباً بك في لوحة تحكم AlphaKnow</p>
+                <div class="admin-section-actions">
+                    <a href="add-article.html" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        إضافة مقال جديد
+                    </a>
+                    <a href="monetization.html" class="btn btn-success">
+                        <i class="fas fa-dollar-sign"></i>
+                        إدارة الربح
+                    </a>
+                </div>
             </div>
             
             <div class="admin-stats-grid">
@@ -300,6 +321,7 @@
                         <div class="admin-form-group">
                             <label for="article-content" class="admin-form-label">محتوى المقال *</label>
                             <div id="article-editor" class="admin-editor"></div>
+                            <input type="hidden" id="article-content" name="content" required>
                         </div>
                         
                         <div class="admin-form-row">
@@ -472,12 +494,13 @@
     </main>
 
     <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
     
     <!-- JavaScript Files -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -486,6 +509,7 @@
     <script src="../js/utils.js"></script>
     <script src="../js/firebase-config.js"></script>
     <script src="../js/firebase-service.js"></script>
+    <script src="../js/firebase-init.js"></script>
     <script src="js/admin.js"></script>
     <script src="js/articles.js"></script>
     <script src="js/categories.js"></script>

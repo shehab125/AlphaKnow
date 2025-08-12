@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Admin Buttons - AlphaKnow</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .success { border-color: #28a745; background-color: #d4edda; }
+        .error { border-color: #dc3545; background-color: #f8d7da; }
+        .warning { border-color: #ffc107; background-color: #fff3cd; }
+        .info { border-color: #17a2b8; background-color: #d1ecf1; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .admin-actions-group {
+            display: flex;
+            gap: 5px;
+        }
+        .admin-action-btn {
+            width: 35px;
+            height: 35px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .admin-action-btn-view { background: #17a2b8; }
+        .admin-action-btn-edit { background: #28a745; }
+        .admin-action-btn-delete { background: #dc3545; }
+        .admin-action-btn:hover { opacity: 0.8; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 12px;
+            text-align: right;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+        .admin-status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .admin-status-draft {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .admin-status-published {
+            background-color: #d4edda;
+            color: #155724;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Test Admin Buttons</h1>
+        <h2>اختبار أزرار لوحة الإدارة</h2>
+        
+        <div class="test-section info">
+            <h3>📋 Instructions / التعليمات</h3>
+            <p>This page tests the admin panel buttons functionality. Click the buttons below to test each action.</p>
+            <p>هذه الصفحة تختبر وظائف أزرار لوحة الإدارة. انقر على الأزرار أدناه لاختبار كل إجراء.</p>
+        </div>
+
+        <div class="test-section">
+            <h3>📝 Test Article Data / بيانات المقال التجريبي</h3>
+            <div id="article-data" class="log"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔘 Test Buttons / اختبار الأزرار</h3>
+            <div>
+                <button onclick="testViewArticle()">Test View Article / اختبار عرض المقال</button>
+                <button onclick="testEditArticle()">Test Edit Article / اختبار تعديل المقال</button>
+                <button onclick="testDeleteArticle()">Test Delete Article / اختبار حذف المقال</button>
+                <button onclick="loadArticles()">Load Articles / تحميل المقالات</button>
+            </div>
+            <div id="button-log" class="log"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📊 Articles Table / جدول المقالات</h3>
+            <table id="articles-table">
+                <thead>
+                    <tr>
+                        <th>الصورة</th>
+                        <th>العنوان</th>
+                        <th>الفئة</th>
+                        <th>الكاتب</th>
+                        <th>التاريخ</th>
+                        <th>المشاهدات</th>
+                        <th>الحالة</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody id="articles-tbody">
+                    <!-- Articles will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="test-section">
+            <h3>🔗 Quick Links / روابط سريعة</h3>
+            <a href="index.html" target="_blank"><button>Admin Panel / لوحة الإدارة</button></a>
+            <a href="debug-firebase.html" target="_blank"><button>Firebase Debug / تشخيص Firebase</button></a>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    
+    <!-- Firebase Configuration -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/firebase-service.js"></script>
+
+    <script>
+        let testArticles = [];
+        let adminPanel = null;
+
+        function log(elementId, message) {
+            const element = document.getElementById(elementId);
+            const timestamp = new Date().toLocaleTimeString();
+            const logMessage = `[${timestamp}] ${message}\n`;
+            element.textContent += logMessage;
+            element.scrollTop = element.scrollHeight;
+        }
+
+        function clearLog(elementId) {
+            document.getElementById(elementId).textContent = '';
+        }
+
+        // Mock admin panel functions for testing
+        const mockAdminPanel = {
+            articles: [],
+            
+            viewArticle(articleId) {
+                log('button-log', `👁️ Viewing article: ${articleId}`);
+                const article = this.articles.find(a => a.id === articleId || a.id === articleId.toString());
+                if (article) {
+                    log('button-log', `📄 Article found: ${article.title}`);
+                    log('button-log', `🔗 Would open: ../article.html?id=${articleId}`);
+                } else {
+                    log('button-log', `❌ Article not found: ${articleId}`);
+                }
+            },
+            
+            editArticle(articleId) {
+                log('button-log', `✏️ Editing article: ${articleId}`);
+                const article = this.articles.find(a => a.id === articleId || a.id === articleId.toString());
+                if (article) {
+                    log('button-log', `📝 Article found for editing: ${article.title}`);
+                    log('button-log', `🔗 Would open editor for: ${articleId}`);
+                } else {
+                    log('button-log', `❌ Article not found for editing: ${articleId}`);
+                }
+            },
+            
+            async deleteArticle(articleId) {
+                log('button-log', `🗑️ Deleting article: ${articleId}`);
+                const article = this.articles.find(a => a.id === articleId || a.id === articleId.toString());
+                if (article) {
+                    log('button-log', `📄 Article found for deletion: ${article.title}`);
+                    
+                    // Remove from array
+                    this.articles = this.articles.filter(a => a.id !== articleId && a.id !== articleId.toString());
+                    log('button-log', `✅ Article removed from array. Remaining: ${this.articles.length}`);
+                    
+                    // Re-render table
+                    renderArticlesTable();
+                } else {
+                    log('button-log', `❌ Article not found for deletion: ${articleId}`);
+                }
+            },
+            
+            formatNumber(num) {
+                if (num === undefined || num === null || isNaN(num)) {
+                    return '0';
+                }
+                const number = Number(num);
+                if (number >= 1000000) {
+                    return (number / 1000000).toFixed(1) + 'M';
+                }
+                if (number >= 1000) {
+                    return (number / 1000).toFixed(1) + 'K';
+                }
+                return number.toString();
+            },
+            
+            formatDate(dateString) {
+                if (!dateString) {
+                    return 'غير محدد';
+                }
+                try {
+                    if (dateString && typeof dateString === 'object' && dateString.toDate) {
+                        const date = dateString.toDate();
+                        return date.toLocaleDateString('ar-SA');
+                    }
+                    const date = new Date(dateString);
+                    if (isNaN(date.getTime())) {
+                        return 'غير محدد';
+                    }
+                    return date.toLocaleDateString('ar-SA');
+                } catch (error) {
+                    return 'غير محدد';
+                }
+            },
+            
+            getCategoryName(categoryId) {
+                const categories = {
+                    'entrepreneurship': 'ريادة الأعمال',
+                    'ecommerce': 'التجارة الإلكترونية',
+                    'marketing': 'التسويق الرقمي',
+                    'tools': 'الأدوات والموارد',
+                    'technology': 'التكنولوجيا'
+                };
+                return categories[categoryId] || categoryId;
+            },
+            
+            getStatusName(status) {
+                const statusMap = {
+                    'published': 'منشور',
+                    'draft': 'مسودة',
+                    'archived': 'مؤرشف'
+                };
+                return statusMap[status] || status;
+            }
+        };
+
+        function renderArticlesTable() {
+            const tbody = document.getElementById('articles-tbody');
+            if (!tbody) return;
+
+            const articlesHTML = mockAdminPanel.articles.map(article => `
+                <tr>
+                    <td>
+                        <img src="${article.image || '../images/placeholder.jpg'}" alt="${article.title}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 0.25rem;">
+                    </td>
+                    <td>
+                        <div>
+                            <strong>${article.title}</strong>
+                            <br>
+                            <small style="color: #6c757d;">${article.excerpt || ''}</small>
+                        </div>
+                    </td>
+                    <td>${mockAdminPanel.getCategoryName(article.category)}</td>
+                    <td>${article.author || 'المدير'}</td>
+                    <td>${mockAdminPanel.formatDate(article.date || article.createdAt)}</td>
+                    <td>${mockAdminPanel.formatNumber(article.views || 0)}</td>
+                    <td>
+                        <span class="admin-status admin-status-${article.status}">${mockAdminPanel.getStatusName(article.status)}</span>
+                    </td>
+                    <td>
+                                                 <div class="admin-actions-group">
+                             <button class="admin-action-btn admin-action-btn-view" onclick="mockAdminPanel.viewArticle('${article.id.replace(/'/g, "\\'")}')" title="عرض">
+                                 <i class="fas fa-eye"></i>
+                             </button>
+                             <button class="admin-action-btn admin-action-btn-edit" onclick="mockAdminPanel.editArticle('${article.id.replace(/'/g, "\\'")}')" title="تعديل">
+                                 <i class="fas fa-edit"></i>
+                             </button>
+                             <button class="admin-action-btn admin-action-btn-delete" onclick="mockAdminPanel.deleteArticle('${article.id.replace(/'/g, "\\'")}')" title="حذف">
+                                 <i class="fas fa-trash"></i>
+                             </button>
+                         </div>
+                    </td>
+                </tr>
+            `).join('');
+
+            tbody.innerHTML = articlesHTML;
+        }
+
+        async function loadArticles() {
+            clearLog('button-log');
+            log('button-log', '📚 Loading articles...');
+            
+            try {
+                if (!window.firebaseService) {
+                    log('button-log', '❌ FirebaseService not available');
+                    return;
+                }
+
+                const result = await window.firebaseService.getArticles();
+                log('button-log', `📤 Get articles result: ${JSON.stringify(result, null, 2)}`);
+
+                if (result.success) {
+                    mockAdminPanel.articles = result.data;
+                    log('button-log', `✅ Loaded ${result.data.length} articles`);
+                    
+                    // Display article data
+                    const articleDataElement = document.getElementById('article-data');
+                    articleDataElement.textContent = JSON.stringify(result.data, null, 2);
+                    
+                    // Render table
+                    renderArticlesTable();
+                    
+                    // Test each article
+                    result.data.forEach((article, index) => {
+                        log('button-log', `${index + 1}. ${article.title} (ID: ${article.id}, Status: ${article.status})`);
+                    });
+                } else {
+                    log('button-log', `❌ Failed to load articles: ${result.error}`);
+                }
+
+            } catch (error) {
+                log('button-log', `❌ Load articles error: ${error.message}`);
+            }
+        }
+
+        function testViewArticle() {
+            clearLog('button-log');
+            if (mockAdminPanel.articles.length > 0) {
+                const firstArticle = mockAdminPanel.articles[0];
+                mockAdminPanel.viewArticle(firstArticle.id);
+            } else {
+                log('button-log', '❌ No articles available for testing');
+            }
+        }
+
+        function testEditArticle() {
+            clearLog('button-log');
+            if (mockAdminPanel.articles.length > 0) {
+                const firstArticle = mockAdminPanel.articles[0];
+                mockAdminPanel.editArticle(firstArticle.id);
+            } else {
+                log('button-log', '❌ No articles available for testing');
+            }
+        }
+
+        function testDeleteArticle() {
+            clearLog('button-log');
+            if (mockAdminPanel.articles.length > 0) {
+                const firstArticle = mockAdminPanel.articles[0];
+                if (confirm(`هل أنت متأكد من حذف المقال: "${firstArticle.title}"؟`)) {
+                    mockAdminPanel.deleteArticle(firstArticle.id);
+                }
+            } else {
+                log('button-log', '❌ No articles available for testing');
+            }
+        }
+
+        // Auto-load articles on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(loadArticles, 1000);
+        });
+    </script>
+</body>
+</html>

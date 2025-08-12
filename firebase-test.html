@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Test - AlphaKnow</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .success { border-color: #28a745; background-color: #d4edda; }
+        .error { border-color: #dc3545; background-color: #f8d7da; }
+        .warning { border-color: #ffc107; background-color: #fff3cd; }
+        .info { border-color: #17a2b8; background-color: #d1ecf1; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 Firebase Test Page</h1>
+        <h2>صفحة اختبار Firebase</h2>
+        
+        <div class="test-section info">
+            <h3>📋 Test Instructions / تعليمات الاختبار</h3>
+            <p><strong>English:</strong> Click the buttons below to test Firebase connectivity and permissions.</p>
+            <p><strong>العربية:</strong> انقر على الأزرار أدناه لاختبار الاتصال وصلاحيات Firebase.</p>
+        </div>
+
+        <div class="test-section">
+            <h3>🔧 Firebase Configuration Test / اختبار تكوين Firebase</h3>
+            <button onclick="testFirebaseConfig()">Test Configuration / اختبار التكوين</button>
+            <div id="config-result" class="log"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔐 Authentication Test / اختبار المصادقة</h3>
+            <button onclick="testAuthentication()">Test Auth / اختبار المصادقة</button>
+            <div id="auth-result" class="log"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📚 Firestore Test / اختبار Firestore</h3>
+            <button onclick="testFirestore()">Test Firestore / اختبار Firestore</button>
+            <div id="firestore-result" class="log"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🗄️ Database Initialization / تهيئة قاعدة البيانات</h3>
+            <button onclick="initializeDatabase()">Initialize DB / تهيئة قاعدة البيانات</button>
+            <div id="init-result" class="log"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>📊 Current Status / الحالة الحالية</h3>
+            <button onclick="checkStatus()">Check Status / فحص الحالة</button>
+            <div id="status-result" class="log"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🔗 Quick Links / روابط سريعة</h3>
+            <a href="admin/" target="_blank"><button>Admin Panel / لوحة الإدارة</button></a>
+            <a href="index.html" target="_blank"><button>Main Site / الموقع الرئيسي</button></a>
+            <a href="FIREBASE_SETUP_FIXED.md" target="_blank"><button>Setup Guide / دليل الإعداد</button></a>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    
+    <!-- Firebase Configuration -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/firebase-service.js"></script>
+    <script src="js/firebase-init.js"></script>
+    
+    <script>
+        function log(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            const timestamp = new Date().toLocaleTimeString();
+            const logMessage = `[${timestamp}] ${message}\n`;
+            element.textContent += logMessage;
+            element.scrollTop = element.scrollHeight;
+        }
+
+        function clearLog(elementId) {
+            document.getElementById(elementId).textContent = '';
+        }
+
+        async function testFirebaseConfig() {
+            clearLog('config-result');
+            log('config-result', 'Testing Firebase configuration...');
+            
+            try {
+                if (!window.FIREBASE) {
+                    log('config-result', '❌ Firebase not initialized', 'error');
+                    return;
+                }
+
+                if (window.FIREBASE.error) {
+                    log('config-result', `❌ Firebase error: ${window.FIREBASE.error}`, 'error');
+                    return;
+                }
+
+                log('config-result', '✅ Firebase SDK loaded');
+                log('config-result', `📦 SDK Version: ${firebase.SDK_VERSION}`);
+                log('config-result', `🔧 Project ID: ${window.FIREBASE.config.projectId}`);
+                log('config-result', `🌐 Auth Domain: ${window.FIREBASE.config.authDomain}`);
+                
+                if (window.FIREBASE.db) {
+                    log('config-result', '✅ Firestore initialized');
+                } else {
+                    log('config-result', '❌ Firestore not initialized', 'error');
+                }
+
+                if (window.FIREBASE.auth) {
+                    log('config-result', '✅ Authentication initialized');
+                } else {
+                    log('config-result', '❌ Authentication not initialized', 'error');
+                }
+
+            } catch (error) {
+                log('config-result', `❌ Configuration test failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testAuthentication() {
+            clearLog('auth-result');
+            log('auth-result', 'Testing Firebase Authentication...');
+            
+            try {
+                if (!window.FIREBASE?.auth) {
+                    log('auth-result', '❌ Authentication not available', 'error');
+                    return;
+                }
+
+                const auth = window.FIREBASE.auth;
+                const currentUser = auth.currentUser;
+                
+                if (currentUser) {
+                    log('auth-result', `✅ User authenticated: ${currentUser.email}`);
+                    log('auth-result', `🆔 User ID: ${currentUser.uid}`);
+                } else {
+                    log('auth-result', '⚠️ No user currently authenticated', 'warning');
+                    log('auth-result', '💡 You can test authentication by going to the admin panel');
+                }
+
+                // Test auth state listener
+                auth.onAuthStateChanged((user) => {
+                    if (user) {
+                        log('auth-result', `🔄 Auth state changed: User logged in (${user.email})`);
+                    } else {
+                        log('auth-result', '🔄 Auth state changed: User logged out');
+                    }
+                });
+                
+            } catch (error) {
+                log('auth-result', `❌ Authentication test failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testFirestore() {
+            clearLog('firestore-result');
+            log('firestore-result', 'Testing Firestore connectivity...');
+            
+            try {
+                if (!window.FIREBASE?.db) {
+                    log('firestore-result', '❌ Firestore not available', 'error');
+                    return;
+                }
+
+                const db = window.FIREBASE.db;
+                
+                // Test read operation
+                log('firestore-result', '📖 Testing read operation...');
+                const testSnapshot = await db.collection('test').doc('ping').get();
+                log('firestore-result', '✅ Read operation successful');
+                
+                // Test write operation
+                log('firestore-result', '✍️ Testing write operation...');
+                await db.collection('test').doc('ping').set({
+                    timestamp: new Date(),
+                    message: 'Firebase test successful'
+                });
+                log('firestore-result', '✅ Write operation successful');
+                
+                // Test collections
+                log('firestore-result', '📚 Checking collections...');
+                const collections = ['articles', 'categories', 'users', 'settings'];
+                
+                for (const collectionName of collections) {
+                    try {
+                        const snapshot = await db.collection(collectionName).limit(1).get();
+                        log('firestore-result', `✅ Collection '${collectionName}': ${snapshot.size} documents`);
+                    } catch (error) {
+                        log('firestore-result', `❌ Collection '${collectionName}': ${error.message}`, 'error');
+                    }
+                }
+                
+            } catch (error) {
+                log('firestore-result', `❌ Firestore test failed: ${error.message}`, 'error');
+                
+                if (error.code === 'permission-denied') {
+                    log('firestore-result', '🔒 Permission denied - Check Firestore security rules', 'warning');
+                    log('firestore-result', '📋 See FIREBASE_SETUP_FIXED.md for instructions', 'info');
+                }
+            }
+        }
+
+        async function initializeDatabase() {
+            clearLog('init-result');
+            log('init-result', 'Initializing database with sample data...');
+            
+            try {
+                if (!window.FirebaseInitializer) {
+                    log('init-result', '❌ FirebaseInitializer not available', 'error');
+                    return;
+                }
+
+                const initializer = new FirebaseInitializer();
+                
+                if (!initializer.isAvailable()) {
+                    log('init-result', '❌ Firebase not available for initialization', 'error');
+                    return;
+                }
+
+                const isEmpty = await initializer.isDatabaseEmpty();
+                log('init-result', `📊 Database empty check: ${isEmpty ? 'Yes' : 'No'}`);
+                
+                if (!isEmpty) {
+                    log('init-result', '⚠️ Database not empty, skipping initialization', 'warning');
+                    return;
+                }
+
+                const result = await initializer.initializeDatabase();
+                
+                if (result.success) {
+                    log('init-result', '✅ Database initialized successfully');
+                    log('init-result', '📝 Sample data created for:');
+                    log('init-result', '   - Categories (5 categories)');
+                    log('init-result', '   - Articles (3 articles)');
+                    log('init-result', '   - Users (1 admin user)');
+                    log('init-result', '   - Settings (site configuration)');
+                } else {
+                    log('init-result', `❌ Database initialization failed: ${result.error}`, 'error');
+                }
+
+            } catch (error) {
+                log('init-result', `❌ Initialization test failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function checkStatus() {
+            clearLog('status-result');
+            log('status-result', 'Checking current Firebase status...');
+            
+            try {
+                // Check Firebase availability
+                if (!window.FIREBASE) {
+                    log('status-result', '❌ Firebase not initialized', 'error');
+                return;
+            }
+            
+                if (window.FIREBASE.error) {
+                    log('status-result', `❌ Firebase error: ${window.FIREBASE.error}`, 'error');
+                return;
+            }
+            
+                log('status-result', '✅ Firebase is available');
+
+                // Check authentication status
+                const currentUser = window.FIREBASE.auth?.currentUser;
+                if (currentUser) {
+                    log('status-result', `👤 Authenticated user: ${currentUser.email}`);
+            } else {
+                    log('status-result', '👤 No authenticated user');
+                }
+
+                // Check database connectivity
+                try {
+                    const db = window.FIREBASE.db;
+                    const testSnapshot = await db.collection('test').doc('status').get();
+                    log('status-result', '✅ Database connectivity: OK');
+                } catch (error) {
+                    log('status-result', `❌ Database connectivity: ${error.message}`, 'error');
+                }
+
+                // Check collections
+                const collections = ['articles', 'categories', 'users', 'settings'];
+                for (const collectionName of collections) {
+                    try {
+                        const snapshot = await window.FIREBASE.db.collection(collectionName).limit(1).get();
+                        log('status-result', `📚 ${collectionName}: ${snapshot.size} documents`);
+                    } catch (error) {
+                        log('status-result', `❌ ${collectionName}: ${error.message}`, 'error');
+                    }
+                }
+
+            } catch (error) {
+                log('status-result', `❌ Status check failed: ${error.message}`, 'error');
+            }
+        }
+
+        // Auto-run configuration test on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(testFirebaseConfig, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -38,6 +38,43 @@
     <link rel="stylesheet" href="css/animations.css">
     <link rel="stylesheet" href="css/responsive.css">
     <link rel="stylesheet" href="css/performance.css">
+    <link rel="stylesheet" href="css/navbar-fix.css">
+    <style>
+        /* Emergency dropdown fix */
+        .dropdown-menu {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            transform: none !important;
+            position: static !important;
+            margin-top: 10px !important;
+            background-color: #ffffff !important;
+            border: 3px solid #ff0000 !important;
+            padding: 15px !important;
+            min-height: 120px !important;
+            z-index: 99999 !important;
+        }
+        
+        .dropdown-item {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            color: #000000 !important;
+            background-color: #ffffff !important;
+            border: 1px solid #cccccc !important;
+            padding: 10px !important;
+            margin: 5px !important;
+            font-size: 16px !important;
+            font-weight: bold !important;
+            text-decoration: none !important;
+        }
+        
+        .dropdown.open {
+            background-color: #f0f0f0 !important;
+            border: 3px solid #00ff00 !important;
+            padding: 10px !important;
+        }
+    </style>
     
     <!-- Schema.org structured data -->
     <script type="application/ld+json">
@@ -140,18 +177,32 @@
         
         <!-- Search Overlay -->
         <div class="search-overlay" id="search-overlay">
-            <div class="search-container">
-                <div class="search-box">
-                    <input type="text" id="search-input" placeholder="ابحث في المقالات والدورات..." autocomplete="off">
-                    <button class="search-btn" id="search-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.35-4.35"></path>
+            <div class="search-overlay-content">
+                <div class="search-overlay-header">
+                    <h3>البحث في الموقع</h3>
+                    <button class="search-close" id="search-close" aria-label="إغلاق البحث">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
                         </svg>
                     </button>
                 </div>
-                <div class="search-suggestions" id="search-suggestions"></div>
-                <button class="search-close" id="search-close">إغلاق</button>
+                <div class="search-overlay-body">
+                    <form class="search-form" role="search">
+                        <div class="search-input-group">
+                            <input type="search" id="search-input" class="search-input" placeholder="ابحث في المقالات والمواضيع..." aria-label="البحث">
+                            <button type="submit" class="search-submit" aria-label="البحث">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="11" cy="11" r="8"></circle>
+                                    <path d="m21 21-4.35-4.35"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </form>
+                    <div class="search-results" id="search-results">
+                        <!-- Search results will be displayed here -->
+                    </div>
+                </div>
             </div>
         </div>
     </header>
@@ -177,7 +228,10 @@
                         <p class="hero-description">
                             اكتشف أسرار النجاح في العالم الرقمي مع محتوى حصري واستراتيجيات مجربة لتحقيق الاستقلال المالي والنجاح في ريادة الأعمال عبر الإنترنت.
                         </p>
-                        <div class="ad-slot top-banner"></div>
+                        <!-- Header Ad Slot -->
+                        <div class="ad-slot top-banner" id="header-ad">
+                            <!-- AdSense ad will be loaded here -->
+                        </div>
                         <div class="hero-actions">
                             <a href="#featured-articles" class="btn btn-primary btn-lg">
                                 استكشف المقالات
@@ -218,19 +272,19 @@
             <div class="container">
                 <div class="stats-grid">
                     <div class="stat-item">
-                        <div class="stat-number" data-count="15000">0</div>
+                        <div class="stat-number" data-count="15000" data-dynamic>0</div>
                         <div class="stat-label">قارئ نشط</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number" data-count="350">0</div>
+                        <div class="stat-number" data-count="350" data-dynamic>0</div>
                         <div class="stat-label">مقال احترافي</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number" data-count="12">0</div>
+                        <div class="stat-number" data-count="12" data-dynamic>0</div>
                         <div class="stat-label">دورة تدريبية</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number" data-count="95">0</div>
+                        <div class="stat-number" data-count="95" data-dynamic>0</div>
                         <div class="stat-label">% نسبة الرضا</div>
                     </div>
                 </div>
@@ -250,7 +304,11 @@
                 <div class="articles-grid" id="featured-articles-grid">
                     <!-- Articles will be loaded here by JavaScript -->
                 </div>
-                <div class="ad-slot featured-articles-ad"></div>
+                
+                <!-- Featured Articles Ad Slot -->
+                <div class="ad-slot featured-articles-ad" id="article-ad">
+                    <!-- AdSense ad will be loaded here -->
+                </div>
                 
                 <div class="section-footer">
                     <a href="articles.html" class="btn btn-outline">
@@ -285,7 +343,7 @@
                         <h3 class="category-title">ريادة الأعمال</h3>
                         <p class="category-description">تعلم كيفية بناء وإدارة مشروعك الناجح من الصفر</p>
                         <div class="category-stats">
-                            <span class="articles-count">250+ مقال</span>
+                            <span class="articles-count category-count"></span>
                         </div>
                         <a href="category.html?cat=entrepreneurship" class="category-link">
                             استكشف الآن
@@ -307,7 +365,7 @@
                         <h3 class="category-title">التجارة الإلكترونية</h3>
                         <p class="category-description">دليلك الشامل لبناء متجر إلكتروني ناجح ومربح</p>
                         <div class="category-stats">
-                            <span class="articles-count">180+ مقال</span>
+                            <span class="articles-count category-count"></span>
                         </div>
                         <a href="category.html?cat=ecommerce" class="category-link">
                             استكشف الآن
@@ -328,7 +386,7 @@
                         <h3 class="category-title">التسويق الرقمي</h3>
                         <p class="category-description">استراتيجيات التسويق الحديثة لنمو أعمالك الرقمية</p>
                         <div class="category-stats">
-                            <span class="articles-count">320+ مقال</span>
+                            <span class="articles-count category-count"></span>
                         </div>
                         <a href="category.html?cat=marketing" class="category-link">
                             استكشف الآن
@@ -349,7 +407,7 @@
                         <h3 class="category-title">العمل الحر</h3>
                         <p class="category-description">كيفية بناء مهنة ناجحة في العمل الحر والاستقلالية المالية</p>
                         <div class="category-stats">
-                            <span class="articles-count">200+ مقال</span>
+                            <span class="articles-count category-count"></span>
                         </div>
                         <a href="category.html?cat=freelancing" class="category-link">
                             استكشف الآن
@@ -369,7 +427,7 @@
                         <h3 class="category-title">الاستثمار الرقمي</h3>
                         <p class="category-description">دليلك للاستثمار الذكي في الأصول والعملات الرقمية</p>
                         <div class="category-stats">
-                            <span class="articles-count">150+ مقال</span>
+                            <span class="articles-count category-count"></span>
                         </div>
                         <a href="category.html?cat=investment" class="category-link">
                             استكشف الآن
@@ -388,7 +446,7 @@
                         <h3 class="category-title">الأدوات والموارد</h3>
                         <p class="category-description">أفضل الأدوات والموارد لتطوير أعمالك الرقمية</p>
                         <div class="category-stats">
-                            <span class="articles-count">100+ أداة</span>
+                            <span class="articles-count category-count"></span>
                         </div>
                         <a href="tools.html" class="category-link">
                             استكشف الآن
@@ -655,10 +713,10 @@
     </button>
 
     <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
     
     <!-- JavaScript -->
     <script src="js/config.js"></script>
@@ -672,6 +730,119 @@
     <script src="js/testimonials.js"></script>
     <script src="js/seo-enhancements.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        // Enhanced navbar functionality for index.html
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔧 Initializing enhanced navbar functionality for index.html...');
+            
+            // Mobile menu toggle
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const navbarMenu = document.getElementById('navbar-menu');
+            
+            console.log('📱 Mobile menu elements:', { mobileMenuToggle, navbarMenu });
+            
+            if (mobileMenuToggle && navbarMenu) {
+                mobileMenuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('📱 Mobile menu clicked');
+                    navbarMenu.classList.toggle('active');
+                    mobileMenuToggle.classList.toggle('active');
+                    document.body.classList.toggle('menu-open');
+                });
+            }
+            
+            // Search functionality
+            const searchToggle = document.getElementById('search-toggle');
+            const searchOverlay = document.getElementById('search-overlay');
+            const searchClose = document.getElementById('search-close');
+            
+            console.log('🔍 Search elements:', { searchToggle, searchOverlay, searchClose });
+            
+            if (searchToggle) {
+                searchToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🔍 Search clicked');
+                    if (searchOverlay) {
+                        searchOverlay.classList.add('active');
+                        document.getElementById('search-input')?.focus();
+                    }
+                });
+            }
+            
+            if (searchClose) {
+                searchClose.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('❌ Search close clicked');
+                    if (searchOverlay) {
+                        searchOverlay.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Dropdown functionality
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            console.log('📋 Dropdown toggles found:', dropdownToggles.length);
+            
+            dropdownToggles.forEach((toggle, index) => {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log(`📋 Dropdown ${index + 1} clicked`);
+                    
+                    const dropdown = this.closest('.dropdown');
+                    const isOpen = dropdown.classList.contains('open');
+                    
+                    // Close all other dropdowns
+                    document.querySelectorAll('.dropdown.open').forEach(d => {
+                        if (d !== dropdown) {
+                            d.classList.remove('open');
+                        }
+                    });
+                    
+                    // Toggle current dropdown
+                    dropdown.classList.toggle('open');
+                    
+                    // Update aria-expanded
+                    this.setAttribute('aria-expanded', !isOpen);
+                });
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.dropdown')) {
+                    document.querySelectorAll('.dropdown.open').forEach(dropdown => {
+                        dropdown.classList.remove('open');
+                    });
+                }
+            });
+            
+            // Theme toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            console.log('🌙 Theme toggle element:', themeToggle);
+            
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🌙 Theme toggle clicked');
+                    document.body.classList.toggle('dark-theme');
+                    const isDark = document.body.classList.contains('dark-theme');
+                    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                });
+                
+                // Load saved theme
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark') {
+                    document.body.classList.add('dark-theme');
+                }
+            }
+            
+            console.log('✅ Enhanced navbar functionality initialized successfully for index.html');
+        });
+    </script>
     
     <!-- SEO and Performance Enhancements -->
     <script type="application/ld+json">
@@ -692,6 +863,7 @@
 
 
     <script src="js/ads.js"></script>
+    <script src="js/monetization.js"></script>
 
     
 

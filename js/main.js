@@ -73,7 +73,7 @@ class DigitalEntrepreneurshipBlog {
     } catch (error) {
       console.error('❌ Error initializing blog:', error);
       this.handleInitializationError(error);
-
+    }
   }
 
   async initializeApp() {
@@ -100,9 +100,11 @@ class DigitalEntrepreneurshipBlog {
   async loadArticles() {
     try {
       // Try to load from Firebase first
-      if (window.firebaseService) {
+      if (window.firebaseService && window.firebaseService.isFirebaseAvailable()) {
+        console.log('🔄 Loading articles from Firebase...');
         const result = await firebaseService.getArticles();
         if (result.success && result.data.length > 0) {
+          console.log(`✅ Loaded ${result.data.length} articles from Firebase`);
           this.articlesData = {
             featured: result.data.filter(article => article.status === 'published').slice(0, 6),
             categories: []
@@ -110,59 +112,29 @@ class DigitalEntrepreneurshipBlog {
           this.renderFeaturedArticles();
           this.updateStats();
           return;
+        } else {
+          console.log('ℹ️ No articles found in Firebase, trying local JSON...');
         }
+      } else {
+        console.log('⚠️ Firebase not available, using local JSON fallback');
       }
       
       // Fallback to local JSON file
+      console.log('🔄 Loading articles from local JSON...');
       const response = await fetch(CONFIG.api.articles);
       if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       
       this.articlesData = await response.json();
+      console.log(`✅ Loaded ${this.articlesData.featured?.length || 0} articles from local JSON`);
       this.renderFeaturedArticles();
       this.updateStats();
     } catch (error) {
-      console.error('Error loading articles:', error);
+      console.error('❌ Error loading articles:', error);
       
-      // Use fallback data instead of showing error
+      // Use empty data instead of fallback dummy data
+      console.log('ℹ️ Using empty articles state');
       this.articlesData = {
-        featured: [
-          {
-            id: 1,
-            title: 'ريادة الأعمال الرقمية: دليل شامل للمبتدئين',
-            excerpt: 'تعرف على أساسيات ريادة الأعمال الرقمية وكيفية البدء في مشروعك الأول',
-            image: 'images/article-1.jpg',
-            author: { name: 'فريق ريادة الأعمال الرقمية', avatar: 'images/author-avatar.jpg' },
-            publishedAt: '2024-01-15',
-            readTime: 8,
-            views: 1250,
-            category: 'entrepreneurship',
-            slug: 'entrepreneurship-guide'
-          },
-          {
-            id: 2,
-            title: 'التجارة الإلكترونية: من الصفر إلى الربح',
-            excerpt: 'دليل عملي لإنشاء متجر إلكتروني ناجح وتحقيق الأرباح',
-            image: 'images/article-2.jpg',
-            author: { name: 'فريق ريادة الأعمال الرقمية', avatar: 'images/author-avatar.jpg' },
-            publishedAt: '2024-01-10',
-            readTime: 12,
-            views: 980,
-            category: 'ecommerce',
-            slug: 'ecommerce-guide'
-          },
-          {
-            id: 3,
-            title: 'التسويق الرقمي: استراتيجيات فعالة للترويج',
-            excerpt: 'أفضل استراتيجيات التسويق الرقمي لزيادة مبيعاتك ووصولك للعملاء',
-            image: 'images/article-3.jpg',
-            author: { name: 'فريق ريادة الأعمال الرقمية', avatar: 'images/author-avatar.jpg' },
-            publishedAt: '2024-01-05',
-            readTime: 10,
-            views: 1560,
-            category: 'marketing',
-            slug: 'digital-marketing-strategies'
-          }
-        ],
+        featured: [],
         categories: []
       };
       
@@ -173,9 +145,19 @@ class DigitalEntrepreneurshipBlog {
 
   renderFeaturedArticles() {
     const container = document.getElementById('featured-articles-grid');
-    if (!container || !this.articlesData?.featured) return;
+    if (!container) return;
 
-    const articlesHTML = this.articlesData.featured.slice(0, 6).map(article => 
+    const articles = this.articlesData?.featured || [];
+    if (articles.length === 0) {
+      container.innerHTML = `
+        <div class="no-articles" role="status" aria-live="polite">
+          لا توجد مقالات حالياً. سيتم عرض المقالات هنا عند إضافتها.
+        </div>
+      `;
+      return;
+    }
+
+    const articlesHTML = articles.slice(0, 6).map(article => 
       this.createArticleCard(article)
     ).join('');
 
@@ -224,15 +206,62 @@ class DigitalEntrepreneurshipBlog {
   }
 
   updateStats() {
-    const stats = this.articlesData?.stats;
-    if (!stats) return;
+    const articles = this.articlesData?.featured || [];
+    const statsSection = document.querySelector('.stats');
+    if (!articles.length) {
+      // Hide stats until real content exists
+      if (statsSection) statsSection.style.display = 'none';
+      this.updateCategoryStats();
+      return;
+    }
 
-    // Animate counters
-    this.animateCounter('stat-number[data-count="50000"]', 50000);
-    this.animateCounter('stat-number[data-count="1200"]', stats.totalArticles || 1200);
-    this.animateCounter('stat-number[data-count="25"]', 25);
-    this.animateCounter('stat-number[data-count="98"]', 98);
+    if (statsSection) statsSection.style.removeProperty('display');
+
+    const totalArticles = articles.length;
+    const totalViews = articles.reduce((sum, a) => sum + (a.views || 0), 0);
+    const totalReaders = totalViews; // 1:1 fallback without fake inflation
+    const satisfactionRate = 0; // Unknown without real feedback
+
+    this.animateCounter('[data-count="15000"]', totalReaders);
+    this.animateCounter('[data-count="350"]', totalArticles);
+    this.animateCounter('[data-count="12"]', 0);
+    this.animateCounter('[data-count="95"]', satisfactionRate);
+    
+    this.updateCategoryStats();
   }
+  
+  updateCategoryStats() {
+    const articles = this.articlesData?.featured || [];
+    
+    // Count articles by category
+    const categoryCount = {};
+    articles.forEach(article => {
+      const category = article.category || 'general';
+      categoryCount[category] = (categoryCount[category] || 0) + 1;
+    });
+    
+    // Update category cards with realistic counts
+    const categoryCards = document.querySelectorAll('.category-card');
+    categoryCards.forEach(card => {
+      const categoryLink = card.querySelector('a[href*="category="]');
+      if (categoryLink) {
+        const href = categoryLink.getAttribute('href');
+        const categoryMatch = href.match(/category=([^&]+)/);
+        if (categoryMatch) {
+          const category = categoryMatch[1];
+          const count = categoryCount[category] || 0;
+          const displayCount = count; // No fake multipliers
+          
+          const countElement = card.querySelector('.category-count');
+          if (countElement) {
+            countElement.textContent = displayCount > 0 ? `${displayCount} مقال` : '';
+          }
+        }
+      }
+    });
+  }
+  
+  // Removed fake multiplier logic
 
   animateCounter(selector, target) {
     const element = document.querySelector(selector);
@@ -251,49 +280,117 @@ class DigitalEntrepreneurshipBlog {
   }
 
   setupEventListeners() {
-    // Mobile menu toggle
-    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
     const navbarMenu = document.getElementById('navbar-menu');
     
-    if (mobileMenuToggle && navbarMenu) {
-      mobileMenuToggle.addEventListener('click', () => {
-        mobileMenuToggle.classList.toggle('active');
-        navbarMenu.classList.toggle('active');
-      });
-    }
+    const openMenu = () => {
+      if (!navbarMenu) return;
+      navbarMenu.classList.add('active');
+      document.body.classList.add('menu-open');
+      const toggleBtn = document.querySelector('#mobile-menu-toggle, #menu-toggle, .mobile-menu-toggle');
+      toggleBtn?.classList.add('active');
+      toggleBtn?.setAttribute('aria-expanded', 'true');
+          navbarMenu.style.display = 'block';
+          navbarMenu.style.transform = 'translateY(0)';
+          navbarMenu.style.opacity = '1';
+          navbarMenu.style.visibility = 'visible';
+    };
 
-    // Search toggle
-    const searchToggle = document.getElementById('search-toggle');
-    const searchOverlay = document.getElementById('search-overlay');
-    const searchClose = document.getElementById('search-close');
-    
-    if (searchToggle && searchOverlay) {
-      searchToggle.addEventListener('click', () => {
-        searchOverlay.classList.add('active');
+    const closeMenu = () => {
+      if (!navbarMenu) return;
+          navbarMenu.classList.remove('active');
+      document.body.classList.remove('menu-open');
+      const toggleBtn = document.querySelector('#mobile-menu-toggle, #menu-toggle, .mobile-menu-toggle');
+      toggleBtn?.classList.remove('active');
+      toggleBtn?.setAttribute('aria-expanded', 'false');
+          navbarMenu.style.transform = 'translateY(-100%)';
+          navbarMenu.style.opacity = '0';
+          navbarMenu.style.visibility = 'hidden';
+    };
+
+    const toggleMenu = () => {
+      if (!navbarMenu) return;
+      if (navbarMenu.classList.contains('active')) closeMenu();
+      else openMenu();
+    };
+
+    // Rebuilt: single delegated click handler for navbar controls
+    document.addEventListener('click', (event) => {
+      const target = event.target;
+
+      // Menu toggle
+      if (target.closest('#mobile-menu-toggle, #menu-toggle, .mobile-menu-toggle')) {
+        event.preventDefault();
+        event.stopPropagation();
+        toggleMenu();
+        return;
+      }
+
+      // Search open
+      if (target.closest('#search-toggle')) {
+        event.preventDefault();
+        const overlay = document.getElementById('search-overlay');
+        overlay?.classList.add('active');
         document.getElementById('search-input')?.focus();
-      });
-    }
-    
-    if (searchClose && searchOverlay) {
-      searchClose.addEventListener('click', () => {
-        searchOverlay.classList.remove('active');
-      });
-    }
+        document.body.classList.add('menu-open');
+        closeMenu();
+        return;
+      }
 
-    // Close search on escape
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && searchOverlay?.classList.contains('active')) {
-        searchOverlay.classList.remove('active');
+      // Search close (button or clicking backdrop)
+      const overlay = document.getElementById('search-overlay');
+      if (overlay && (target.closest('#search-close') || target === overlay)) {
+        event.preventDefault();
+        overlay.classList.remove('active');
+        document.body.classList.remove('menu-open');
+        return;
+      }
+
+    // Theme toggle
+      if (target.closest('#theme-toggle')) {
+        event.preventDefault();
+        this.toggleTheme();
+        return;
+      }
+
+      // Dropdown toggle on touch/small screens
+      const dropdownToggle = target.closest('.dropdown > .dropdown-toggle');
+      if (dropdownToggle) {
+        // Prevent page jump
+        event.preventDefault();
+        const parent = dropdownToggle.closest('.dropdown');
+        if (parent) {
+          const open = parent.classList.toggle('open');
+          dropdownToggle.setAttribute('aria-expanded', String(open));
+          const menu = parent.querySelector('.dropdown-menu');
+          if (menu) {
+            // Toggle visibility for mobile where we want collapsible behavior
+            if (open) {
+              menu.style.display = 'block';
+            } else {
+              menu.style.display = 'none';
+            }
+          }
+        }
+        return;
+      }
+
+      // Clicking outside closes menu
+      if (!target.closest('.navbar') && navbarMenu?.classList.contains('active')) {
+        closeMenu();
       }
     });
 
-    // Theme toggle
-    const themeToggle = document.getElementById('theme-toggle');
-    if (themeToggle) {
-      themeToggle.addEventListener('click', () => {
-        this.toggleTheme();
-      });
-    }
+    // Close search on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const overlay = document.getElementById('search-overlay');
+        if (overlay?.classList.contains('active')) {
+          overlay.classList.remove('active');
+          document.body.classList.remove('menu-open');
+        }
+        if (navbarMenu?.classList.contains('active')) closeMenu();
+      }
+    });
 
     // Back to top button
     const backToTop = document.getElementById('back-to-top');
@@ -303,23 +400,16 @@ class DigitalEntrepreneurshipBlog {
       });
     }
 
-    // Smooth scroll for anchor links
+    // Smooth scroll for anchor links, ignore plain "#"
     document.addEventListener('click', (e) => {
       const link = e.target.closest('a[href^="#"]');
       if (link) {
+        const href = link.getAttribute('href');
+        if (href && href.length > 1) {
         e.preventDefault();
-        const target = document.querySelector(link.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
+          const target = document.querySelector(href);
+          target?.scrollIntoView({ behavior: 'smooth' });
         }
-      }
-    });
-
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', (e) => {
-      if (!e.target.closest('.navbar') && navbarMenu?.classList.contains('active')) {
-        mobileMenuToggle?.classList.remove('active');
-        navbarMenu.classList.remove('active');
       }
     });
   }
@@ -745,10 +835,8 @@ if (typeof module !== 'undefined' && module.exports) {
   module.exports = DigitalEntrepreneurshipBlog;
 }
 
-
-
-  // SEO Enhancement: Add structured data for articles
-  addArticleStructuredData(article) {
+// SEO Enhancement: Add structured data for articles
+function addArticleStructuredData(article) {
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "Article",
@@ -818,4 +906,6 @@ if (typeof module !== 'undefined' && module.exports) {
       document.body.classList.remove('keyboard-navigation');
     });
   }
+
+
 

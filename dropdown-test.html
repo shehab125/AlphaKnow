@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار القوائم المنسدلة</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .navbar {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .nav-list {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            padding: 10px;
+            display: block;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-link:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .dropdown-toggle::after {
+            content: '▼';
+            margin-right: 5px;
+            font-size: 12px;
+        }
+        
+        .dropdown.open .dropdown-toggle::after {
+            content: '▲';
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            min-width: 200px;
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 8px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 9999;
+        }
+        
+        .dropdown.open .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-item {
+            display: block;
+            padding: 12px 16px;
+            color: #374151;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            background-color: transparent;
+            border: none;
+            width: 100%;
+            text-align: right;
+            font-size: 14px;
+            line-height: 1.5;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .dropdown-item:hover {
+            background-color: #f3f4f6;
+            color: #1f2937;
+        }
+        
+        .test-info {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .test-info h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .test-info p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        
+        .status.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#" class="nav-link">الرئيسية</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle">المقالات</a>
+                <div class="dropdown-menu">
+                    <a href="#" class="dropdown-item">ريادة الأعمال</a>
+                    <a href="#" class="dropdown-item">التجارة الإلكترونية</a>
+                    <a href="#" class="dropdown-item">التسويق الرقمي</a>
+                    <a href="#" class="dropdown-item">العمل الحر</a>
+                    <a href="#" class="dropdown-item">الاستثمار الرقمي</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle">المزيد</a>
+                <div class="dropdown-menu">
+                    <a href="#" class="dropdown-item">سياسة الخصوصية</a>
+                    <a href="#" class="dropdown-item">شروط الاستخدام</a>
+                    <a href="#" class="dropdown-item">الأسئلة الشائعة</a>
+                    <a href="#" class="dropdown-item">خريطة الموقع</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="test-info">
+        <h2>اختبار القوائم المنسدلة</h2>
+        <p>هذه صفحة اختبار بسيطة للقوائم المنسدلة.</p>
+        
+        <div class="status success">
+            ✅ إذا كنت ترى القوائم المنسدلة تفتح عند النقر، فهذا يعني أن JavaScript يعمل بشكل صحيح.
+        </div>
+        
+        <div class="status error">
+            ❌ إذا كانت القوائم المنسدلة لا تظهر، فهناك مشكلة في CSS أو JavaScript.
+        </div>
+        
+        <h3>تعليمات الاختبار:</h3>
+        <ol>
+            <li>انقر على "المقالات" - يجب أن تفتح القائمة المنسدلة</li>
+            <li>انقر على "المزيد" - يجب أن تفتح قائمة منسدلة أخرى</li>
+            <li>انقر خارج القوائم - يجب أن تغلق</li>
+            <li>مرر فوق العناصر - يجب أن تظهر تأثيرات التمرير</li>
+        </ol>
+        
+        <div id="test-results"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔧 Starting dropdown test...');
+            
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            const testResults = document.getElementById('test-results');
+            
+            console.log('📋 Found dropdown toggles:', dropdownToggles.length);
+            
+            dropdownToggles.forEach((toggle, index) => {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    console.log(`📋 Dropdown ${index + 1} clicked`);
+                    
+                    const dropdown = this.closest('.dropdown');
+                    const isOpen = dropdown.classList.contains('open');
+                    
+                    // Close all other dropdowns
+                    document.querySelectorAll('.dropdown.open').forEach(d => {
+                        if (d !== dropdown) {
+                            d.classList.remove('open');
+                        }
+                    });
+                    
+                    // Toggle current dropdown
+                    dropdown.classList.toggle('open');
+                    
+                    // Update test results
+                    updateTestResults();
+                });
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.dropdown')) {
+                    document.querySelectorAll('.dropdown.open').forEach(dropdown => {
+                        dropdown.classList.remove('open');
+                    });
+                    updateTestResults();
+                }
+            });
+            
+            function updateTestResults() {
+                const openDropdowns = document.querySelectorAll('.dropdown.open');
+                const results = `
+                    <div class="status ${openDropdowns.length > 0 ? 'success' : 'error'}">
+                        <strong>الحالة الحالية:</strong> 
+                        ${openDropdowns.length > 0 ? 
+                            `القوائم المنسدلة مفتوحة (${openDropdowns.length})` : 
+                            'جميع القوائم المنسدلة مغلقة'
+                        }
+                    </div>
+                `;
+                testResults.innerHTML = results;
+            }
+            
+            // Initial test results
+            updateTestResults();
+            
+            console.log('✅ Dropdown test initialized successfully');
+        });
+    </script>
+</body>
+</html>

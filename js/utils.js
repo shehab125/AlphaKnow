@@ -1,5 +1,5 @@
 // Utility functions for the blog
-const UTILS = {
+window.UTILS = window.UTILS || {
   // Performance utilities
   performance: {
     mark: (name) => {

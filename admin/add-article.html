@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إضافة مقال جديد - AlphaKnow</title>
+    <meta name="description" content="إضافة مقال جديد - لوحة تحكم AlphaKnow">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/performance.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/add-article.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Quill Editor -->
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+    
+    <!-- Tagify -->
+    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-spinner"></div>
+        <p>جاري التحميل...</p>
+    </div>
+
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="admin-header-content">
+            <div class="admin-brand">
+                <a href="../index.html" class="admin-logo">
+                    <img src="../images/logo.png" alt="AlphaKnow" class="admin-logo-img">
+                    <span class="admin-logo-text">AlphaKnow</span>
+                </a>
+            </div>
+            
+            <div class="admin-header-nav">
+                <a href="index.html" class="admin-nav-btn">
+                    <i class="fas fa-arrow-right"></i>
+                    العودة للوحة التحكم
+                </a>
+            </div>
+            
+            <div class="admin-header-actions">
+                <button class="admin-btn admin-btn-outline" id="save-draft-btn">
+                    <i class="fas fa-save"></i>
+                    حفظ كمسودة
+                </button>
+                <button class="admin-btn admin-btn-primary" id="publish-btn">
+                    <i class="fas fa-paper-plane"></i>
+                    نشر المقال
+                </button>
+                <div class="admin-user-menu">
+                    <button class="admin-user-btn" id="admin-user-btn">
+                        <img src="../images/default-avatar.png" alt="المستخدم" class="admin-user-avatar">
+                        <span class="admin-user-name" id="admin-user-name">المدير</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="admin-user-dropdown" id="admin-user-dropdown">
+                        <a href="#" class="admin-dropdown-item">
+                            <i class="fas fa-user"></i>
+                            الملف الشخصي
+                        </a>
+                        <a href="#" class="admin-dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            الإعدادات
+                        </a>
+                        <div class="admin-dropdown-divider"></div>
+                        <a href="#" class="admin-dropdown-item" id="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            تسجيل الخروج
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="add-article-main">
+        <div class="add-article-container">
+            <!-- Article Form -->
+            <form class="add-article-form" id="add-article-form">
+                <!-- Article Header -->
+                <div class="article-header-section">
+                    <div class="form-group">
+                        <label for="article-title" class="form-label required">عنوان المقال</label>
+                        <input type="text" id="article-title" name="title" class="form-input" 
+                               placeholder="اكتب عنوان المقال هنا..." required>
+                        <div class="form-help">يجب أن يكون العنوان جذاباً ووصفياً (50-60 حرف مثالي لـ SEO)</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="article-slug" class="form-label">الرابط المخصص (Slug)</label>
+                        <input type="text" id="article-slug" name="slug" class="form-input" 
+                               placeholder="سيتم إنشاؤه تلقائياً من العنوان">
+                        <div class="form-help">الرابط الذي سيظهر في URL المقال</div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="article-category" class="form-label required">الفئة</label>
+                            <select id="article-category" name="category" class="form-select" required>
+                                <option value="">اختر الفئة</option>
+                                <option value="entrepreneurship">ريادة الأعمال</option>
+                                <option value="ecommerce">التجارة الإلكترونية</option>
+                                <option value="marketing">التسويق الرقمي</option>
+                                <option value="freelancing">العمل الحر</option>
+                                <option value="investment">الاستثمار الرقمي</option>
+                                <option value="technology">التكنولوجيا</option>
+                                <option value="business">الأعمال</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="article-status" class="form-label">حالة المقال</label>
+                            <select id="article-status" name="status" class="form-select">
+                                <option value="draft">مسودة</option>
+                                <option value="published">منشور</option>
+                                <option value="scheduled">مجدول</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="article-featured" class="form-label">مقال مميز</label>
+                            <div class="form-toggle">
+                                <input type="checkbox" id="article-featured" name="featured" class="toggle-input">
+                                <label for="article-featured" class="toggle-label">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article Content -->
+                <div class="article-content-section">
+                    <div class="form-group">
+                        <label for="article-excerpt" class="form-label required">ملخص المقال</label>
+                        <textarea id="article-excerpt" name="excerpt" class="form-textarea" rows="3" 
+                                  placeholder="اكتب ملخصاً قصيراً وجذاباً للمقال..." required></textarea>
+                        <div class="form-help">ملخص قصير يظهر في قوائم المقالات (150-160 حرف مثالي)</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="article-content" class="form-label required">محتوى المقال</label>
+                        <div class="editor-toolbar-custom">
+                            <button type="button" class="editor-btn" data-action="heading">
+                                <i class="fas fa-heading"></i>
+                            </button>
+                            <button type="button" class="editor-btn" data-action="bold">
+                                <i class="fas fa-bold"></i>
+                            </button>
+                            <button type="button" class="editor-btn" data-action="italic">
+                                <i class="fas fa-italic"></i>
+                            </button>
+                            <button type="button" class="editor-btn" data-action="list">
+                                <i class="fas fa-list"></i>
+                            </button>
+                            <button type="button" class="editor-btn" data-action="link">
+                                <i class="fas fa-link"></i>
+                            </button>
+                            <button type="button" class="editor-btn" data-action="image">
+                                <i class="fas fa-image"></i>
+                            </button>
+                            <button type="button" class="editor-btn" data-action="quote">
+                                <i class="fas fa-quote-right"></i>
+                            </button>
+                        </div>
+                        <div id="article-content" class="article-editor"></div>
+                        <div class="editor-stats">
+                            <span class="word-count">عدد الكلمات: <strong id="word-count">0</strong></span>
+                            <span class="read-time">وقت القراءة: <strong id="read-time">0 دقيقة</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Article Media -->
+                <div class="article-media-section">
+                    <div class="form-group">
+                        <label for="article-image" class="form-label">صورة المقال الرئيسية</label>
+                        <div class="image-upload-area" id="image-upload-area">
+                            <div class="image-upload-placeholder">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>اسحب الصورة هنا أو انقر للاختيار</p>
+                                <small>PNG, JPG, WEBP - حد أقصى 5MB</small>
+                            </div>
+                            <input type="file" id="article-image" name="image" accept="image/*" class="image-input">
+                            <div class="image-preview" id="image-preview" style="display: none;">
+                                <img src="" alt="معاينة الصورة" class="preview-img">
+                                <button type="button" class="remove-image-btn" id="remove-image-btn">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="article-tags" class="form-label">الكلمات المفتاحية</label>
+                        <input type="text" id="article-tags" name="tags" class="form-input" 
+                               placeholder="أضف الكلمات المفتاحية...">
+                        <div class="form-help">اضغط Enter لإضافة كلمة مفتاحية جديدة</div>
+                    </div>
+                </div>
+
+                <!-- SEO Settings -->
+                <div class="article-seo-section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <i class="fas fa-search"></i>
+                            إعدادات تحسين محركات البحث (SEO)
+                        </h3>
+                        <button type="button" class="section-toggle" data-target="seo-content">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="section-content" id="seo-content">
+                        <div class="form-group">
+                            <label for="seo-title" class="form-label">عنوان SEO</label>
+                            <input type="text" id="seo-title" name="seo_title" class="form-input" 
+                                   placeholder="سيتم استخدام عنوان المقال إذا ترك فارغاً">
+                            <div class="form-help">العنوان الذي سيظهر في نتائج البحث (50-60 حرف)</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="seo-description" class="form-label">وصف SEO</label>
+                            <textarea id="seo-description" name="seo_description" class="form-textarea" rows="2" 
+                                      placeholder="سيتم استخدام ملخص المقال إذا ترك فارغاً"></textarea>
+                            <div class="form-help">الوصف الذي سيظهر في نتائج البحث (150-160 حرف)</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="seo-keywords" class="form-label">كلمات مفتاحية إضافية</label>
+                            <input type="text" id="seo-keywords" name="seo_keywords" class="form-input" 
+                                   placeholder="كلمة1, كلمة2, كلمة3">
+                            <div class="form-help">كلمات مفتاحية إضافية مفصولة بفواصل</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Publishing Settings -->
+                <div class="article-publish-section">
+                    <div class="section-header">
+                        <h3 class="section-title">
+                            <i class="fas fa-calendar"></i>
+                            إعدادات النشر
+                        </h3>
+                        <button type="button" class="section-toggle" data-target="publish-content">
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="section-content" id="publish-content">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="publish-date" class="form-label">تاريخ النشر</label>
+                                <input type="datetime-local" id="publish-date" name="publish_date" class="form-input">
+                                <div class="form-help">اتركه فارغاً للنشر الفوري</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="article-author" class="form-label">الكاتب</label>
+                                <select id="article-author" name="author" class="form-select">
+                                    <option value="current">المستخدم الحالي</option>
+                                    <option value="admin">المدير</option>
+                                    <option value="editor">المحرر</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="article-visibility" class="form-label">مستوى الرؤية</label>
+                            <select id="article-visibility" name="visibility" class="form-select">
+                                <option value="public">عام - مرئي للجميع</option>
+                                <option value="members">الأعضاء فقط</option>
+                                <option value="premium">الأعضاء المميزين فقط</option>
+                                <option value="private">خاص - المدراء فقط</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="add-article-sidebar">
+            <!-- Quick Actions -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-card-title">إجراءات سريعة</h3>
+                <div class="sidebar-actions">
+                    <button type="button" class="sidebar-btn" id="preview-btn">
+                        <i class="fas fa-eye"></i>
+                        معاينة المقال
+                    </button>
+                    <button type="button" class="sidebar-btn" id="auto-save-toggle">
+                        <i class="fas fa-save"></i>
+                        الحفظ التلقائي: <span id="auto-save-status">مفعل</span>
+                    </button>
+                    <button type="button" class="sidebar-btn" id="import-content">
+                        <i class="fas fa-file-import"></i>
+                        استيراد محتوى
+                    </button>
+                </div>
+            </div>
+
+            <!-- Article Stats -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-card-title">إحصائيات المقال</h3>
+                <div class="article-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">عدد الكلمات:</span>
+                        <span class="stat-value" id="sidebar-word-count">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">عدد الأحرف:</span>
+                        <span class="stat-value" id="char-count">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">وقت القراءة:</span>
+                        <span class="stat-value" id="sidebar-read-time">0 دقيقة</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">درجة SEO:</span>
+                        <span class="stat-value seo-score" id="seo-score">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Articles -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-card-title">المقالات الأخيرة</h3>
+                <div class="recent-articles" id="recent-articles-sidebar">
+                    <!-- Recent articles will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Tips -->
+            <div class="sidebar-card">
+                <h3 class="sidebar-card-title">نصائح للكتابة</h3>
+                <div class="writing-tips">
+                    <div class="tip-item">
+                        <i class="fas fa-lightbulb"></i>
+                        <p>استخدم عناوين فرعية لتنظيم المحتوى</p>
+                    </div>
+                    <div class="tip-item">
+                        <i class="fas fa-lightbulb"></i>
+                        <p>أضف صوراً توضيحية لجعل المقال أكثر جاذبية</p>
+                    </div>
+                    <div class="tip-item">
+                        <i class="fas fa-lightbulb"></i>
+                        <p>استخدم كلمات مفتاحية ذات صلة بالموضوع</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Preview Modal -->
+    <div class="modal" id="preview-modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3 class="modal-title">معاينة المقال</h3>
+                <button type="button" class="modal-close" id="close-preview">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="article-preview" id="article-preview-content">
+                    <!-- Preview content will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    
+    <!-- App Scripts -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/firebase-service.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/add-article.js"></script>
+</body>
+</html>
+

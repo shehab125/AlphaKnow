@@ -53,8 +53,10 @@
     transform: translateY(-100%);
     opacity: 0;
     visibility: hidden;
-    transition: var(--transition-base);
-    z-index: var(--z-dropdown);
+    transition: all 0.3s ease;
+    z-index: 999;
+    max-height: calc(100vh - var(--header-height));
+    overflow-y: auto;
   }
   
   .navbar-menu.active {

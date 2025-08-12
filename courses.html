@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدورات التدريبية - AlphaKnow</title>
+    <meta name="description" content="دورات تدريبية متخصصة في ريادة الأعمال والتجارة الإلكترونية والتسويق الرقمي مع شهادات معتمدة">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a href="index.html" class="brand-link">
+                        <img src="images/logo.png" alt="AlphaKnow" class="brand-logo">
+                        <span class="brand-text">AlphaKnow</span>
+                    </a>
+                </div>
+                
+                <div class="navbar-menu" id="navbar-menu">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link">الرئيسية</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="category.html" class="nav-link">المقالات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="courses.html" class="nav-link active">الدورات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="tools.html" class="nav-link">الأدوات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">من نحن</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">تواصل معنا</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle">المزيد</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="navbar-actions">
+                    <button class="search-toggle" aria-label="البحث">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="theme-toggle" aria-label="تبديل الوضع">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="القائمة">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero-section courses-hero">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="hero-title">الدورات التدريبية المتخصصة</h1>
+                        <p class="hero-description">
+                            تعلم من خبراء المجال واحصل على شهادات معتمدة في ريادة الأعمال والتجارة الإلكترونية والتسويق الرقمي
+                        </p>
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">25+</span>
+                                <span class="stat-label">دورة متخصصة</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">5,000+</span>
+                                <span class="stat-label">طالب مسجل</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">98%</span>
+                                <span class="stat-label">نسبة الرضا</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <div class="hero-badge">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>شهادات معتمدة</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Course Categories -->
+        <section class="courses-categories">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">تصفح الدورات حسب التخصص</h2>
+                    <p class="section-description">اختر المجال الذي يناسب أهدافك المهنية</p>
+                </div>
+                
+                <div class="categories-grid">
+                    <div class="category-card active" data-category="all">
+                        <div class="category-icon">
+                            <i class="fas fa-th-large"></i>
+                        </div>
+                        <h3 class="category-name">جميع الدورات</h3>
+                        <span class="category-count">25 دورة</span>
+                    </div>
+                    
+                    <div class="category-card" data-category="entrepreneurship">
+                        <div class="category-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <h3 class="category-name">ريادة الأعمال</h3>
+                        <span class="category-count">8 دورات</span>
+                    </div>
+                    
+                    <div class="category-card" data-category="ecommerce">
+                        <div class="category-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h3 class="category-name">التجارة الإلكترونية</h3>
+                        <span class="category-count">6 دورات</span>
+                    </div>
+                    
+                    <div class="category-card" data-category="marketing">
+                        <div class="category-icon">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <h3 class="category-name">التسويق الرقمي</h3>
+                        <span class="category-count">7 دورات</span>
+                    </div>
+                    
+                    <div class="category-card" data-category="freelancing">
+                        <div class="category-icon">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <h3 class="category-name">العمل الحر</h3>
+                        <span class="category-count">4 دورات</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Courses -->
+        <section class="featured-courses">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">الدورات المميزة</h2>
+                    <p class="section-description">أكثر الدورات طلباً وتقييماً من طلابنا</p>
+                </div>
+                
+                <div class="courses-grid">
+                    <!-- Course 1 -->
+                    <div class="course-card featured" data-category="entrepreneurship">
+                        <div class="course-image">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop" alt="دورة ريادة الأعمال الشاملة">
+                            <div class="course-badge bestseller">الأكثر مبيعاً</div>
+                            <div class="course-level">متوسط</div>
+                        </div>
+                        <div class="course-content">
+                            <div class="course-meta">
+                                <span class="course-category">ريادة الأعمال</span>
+                                <div class="course-rating">
+                                    <span class="rating-stars">⭐⭐⭐⭐⭐</span>
+                                    <span class="rating-number">4.9 (1,250 تقييم)</span>
+                                </div>
+                            </div>
+                            <h3 class="course-title">دورة ريادة الأعمال الشاملة: من الفكرة إلى النجاح</h3>
+                            <p class="course-description">تعلم كيفية تحويل فكرتك إلى مشروع ناجح ومربح مع استراتيجيات مجربة من خبراء المجال</p>
+                            
+                            <div class="course-features">
+                                <div class="feature-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>45 ساعة تدريبية</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-video"></i>
+                                    <span>120 درس فيديو</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>شهادة معتمدة</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>2,500+ طالب</span>
+                                </div>
+                            </div>
+                            
+                            <div class="course-instructor">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face" alt="أحمد محمد" class="instructor-avatar">
+                                <div class="instructor-info">
+                                    <span class="instructor-name">أحمد محمد</span>
+                                    <span class="instructor-title">خبير ريادة الأعمال</span>
+                                </div>
+                            </div>
+                            
+                            <div class="course-footer">
+                                <div class="course-price">
+                                    <span class="current-price">$199</span>
+                                    <span class="original-price">$299</span>
+                                    <span class="discount">خصم 33%</span>
+                                </div>
+                                <button class="btn btn-primary course-enroll">التسجيل الآن</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course 2 -->
+                    <div class="course-card" data-category="ecommerce">
+                        <div class="course-image">
+                            <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=250&fit=crop" alt="دورة التجارة الإلكترونية">
+                            <div class="course-badge new">جديد</div>
+                            <div class="course-level">مبتدئ</div>
+                        </div>
+                        <div class="course-content">
+                            <div class="course-meta">
+                                <span class="course-category">التجارة الإلكترونية</span>
+                                <div class="course-rating">
+                                    <span class="rating-stars">⭐⭐⭐⭐⭐</span>
+                                    <span class="rating-number">4.8 (890 تقييم)</span>
+                                </div>
+                            </div>
+                            <h3 class="course-title">إنشاء متجر إلكتروني احترافي مع Shopify</h3>
+                            <p class="course-description">تعلم بناء متجرك الإلكتروني من الصفر وتحقيق أرباح شهرية مستدامة</p>
+                            
+                            <div class="course-features">
+                                <div class="feature-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>30 ساعة تدريبية</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-video"></i>
+                                    <span>85 درس فيديو</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>شهادة معتمدة</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>1,800+ طالب</span>
+                                </div>
+                            </div>
+                            
+                            <div class="course-instructor">
+                                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=50&h=50&fit=crop&crop=face" alt="فاطمة أحمد" class="instructor-avatar">
+                                <div class="instructor-info">
+                                    <span class="instructor-name">فاطمة أحمد</span>
+                                    <span class="instructor-title">خبيرة التجارة الإلكترونية</span>
+                                </div>
+                            </div>
+                            
+                            <div class="course-footer">
+                                <div class="course-price">
+                                    <span class="current-price">$149</span>
+                                    <span class="original-price">$199</span>
+                                    <span class="discount">خصم 25%</span>
+                                </div>
+                                <button class="btn btn-primary course-enroll">التسجيل الآن</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course 3 -->
+                    <div class="course-card" data-category="marketing">
+                        <div class="course-image">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=250&fit=crop" alt="دورة التسويق الرقمي">
+                            <div class="course-badge hot">الأكثر طلباً</div>
+                            <div class="course-level">متقدم</div>
+                        </div>
+                        <div class="course-content">
+                            <div class="course-meta">
+                                <span class="course-category">التسويق الرقمي</span>
+                                <div class="course-rating">
+                                    <span class="rating-stars">⭐⭐⭐⭐⭐</span>
+                                    <span class="rating-number">4.9 (2,100 تقييم)</span>
+                                </div>
+                            </div>
+                            <h3 class="course-title">إتقان التسويق الرقمي: استراتيجيات متقدمة للنمو</h3>
+                            <p class="course-description">احترف التسويق الرقمي بجميع قنواته وحقق نتائج استثنائية لعملائك</p>
+                            
+                            <div class="course-features">
+                                <div class="feature-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>60 ساعة تدريبية</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-video"></i>
+                                    <span>150 درس فيديو</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>شهادة معتمدة</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>3,200+ طالب</span>
+                                </div>
+                            </div>
+                            
+                            <div class="course-instructor">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face" alt="محمد علي" class="instructor-avatar">
+                                <div class="instructor-info">
+                                    <span class="instructor-name">محمد علي</span>
+                                    <span class="instructor-title">خبير التسويق الرقمي</span>
+                                </div>
+                            </div>
+                            
+                            <div class="course-footer">
+                                <div class="course-price">
+                                    <span class="current-price">$249</span>
+                                    <span class="original-price">$349</span>
+                                    <span class="discount">خصم 29%</span>
+                                </div>
+                                <button class="btn btn-primary course-enroll">التسجيل الآن</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course 4 -->
+                    <div class="course-card" data-category="freelancing">
+                        <div class="course-image">
+                            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=250&fit=crop" alt="دورة العمل الحر">
+                            <div class="course-level">مبتدئ</div>
+                        </div>
+                        <div class="course-content">
+                            <div class="course-meta">
+                                <span class="course-category">العمل الحر</span>
+                                <div class="course-rating">
+                                    <span class="rating-stars">⭐⭐⭐⭐⭐</span>
+                                    <span class="rating-number">4.7 (650 تقييم)</span>
+                                </div>
+                            </div>
+                            <h3 class="course-title">بناء مهنة ناجحة في العمل الحر</h3>
+                            <p class="course-description">تعلم كيفية بدء وتطوير مهنة مربحة في العمل الحر مع استراتيجيات عملية</p>
+                            
+                            <div class="course-features">
+                                <div class="feature-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>25 ساعة تدريبية</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-video"></i>
+                                    <span>70 درس فيديو</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-certificate"></i>
+                                    <span>شهادة معتمدة</span>
+                                </div>
+                                <div class="feature-item">
+                                    <i class="fas fa-users"></i>
+                                    <span>1,200+ طالب</span>
+                                </div>
+                            </div>
+                            
+                            <div class="course-instructor">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50&h=50&fit=crop&crop=face" alt="سارة محمود" class="instructor-avatar">
+                                <div class="instructor-info">
+                                    <span class="instructor-name">سارة محمود</span>
+                                    <span class="instructor-title">خبيرة العمل الحر</span>
+                                </div>
+                            </div>
+                            
+                            <div class="course-footer">
+                                <div class="course-price">
+                                    <span class="current-price">$99</span>
+                                    <span class="original-price">$149</span>
+                                    <span class="discount">خصم 34%</span>
+                                </div>
+                                <button class="btn btn-primary course-enroll">التسجيل الآن</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section-footer">
+                    <button class="btn btn-outline load-more">عرض المزيد من الدورات</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Learning Path -->
+        <section class="learning-path">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">مسارات التعلم المقترحة</h2>
+                    <p class="section-description">خطط تعليمية متكاملة لتحقيق أهدافك المهنية</p>
+                </div>
+                
+                <div class="paths-grid">
+                    <div class="path-card">
+                        <div class="path-header">
+                            <div class="path-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <h3 class="path-title">مسار رائد الأعمال الشامل</h3>
+                            <p class="path-description">من الفكرة إلى الشركة الناجحة</p>
+                        </div>
+                        <div class="path-content">
+                            <div class="path-stats">
+                                <div class="stat">
+                                    <span class="stat-number">6</span>
+                                    <span class="stat-label">دورات</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number">180</span>
+                                    <span class="stat-label">ساعة</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number">6</span>
+                                    <span class="stat-label">أشهر</span>
+                                </div>
+                            </div>
+                            <div class="path-courses">
+                                <div class="course-item">
+                                    <span class="course-number">1</span>
+                                    <span class="course-name">أساسيات ريادة الأعمال</span>
+                                </div>
+                                <div class="course-item">
+                                    <span class="course-number">2</span>
+                                    <span class="course-name">دراسة الجدوى والتخطيط</span>
+                                </div>
+                                <div class="course-item">
+                                    <span class="course-number">3</span>
+                                    <span class="course-name">التمويل والاستثمار</span>
+                                </div>
+                                <div class="course-item">
+                                    <span class="course-number">4</span>
+                                    <span class="course-name">التسويق والمبيعات</span>
+                                </div>
+                                <div class="course-item">
+                                    <span class="course-number">5</span>
+                                    <span class="course-name">إدارة الفرق والقيادة</span>
+                                </div>
+                                <div class="course-item">
+                                    <span class="course-number">6</span>
+                                    <span class="course-name">النمو والتوسع</span>
+                                </div>
+                            </div>
+                            <div class="path-footer">
+                                <div class="path-price">
+                                    <span class="current-price">$599</span>
+                                    <span class="original-price">$899</span>
+                                    <span class="discount">وفر $300</span>
+                                </div>
+                                <button class="btn btn-primary">ابدأ المسار</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="path-card">
+                        <div class="path-header">
+                            <div class="path-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <h3 class="path-title">مسار خبير التجارة الإلكترونية</h3>
+                            <p class="path-description">احترف بناء وإدارة المتاجر الإلكترونية</p>
+                        </div>
+                        <div class="path-content">
+                            <div class="path-stats">
+                                <div class="stat">
+                                    <span class="stat-number">5</span>
+                                    <span class="stat-label">دورات</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number">150</span>
+                                    <span class="stat-label">ساعة</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="stat-number">4</span>
+                                    <span class="stat-label">أشهر</span>
+                                </div>
+                            </div>
+                            <div class="path-courses">
+                                <div class="course-item">
+                                    <span class="course-number">1</span>
+                                    <span class="course-name">أساسيات التجارة الإلكترونية</span>
+                                </div>
+                                <div class="course-item">
+                                    <span class="course-number">2</span>
+                                    <span class="course-name">بناء المتجر مع Shopify</span>
+                                </div>
+                                <div class="course-item">
+                                    <span class="course-number">3</span>
+                                    <span class="course-name">إدارة المخزون والشحن</span>
+                                </div>
+                                <div class="course-item">
+                                    <span class="course-number">4</span>
+                                    <span class="course-name">التسويق للمتاجر الإلكترونية</span>
+                                </div>
+                                <div class="course-item">
+                                    <span class="course-number">5</span>
+                                    <span class="course-name">تحليل البيانات والتحسين</span>
+                                </div>
+                            </div>
+                            <div class="path-footer">
+                                <div class="path-price">
+                                    <span class="current-price">$499</span>
+                                    <span class="original-price">$749</span>
+                                    <span class="discount">وفر $250</span>
+                                </div>
+                                <button class="btn btn-primary">ابدأ المسار</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories -->
+        <section class="success-stories">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">قصص نجاح طلابنا</h2>
+                    <p class="section-description">اكتشف كيف غيرت دوراتنا حياة آلاف الطلاب</p>
+                </div>
+                
+                <div class="stories-grid">
+                    <div class="story-card">
+                        <div class="story-content">
+                            <div class="story-quote">
+                                <i class="fas fa-quote-right"></i>
+                                <p>"بفضل دورة ريادة الأعمال، تمكنت من تأسيس شركتي الناشئة وجمع تمويل بقيمة 500 ألف دولار في أقل من عام"</p>
+                            </div>
+                            <div class="story-author">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" alt="أحمد محمد" class="author-avatar">
+                                <div class="author-info">
+                                    <h4 class="author-name">أحمد محمد</h4>
+                                    <p class="author-title">مؤسس تطبيق إدارة المشاريع</p>
+                                    <div class="author-achievement">
+                                        <i class="fas fa-trophy"></i>
+                                        <span>جمع تمويل $500K</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="story-card">
+                        <div class="story-content">
+                            <div class="story-quote">
+                                <i class="fas fa-quote-right"></i>
+                                <p>"دورة التجارة الإلكترونية ساعدتني في بناء متجر يحقق أرباحاً شهرية تزيد عن 15 ألف دولار"</p>
+                            </div>
+                            <div class="story-author">
+                                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=60&h=60&fit=crop&crop=face" alt="فاطمة أحمد" class="author-avatar">
+                                <div class="author-info">
+                                    <h4 class="author-name">فاطمة أحمد</h4>
+                                    <p class="author-title">مؤسسة متجر الأزياء الإلكتروني</p>
+                                    <div class="author-achievement">
+                                        <i class="fas fa-chart-line"></i>
+                                        <span>$15K أرباح شهرية</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="story-card">
+                        <div class="story-content">
+                            <div class="story-quote">
+                                <i class="fas fa-quote-right"></i>
+                                <p>"تعلمت التسويق الرقمي من الصفر وأصبحت الآن أدير حملات إعلانية لشركات كبرى بدخل شهري يفوق 8 آلاف دولار"</p>
+                            </div>
+                            <div class="story-author">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face" alt="سارة محمود" class="author-avatar">
+                                <div class="author-info">
+                                    <h4 class="author-name">سارة محمود</h4>
+                                    <p class="author-title">خبيرة التسويق الرقمي</p>
+                                    <div class="author-achievement">
+                                        <i class="fas fa-dollar-sign"></i>
+                                        <span>$8K دخل شهري</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2 class="cta-title">ابدأ رحلتك التعليمية اليوم</h2>
+                    <p class="cta-description">انضم إلى آلاف الطلاب الذين حققوا أهدافهم المهنية معنا</p>
+                    <div class="cta-features">
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>شهادات معتمدة</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>دعم مدى الحياة</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-check"></i>
+                            <span>ضمان استرداد المال</span>
+                        </div>
+                    </div>
+                    <div class="cta-actions">
+                        <button class="btn btn-primary btn-large">تصفح جميع الدورات</button>
+                        <button class="btn btn-outline btn-large">تحدث مع مستشار</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <img src="images/logo.png" alt="AlphaKnow" class="footer-logo">
+                        <h3 class="footer-title">AlphaKnow</h3>
+                        <p class="footer-description">
+                            منصتك الموثوقة لتعلم ريادة الأعمال والتجارة الإلكترونية والتسويق الرقمي
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-heading">الدورات</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">ريادة الأعمال</a></li>
+                        <li><a href="#">التجارة الإلكترونية</a></li>
+                        <li><a href="#">التسويق الرقمي</a></li>
+                        <li><a href="#">العمل الحر</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-heading">الدعم</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">مركز المساعدة</a></li>
+                        <li><a href="#">تواصل معنا</a></li>
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">سياسة الاسترداد</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-heading">تابعنا</h4>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    <p>&copy; 2024 AlphaKnow. جميع الحقوق محفوظة.</p>
+                </div>
+                <div class="footer-legal">
+                    <a href="#">سياسة الخصوصية</a>
+                    <a href="#">شروط الاستخدام</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/courses.js"></script>
+</body>
+</html>
+

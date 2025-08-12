@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار Firebase - لوحة التحكم</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        .info { background: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        button:disabled { background: #6c757d; cursor: not-allowed; }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .test-section {
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .test-section h3 {
+            margin-top: 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔥 اختبار Firebase - لوحة التحكم</h1>
+        <p>هذه الصفحة تختبر اتصال Firebase وتساعد في تحديد أي مشاكل.</p>
+        
+        <div id="status-container">
+            <div class="status info">جاري تهيئة Firebase...</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>اختبارات أساسية</h3>
+            <div>
+                <button onclick="testFirestore()" id="test-firestore">اختبار Firestore</button>
+                <button onclick="testAuth()" id="test-auth">اختبار المصادقة</button>
+                <button onclick="testWrite()" id="test-write">اختبار الكتابة</button>
+                <button onclick="clearLog()">مسح السجل</button>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>اختبار إنشاء مقال</h3>
+            <div>
+                <button onclick="testCreateArticle()" id="test-create-article">إنشاء مقال تجريبي</button>
+                <button onclick="testReadArticles()" id="test-read-articles">قراءة المقالات</button>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h3>سجل Console:</h3>
+            <div id="log" class="log"></div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    
+    <!-- Firebase Config -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/firebase-service.js"></script>
+    
+    <script>
+        // Override console.log to capture logs
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        
+        function addToLog(message, type = 'log') {
+            const log = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.style.color = type === 'error' ? '#dc3545' : type === 'warn' ? '#ffc107' : '#28a745';
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            log.appendChild(logEntry);
+            log.scrollTop = log.scrollHeight;
+        }
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            addToLog(args.join(' '), 'log');
+        };
+        
+        console.error = function(...args) {
+            originalError.apply(console, args);
+            addToLog(args.join(' '), 'error');
+        };
+        
+        console.warn = function(...args) {
+            originalWarn.apply(console, args);
+            addToLog(args.join(' '), 'warn');
+        };
+        
+        // Update status
+        function updateStatus(message, type = 'info') {
+            const container = document.getElementById('status-container');
+            container.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+        
+        // Test functions
+        async function testFirestore() {
+            const btn = document.getElementById('test-firestore');
+            btn.disabled = true;
+            btn.textContent = 'جاري الاختبار...';
+            
+            try {
+                if (!window.FIREBASE || !window.FIREBASE.db) {
+                    throw new Error('Firebase not initialized');
+                }
+                
+                // Test a simple read operation
+                const testDoc = await window.FIREBASE.db.collection('test').doc('connection-test').get();
+                console.log('✅ Firestore read test successful');
+                
+                updateStatus('✅ اختبار Firestore ناجح!', 'success');
+                
+            } catch (error) {
+                console.error('❌ Firestore test failed:', error);
+                updateStatus(`❌ اختبار Firestore فشل: ${error.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'اختبار Firestore';
+            }
+        }
+        
+        async function testAuth() {
+            const btn = document.getElementById('test-auth');
+            btn.disabled = true;
+            btn.textContent = 'جاري الاختبار...';
+            
+            try {
+                if (!window.FIREBASE || !window.FIREBASE.auth) {
+                    throw new Error('Firebase not initialized');
+                }
+                
+                // Test anonymous auth
+                const userCredential = await window.FIREBASE.auth.signInAnonymously();
+                console.log('✅ Anonymous authentication successful:', userCredential.user.uid);
+                
+                // Sign out
+                await window.FIREBASE.auth.signOut();
+                console.log('✅ Sign out successful');
+                
+                updateStatus('✅ اختبار المصادقة ناجح!', 'success');
+                
+            } catch (error) {
+                console.error('❌ Authentication test failed:', error);
+                updateStatus(`❌ اختبار المصادقة فشل: ${error.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'اختبار المصادقة';
+            }
+        }
+
+        async function testWrite() {
+            const btn = document.getElementById('test-write');
+            btn.disabled = true;
+            btn.textContent = 'جاري الاختبار...';
+            
+            try {
+                if (!window.FIREBASE || !window.FIREBASE.db) {
+                    throw new Error('Firebase not initialized');
+                }
+                
+                // Test a simple write operation
+                await window.FIREBASE.db.collection('test').doc('write-test').set({
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    test: true,
+                    message: 'Test write operation'
+                });
+                console.log('✅ Firestore write test successful');
+                
+                updateStatus('✅ اختبار الكتابة ناجح!', 'success');
+                
+            } catch (error) {
+                console.error('❌ Firestore write test failed:', error);
+                updateStatus(`❌ اختبار الكتابة فشل: ${error.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'اختبار الكتابة';
+            }
+        }
+
+        async function testCreateArticle() {
+            const btn = document.getElementById('test-create-article');
+            btn.disabled = true;
+            btn.textContent = 'جاري الإنشاء...';
+            
+            try {
+                if (!window.firebaseService) {
+                    throw new Error('Firebase service not available');
+                }
+
+                const testArticle = {
+                    title: 'مقال تجريبي للاختبار',
+                    content: 'هذا مقال تجريبي لاختبار Firebase',
+                    excerpt: 'ملخص المقال التجريبي',
+                    category: 'test',
+                    status: 'published',
+                    author: 'نظام الاختبار'
+                };
+
+                console.log('🔄 Testing article creation via Firebase service...');
+                const result = await window.firebaseService.createArticle(testArticle);
+                
+                if (result.success) {
+                    console.log('✅ Article created successfully:', result.id);
+                    updateStatus('✅ تم إنشاء المقال التجريبي بنجاح!', 'success');
+                } else {
+                    throw new Error(result.error);
+                }
+                
+            } catch (error) {
+                console.error('❌ Article creation test failed:', error);
+                updateStatus(`❌ فشل إنشاء المقال التجريبي: ${error.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'إنشاء مقال تجريبي';
+            }
+        }
+
+        async function testReadArticles() {
+            const btn = document.getElementById('test-read-articles');
+            btn.disabled = true;
+            btn.textContent = 'جاري القراءة...';
+            
+            try {
+                if (!window.firebaseService) {
+                    throw new Error('Firebase service not available');
+                }
+
+                console.log('🔄 Testing article reading via Firebase service...');
+                const result = await window.firebaseService.getArticles();
+                
+                if (result.success) {
+                    console.log('✅ Articles read successfully:', result.data.length, 'articles found');
+                    updateStatus(`✅ تم قراءة المقالات بنجاح! (${result.data.length} مقال)`, 'success');
+                } else {
+                    throw new Error(result.error);
+                }
+                
+            } catch (error) {
+                console.error('❌ Article reading test failed:', error);
+                updateStatus(`❌ فشل قراءة المقالات: ${error.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'قراءة المقالات';
+            }
+        }
+        
+        function clearLog() {
+            document.getElementById('log').innerHTML = '';
+        }
+        
+        // Monitor Firebase initialization
+        let checkCount = 0;
+        const maxChecks = 50; // 5 seconds max
+        
+        function checkFirebaseStatus() {
+            checkCount++;
+            
+            if (window.FIREBASE && !window.FIREBASE.error) {
+                updateStatus('✅ تم تهيئة Firebase بنجاح!', 'success');
+                console.log('🎉 Firebase is ready for testing!');
+                return;
+            }
+            
+            if (window.FIREBASE && window.FIREBASE.error) {
+                updateStatus(`❌ فشل Firebase: ${window.FIREBASE.error}`, 'error');
+                return;
+            }
+            
+            if (checkCount < maxChecks) {
+                setTimeout(checkFirebaseStatus, 100);
+            } else {
+                updateStatus('❌ انتهت مهلة تهيئة Firebase', 'error');
+            }
+        }
+        
+        // Start checking after a short delay
+        setTimeout(checkFirebaseStatus, 500);
+    </script>
+</body>
+</html>

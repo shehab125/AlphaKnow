@@ -217,6 +217,77 @@ class AdminPanel {
         }
       });
     }
+
+    // Article action buttons (delegated event listener)
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('.admin-action-btn')) {
+        const button = e.target.closest('.admin-action-btn');
+        const action = button.getAttribute('data-action');
+        const articleId = button.getAttribute('data-article-id');
+        
+        if (action && articleId) {
+          console.log(`🔘 Button clicked: ${action} for article: ${articleId}`);
+          
+          switch (action) {
+            case 'view':
+              this.viewArticle(articleId);
+              break;
+            case 'edit':
+              this.editArticle(articleId);
+              break;
+            case 'delete':
+              this.deleteArticle(articleId);
+              break;
+            default:
+              console.warn(`⚠️ Unknown action: ${action}`);
+          }
+        }
+      }
+    });
+
+    // Category action buttons (delegated event listener)
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('.admin-btn[data-action]')) {
+        const button = e.target.closest('.admin-btn[data-action]');
+        const action = button.getAttribute('data-action');
+        const categoryId = button.getAttribute('data-category-id');
+        
+        if (action && categoryId) {
+          console.log(`🔘 Category button clicked: ${action} for category: ${categoryId}`);
+          
+          switch (action) {
+            case 'edit-category':
+              this.editCategory(categoryId);
+              break;
+            case 'delete-category':
+              this.deleteCategory(categoryId);
+              break;
+            default:
+              console.warn(`⚠️ Unknown category action: ${action}`);
+          }
+        }
+      }
+    });
+
+    // Mobile menu toggle
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const adminSidebar = document.getElementById('admin-sidebar');
+    
+    if (mobileMenuToggle && adminSidebar) {
+      mobileMenuToggle.addEventListener('click', () => {
+        mobileMenuToggle.classList.toggle('active');
+        adminSidebar.classList.toggle('active');
+        console.log('📱 Mobile menu toggled');
+      });
+      
+      // Close mobile menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!mobileMenuToggle.contains(e.target) && !adminSidebar.contains(e.target)) {
+          mobileMenuToggle.classList.remove('active');
+          adminSidebar.classList.remove('active');
+        }
+      });
+    }
   }
 
   initializeQuillEditor() {
@@ -307,13 +378,21 @@ class AdminPanel {
   }
 
   formatNumber(num) {
-    if (num >= 1000000) {
-      return (num / 1000000).toFixed(1) + 'M';
+    // Handle undefined, null, or non-numeric values
+    if (num === undefined || num === null || isNaN(num)) {
+      return '0';
     }
-    if (num >= 1000) {
-      return (num / 1000).toFixed(1) + 'K';
+    
+    // Convert to number if it's a string
+    const number = Number(num);
+    
+    if (number >= 1000000) {
+      return (number / 1000000).toFixed(1) + 'M';
     }
-    return num.toString();
+    if (number >= 1000) {
+      return (number / 1000).toFixed(1) + 'K';
+    }
+    return number.toString();
   }
 
   renderRecentArticles(articles) {
@@ -450,20 +529,20 @@ class AdminPanel {
           <span class="admin-status admin-status-${this.getCategoryColor(article.category)}">${this.getCategoryName(article.category)}</span>
         </td>
         <td>${article.author}</td>
-        <td>${this.formatDate(article.date)}</td>
-        <td>${this.formatNumber(article.views)}</td>
+        <td>${this.formatDate(article.date || article.createdAt)}</td>
+        <td>${this.formatNumber(article.views || 0)}</td>
         <td>
           <span class="admin-status admin-status-${article.status}">${this.getStatusName(article.status)}</span>
         </td>
         <td>
           <div class="admin-actions-group">
-            <button class="admin-action-btn admin-action-btn-view" onclick="adminPanel.viewArticle(${article.id})" title="عرض">
+            <button class="admin-action-btn admin-action-btn-view" data-action="view" data-article-id="${article.id}" title="عرض">
               <i class="fas fa-eye"></i>
             </button>
-            <button class="admin-action-btn admin-action-btn-edit" onclick="adminPanel.editArticle(${article.id})" title="تعديل">
+            <button class="admin-action-btn admin-action-btn-edit" data-action="edit" data-article-id="${article.id}" title="تعديل">
               <i class="fas fa-edit"></i>
             </button>
-            <button class="admin-action-btn admin-action-btn-delete" onclick="adminPanel.deleteArticle(${article.id})" title="حذف">
+            <button class="admin-action-btn admin-action-btn-delete" data-action="delete" data-article-id="${article.id}" title="حذف">
               <i class="fas fa-trash"></i>
             </button>
           </div>
@@ -601,93 +680,174 @@ class AdminPanel {
   }
 
   loadArticleForEdit(articleId) {
-    const article = this.articles.find(a => a.id === articleId);
-    if (!article) return;
+    console.log('📝 Loading article for edit:', articleId);
+    const article = this.articles.find(a => a.id === articleId || a.id === articleId.toString());
+    if (!article) {
+      console.warn('⚠️ Article not found for editing:', articleId);
+      this.showError('المقال غير موجود');
+      return;
+    }
+
+    console.log('📄 Article found for editing:', article);
 
     // Fill form fields
     const titleInput = document.getElementById('article-title');
     const excerptInput = document.getElementById('article-excerpt');
     const categorySelect = document.getElementById('article-category');
     const statusSelect = document.getElementById('article-status');
-    const tagsInput = document.getElementById('article-tags');
+    const authorInput = document.getElementById('article-author');
+    const articleIdInput = document.getElementById('article-id');
 
-    if (titleInput) titleInput.value = article.title;
-    if (excerptInput) excerptInput.value = article.excerpt;
-    if (categorySelect) categorySelect.value = article.category;
-    if (statusSelect) statusSelect.value = article.status;
-    if (tagsInput) tagsInput.value = article.tags.join(', ');
+    if (titleInput) {
+      titleInput.value = article.title || '';
+      console.log('✅ Title set:', article.title);
+    }
+    if (excerptInput) {
+      excerptInput.value = article.excerpt || '';
+      console.log('✅ Excerpt set:', article.excerpt);
+    }
+    if (categorySelect) {
+      categorySelect.value = article.category || '';
+      console.log('✅ Category set:', article.category);
+    }
+    if (statusSelect) {
+      statusSelect.value = article.status || 'draft';
+      console.log('✅ Status set:', article.status);
+    }
+    if (authorInput) {
+      authorInput.value = article.author || 'المدير';
+      console.log('✅ Author set:', article.author);
+    }
+    if (articleIdInput) {
+      articleIdInput.value = article.id;
+      console.log('✅ Article ID set:', article.id);
+    }
 
     // Set editor content
     if (this.quill) {
-      this.quill.root.innerHTML = article.content;
+      this.quill.root.innerHTML = article.content || '';
+      console.log('✅ Quill content set, length:', article.content ? article.content.length : 0);
+    } else {
+      console.warn('⚠️ Quill editor not initialized');
     }
 
     // Show image preview
     if (article.image) {
+      this.currentImageUrl = article.image;
       this.showImagePreview(article.image);
+      console.log('✅ Image preview set:', article.image);
     }
 
-    // Store article ID for update
-    form.dataset.articleId = articleId;
+    console.log('✅ Article loaded for editing successfully');
   }
 
   async saveArticle() {
     try {
-      const form = document.getElementById('article-form');
-      const formData = new FormData(form);
+      console.log('🔄 Starting article save process...');
+      
+      const formData = new FormData(document.getElementById('article-form'));
+      
+      // Get content from Quill editor
+      let content = '';
+      if (this.quill) {
+        content = this.quill.root.innerHTML;
+        console.log('📝 Content from Quill editor:', content.substring(0, 100) + '...');
+      } else {
+        content = formData.get('content') || '';
+        console.log('📝 Content from form field:', content.substring(0, 100) + '...');
+      }
       
       const articleData = {
         title: formData.get('title'),
+        content: content,
         excerpt: formData.get('excerpt'),
         category: formData.get('category'),
         status: formData.get('status'),
-        tags: formData.get('tags').split(',').map(tag => tag.trim()).filter(tag => tag),
-        content: this.quill ? this.quill.root.innerHTML : '',
         image: this.currentImageUrl || '',
-        author: 'فريق AlphaKnow',
-        date: new Date().toISOString().split('T')[0],
-        views: 0,
+        author: formData.get('author') || 'المدير',
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
       };
+      
+      console.log('📋 Article data prepared:', {
+        title: articleData.title,
+        category: articleData.category,
+        status: articleData.status,
+        contentLength: articleData.content.length
+      });
 
-      const articleId = form.dataset.articleId;
+      // Validate required fields
+      if (!articleData.title || !articleData.content) {
+        this.showError('يرجى ملء جميع الحقول المطلوبة');
+        return;
+      }
+
+      const articleId = formData.get('article-id');
       
       if (articleId) {
         // تحديث مقال موجود
         try {
-          const updateResult = await firebaseService.updateArticle(articleId, articleData);
-          if (updateResult.success) {
-            // تحديث القائمة المحلية
-            const index = this.articles.findIndex(a => a.id === articleId);
-            if (index !== -1) {
-              this.articles[index] = { ...this.articles[index], ...articleData };
+          // Check if Firebase is available and user is authenticated
+          if (window.firebaseService && window.firebaseService.isFirebaseAvailable()) {
+            const currentUser = window.firebaseService.getCurrentUser();
+            if (currentUser) {
+              console.log('🔄 Updating article via Firebase...');
+              const updateResult = await firebaseService.updateArticle(articleId, articleData);
+              if (updateResult.success) {
+                this.showSuccess('تم تحديث المقال بنجاح');
+              } else {
+                throw new Error(updateResult.error);
+              }
+            } else {
+              throw new Error('User not authenticated');
             }
-            this.showSuccess('تم تحديث المقال بنجاح');
           } else {
-            throw new Error(updateResult.error);
+            throw new Error('Firebase not available');
           }
         } catch (error) {
           console.error('Firebase update failed, using localStorage:', error);
           // استخدام LocalStorage كاحتياطي
-          const index = this.articles.findIndex(a => a.id === parseInt(articleId));
-          if (index !== -1) {
-            this.articles[index] = { ...this.articles[index], ...articleData };
+          const existingIndex = this.articles.findIndex(a => a.id == articleId);
+          if (existingIndex >= 0) {
+            this.articles[existingIndex] = { ...this.articles[existingIndex], ...articleData };
+            this.saveArticlesToStorage();
+            this.showSuccess('تم تحديث المقال بنجاح (محلي)');
           }
-          this.saveArticlesToStorage();
-          this.showSuccess('تم تحديث المقال بنجاح (محلي)');
         }
       } else {
         // إضافة مقال جديد
         try {
-          const createResult = await firebaseService.createArticle(articleData);
-          if (createResult.success) {
-            // إضافة المقال الجديد للقائمة المحلية
-            const newArticle = { ...articleData, id: createResult.id };
-            this.articles.unshift(newArticle);
-            this.showSuccess('تم إضافة المقال بنجاح');
+          console.log('🔍 Checking Firebase availability...');
+          console.log('Firebase service:', window.firebaseService);
+          console.log('FIREBASE object:', window.FIREBASE);
+          
+          // Check if Firebase is available and user is authenticated
+          if (window.firebaseService && window.firebaseService.isFirebaseAvailable()) {
+            console.log('✅ Firebase service is available');
+            const currentUser = window.firebaseService.getCurrentUser();
+            console.log('👤 Current user:', currentUser);
+            
+            if (currentUser) {
+              console.log('🔄 Creating article via Firebase...');
+              const createResult = await firebaseService.createArticle(articleData);
+              console.log('📤 Firebase create result:', createResult);
+              
+              if (createResult.success) {
+                // إضافة المقال الجديد للقائمة المحلية
+                const newArticle = { ...articleData, id: createResult.id };
+                this.articles.unshift(newArticle);
+                this.showSuccess('تم إضافة المقال بنجاح');
+                console.log('✅ Article created successfully via Firebase');
+              } else {
+                throw new Error(createResult.error);
+              }
+            } else {
+              console.log('❌ User not authenticated');
+              throw new Error('User not authenticated');
+            }
           } else {
-            throw new Error(createResult.error);
+            console.log('❌ Firebase not available');
+            throw new Error('Firebase not available');
           }
         } catch (error) {
           console.error('Firebase create failed, using localStorage:', error);
@@ -696,6 +856,7 @@ class AdminPanel {
           this.articles.unshift(articleData);
           this.saveArticlesToStorage();
           this.showSuccess('تم إضافة المقال بنجاح (محلي)');
+          console.log('💾 Article saved to localStorage as fallback');
         }
       }
       
@@ -738,24 +899,68 @@ class AdminPanel {
   }
 
   viewArticle(articleId) {
-    const article = this.articles.find(a => a.id === articleId);
+    console.log('👁️ Viewing article:', articleId);
+    const article = this.articles.find(a => a.id === articleId || a.id === articleId.toString());
     if (article) {
+      console.log('📄 Article found:', article.title);
       // Open article in new tab
       window.open(`../article.html?id=${articleId}`, '_blank');
+    } else {
+      console.warn('⚠️ Article not found:', articleId);
+      this.showError('المقال غير موجود');
     }
   }
 
   editArticle(articleId) {
-    this.openArticleEditor(articleId);
+    console.log('✏️ Editing article:', articleId);
+    const article = this.articles.find(a => a.id === articleId || a.id === articleId.toString());
+    if (article) {
+      console.log('📝 Article found for editing:', article.title);
+      this.openArticleEditor(articleId);
+    } else {
+      console.warn('⚠️ Article not found for editing:', articleId);
+      this.showError('المقال غير موجود');
+    }
   }
 
-  deleteArticle(articleId) {
+  async deleteArticle(articleId) {
     if (confirm('هل أنت متأكد من حذف هذا المقال؟')) {
-      this.articles = this.articles.filter(a => a.id !== articleId);
-      this.saveArticlesToStorage();
-      this.renderArticlesTable();
-      this.updateArticlesCount();
-      this.showSuccess('تم حذف المقال بنجاح');
+      try {
+        console.log('🔄 Deleting article:', articleId);
+        
+        // Try to delete from Firebase first
+        if (window.firebaseService && window.firebaseService.isFirebaseAvailable()) {
+          const currentUser = window.firebaseService.getCurrentUser();
+          if (currentUser) {
+            console.log('🗑️ Deleting article via Firebase...');
+            const deleteResult = await firebaseService.deleteArticle(articleId);
+            if (deleteResult.success) {
+              console.log('✅ Article deleted from Firebase successfully');
+            } else {
+              console.warn('⚠️ Firebase delete failed:', deleteResult.error);
+            }
+          } else {
+            console.warn('⚠️ User not authenticated for Firebase delete');
+          }
+        }
+        
+        // Remove from local array
+        this.articles = this.articles.filter(a => a.id !== articleId);
+        
+        // Save to localStorage as backup
+        this.saveArticlesToStorage();
+        
+        // Update UI
+        this.renderArticlesTable();
+        this.updateArticlesCount();
+        
+        this.showSuccess('تم حذف المقال بنجاح');
+        console.log('✅ Article deleted successfully');
+        
+      } catch (error) {
+        console.error('❌ Error deleting article:', error);
+        this.showError('حدث خطأ أثناء حذف المقال');
+      }
     }
   }
 
@@ -804,11 +1009,11 @@ class AdminPanel {
           </div>
         </div>
         <div style="display: flex; gap: 0.5rem;">
-          <button class="admin-btn admin-btn-secondary" onclick="adminPanel.editCategory('${category.id}')">
+          <button class="admin-btn admin-btn-secondary" data-action="edit-category" data-category-id="${category.id}">
             <i class="fas fa-edit"></i>
             تعديل
           </button>
-          <button class="admin-btn admin-btn-danger" onclick="adminPanel.deleteCategory('${category.id}')">
+          <button class="admin-btn admin-btn-danger" data-action="delete-category" data-category-id="${category.id}">
             <i class="fas fa-trash"></i>
             حذف
           </button>
@@ -841,6 +1046,44 @@ class AdminPanel {
     if (articleCategory) {
       articleCategory.innerHTML = '<option value="">اختر الفئة</option>' + options;
     }
+  }
+
+  // Category Management Functions
+  editCategory(categoryId) {
+    console.log('✏️ Editing category:', categoryId);
+    const category = this.categories.find(c => c.id === categoryId);
+    if (category) {
+      console.log('📝 Category found for editing:', category.name);
+      // TODO: Implement category editor modal
+      this.showNotification('ميزة تعديل الفئات قيد التطوير', 'info');
+    } else {
+      console.warn('⚠️ Category not found for editing:', categoryId);
+      this.showError('الفئة غير موجودة');
+    }
+  }
+
+  deleteCategory(categoryId) {
+    console.log('🗑️ Deleting category:', categoryId);
+    const category = this.categories.find(c => c.id === categoryId);
+    if (category) {
+      if (confirm(`هل أنت متأكد من حذف الفئة: "${category.name}"؟`)) {
+        this.categories = this.categories.filter(c => c.id !== categoryId);
+        this.renderCategoriesGrid();
+        this.updateCategoriesCount();
+        this.populateCategoryFilters();
+        this.showSuccess('تم حذف الفئة بنجاح');
+        console.log('✅ Category deleted successfully');
+      }
+    } else {
+      console.warn('⚠️ Category not found for deletion:', categoryId);
+      this.showError('الفئة غير موجودة');
+    }
+  }
+
+  addCategory() {
+    console.log('➕ Adding new category');
+    // TODO: Implement category creation modal
+    this.showNotification('ميزة إضافة الفئات قيد التطوير', 'info');
   }
 
   async loadUsers() {
@@ -1061,8 +1304,27 @@ class AdminPanel {
 
   // Utility methods
   formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('ar-SA');
+    if (!dateString) {
+      return 'غير محدد';
+    }
+    
+    try {
+      // Handle Firebase Timestamp objects
+      if (dateString && typeof dateString === 'object' && dateString.toDate) {
+        const date = dateString.toDate();
+        return date.toLocaleDateString('ar-SA');
+      }
+      
+      // Handle regular date strings
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) {
+        return 'غير محدد';
+      }
+      return date.toLocaleDateString('ar-SA');
+    } catch (error) {
+      console.warn('Error formatting date:', error);
+      return 'غير محدد';
+    }
   }
 
   getCategoryName(categoryId) {

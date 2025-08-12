@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Debug - AlphaKnow</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .success { border-color: #28a745; background-color: #d4edda; }
+        .error { border-color: #dc3545; background-color: #f8d7da; }
+        .warning { border-color: #ffc107; background-color: #fff3cd; }
+        .info { border-color: #17a2b8; background-color: #d1ecf1; }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #0056b3; }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Firebase Debug Page</h1>
+        <h2>صفحة تشخيص Firebase</h2>
+        
+        <div class="test-section info">
+            <h3>📋 Status Check / فحص الحالة</h3>
+            <button onclick="checkStatus()">Check Status / فحص الحالة</button>
+            <div id="status-log" class="log"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔐 Authentication Test / اختبار المصادقة</h3>
+            <button onclick="testAuth()">Test Authentication / اختبار المصادقة</button>
+            <button onclick="signInAnonymously()">Sign In Anonymously / تسجيل دخول مجهول</button>
+            <div id="auth-log" class="log"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📝 Article Creation Test / اختبار إنشاء المقال</h3>
+            <div>
+                <label>Title / العنوان:</label>
+                <input type="text" id="test-title" value="مقال تجريبي" placeholder="عنوان المقال">
+                
+                <label>Content / المحتوى:</label>
+                <textarea id="test-content" placeholder="محتوى المقال">هذا مقال تجريبي لاختبار Firebase.</textarea>
+                
+                <label>Category / الفئة:</label>
+                <input type="text" id="test-category" value="technology" placeholder="الفئة">
+                
+                <button onclick="createTestArticle()">Create Test Article / إنشاء مقال تجريبي</button>
+            </div>
+            <div id="article-log" class="log"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>📚 Load Articles / تحميل المقالات</h3>
+            <button onclick="loadArticles()">Load Articles / تحميل المقالات</button>
+            <div id="articles-log" class="log"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>🔗 Quick Links / روابط سريعة</h3>
+            <a href="index.html" target="_blank"><button>Admin Panel / لوحة الإدارة</button></a>
+            <a href="../firebase-test.html" target="_blank"><button>Firebase Test / اختبار Firebase</button></a>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    
+    <!-- Firebase Configuration -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/firebase-service.js"></script>
+
+    <script>
+        function log(elementId, message) {
+            const element = document.getElementById(elementId);
+            const timestamp = new Date().toLocaleTimeString();
+            const logMessage = `[${timestamp}] ${message}\n`;
+            element.textContent += logMessage;
+            element.scrollTop = element.scrollHeight;
+        }
+
+        function clearLog(elementId) {
+            document.getElementById(elementId).textContent = '';
+        }
+
+        async function checkStatus() {
+            clearLog('status-log');
+            log('status-log', '🔍 Checking Firebase status...');
+            
+            try {
+                // Check Firebase availability
+                if (!window.FIREBASE) {
+                    log('status-log', '❌ Firebase not initialized', 'error');
+                    return;
+                }
+
+                if (window.FIREBASE.error) {
+                    log('status-log', `❌ Firebase error: ${window.FIREBASE.error}`, 'error');
+                    return;
+                }
+
+                log('status-log', '✅ Firebase is available');
+                log('status-log', `📦 SDK Version: ${firebase.SDK_VERSION}`);
+                log('status-log', `🔧 Project ID: ${window.FIREBASE.config.projectId}`);
+
+                // Check firebaseService
+                if (window.firebaseService) {
+                    log('status-log', '✅ FirebaseService is available');
+                    log('status-log', `🔍 Firebase available: ${window.firebaseService.isFirebaseAvailable()}`);
+                } else {
+                    log('status-log', '❌ FirebaseService not available', 'error');
+                }
+
+                // Check authentication
+                const currentUser = window.FIREBASE.auth?.currentUser;
+                if (currentUser) {
+                    log('status-log', `👤 Authenticated user: ${currentUser.email || currentUser.uid}`);
+                } else {
+                    log('status-log', '👤 No authenticated user');
+                }
+
+                // Test database connectivity
+                try {
+                    const db = window.FIREBASE.db;
+                    const testSnapshot = await db.collection('test').doc('debug').get();
+                    log('status-log', '✅ Database connectivity: OK');
+                } catch (error) {
+                    log('status-log', `❌ Database connectivity: ${error.message}`, 'error');
+                }
+
+            } catch (error) {
+                log('status-log', `❌ Status check failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testAuth() {
+            clearLog('auth-log');
+            log('auth-log', '🔐 Testing authentication...');
+            
+            try {
+                if (!window.FIREBASE?.auth) {
+                    log('auth-log', '❌ Authentication not available', 'error');
+                    return;
+                }
+
+                const auth = window.FIREBASE.auth;
+                const currentUser = auth.currentUser;
+                
+                if (currentUser) {
+                    log('auth-log', `✅ User authenticated: ${currentUser.email || currentUser.uid}`);
+                    log('auth-log', `🆔 User ID: ${currentUser.uid}`);
+                } else {
+                    log('auth-log', '⚠️ No user currently authenticated', 'warning');
+                }
+
+                // Test auth state listener
+                auth.onAuthStateChanged((user) => {
+                    if (user) {
+                        log('auth-log', `🔄 Auth state changed: User logged in (${user.email || user.uid})`);
+                    } else {
+                        log('auth-log', '🔄 Auth state changed: User logged out');
+                    }
+                });
+
+            } catch (error) {
+                log('auth-log', `❌ Authentication test failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function signInAnonymously() {
+            clearLog('auth-log');
+            log('auth-log', '🔐 Signing in anonymously...');
+            
+            try {
+                if (!window.FIREBASE?.auth) {
+                    log('auth-log', '❌ Authentication not available', 'error');
+                    return;
+                }
+
+                const userCredential = await window.FIREBASE.auth.signInAnonymously();
+                log('auth-log', `✅ Anonymous sign in successful: ${userCredential.user.uid}`);
+                
+            } catch (error) {
+                log('auth-log', `❌ Anonymous sign in failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function createTestArticle() {
+            clearLog('article-log');
+            log('article-log', '📝 Creating test article...');
+            
+            try {
+                const title = document.getElementById('test-title').value;
+                const content = document.getElementById('test-content').value;
+                const category = document.getElementById('test-category').value;
+
+                if (!title || !content) {
+                    log('article-log', '❌ Title and content are required', 'error');
+                    return;
+                }
+
+                const articleData = {
+                    title: title,
+                    content: content,
+                    excerpt: content.substring(0, 100) + '...',
+                    category: category,
+                    status: 'published',
+                    author: 'Test User',
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                };
+
+                log('article-log', `📋 Article data: ${JSON.stringify(articleData, null, 2)}`);
+
+                // Check if firebaseService is available
+                if (!window.firebaseService) {
+                    log('article-log', '❌ FirebaseService not available', 'error');
+                    return;
+                }
+
+                if (!window.firebaseService.isFirebaseAvailable()) {
+                    log('article-log', '❌ Firebase not available', 'error');
+                    return;
+                }
+
+                const currentUser = window.firebaseService.getCurrentUser();
+                if (!currentUser) {
+                    log('article-log', '❌ User not authenticated', 'error');
+                    return;
+                }
+
+                log('article-log', `👤 Creating article as: ${currentUser.email || currentUser.uid}`);
+
+                const result = await window.firebaseService.createArticle(articleData);
+                log('article-log', `📤 Create result: ${JSON.stringify(result, null, 2)}`);
+
+                if (result.success) {
+                    log('article-log', `✅ Article created successfully with ID: ${result.id}`);
+                } else {
+                    log('article-log', `❌ Article creation failed: ${result.error}`, 'error');
+                }
+
+            } catch (error) {
+                log('article-log', `❌ Article creation error: ${error.message}`, 'error');
+            }
+        }
+
+        async function loadArticles() {
+            clearLog('articles-log');
+            log('articles-log', '📚 Loading articles...');
+            
+            try {
+                if (!window.firebaseService) {
+                    log('articles-log', '❌ FirebaseService not available', 'error');
+                    return;
+                }
+
+                const result = await window.firebaseService.getArticles();
+                log('articles-log', `📤 Get articles result: ${JSON.stringify(result, null, 2)}`);
+
+                if (result.success) {
+                    log('articles-log', `✅ Loaded ${result.data.length} articles`);
+                    result.data.forEach((article, index) => {
+                        log('articles-log', `${index + 1}. ${article.title} (${article.status})`);
+                    });
+                } else {
+                    log('articles-log', `❌ Failed to load articles: ${result.error}`, 'error');
+                }
+
+            } catch (error) {
+                log('articles-log', `❌ Load articles error: ${error.message}`, 'error');
+            }
+        }
+
+        // Auto-run status check on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(checkStatus, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأدوات والموارد - AlphaKnow</title>
+    <meta name="description" content="أفضل الأدوات والموارد لتطوير أعمالك الرقمية - AlphaKnow">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/performance.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <img src="images/logo.png" alt="AlphaKnow" width="60" height="60">
+            </div>
+            <div class="loading-spinner"></div>
+            <p class="loading-text">جاري التحميل...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a href="index.html" class="logo">
+                        <img src="images/logo.png" alt="AlphaKnow Logo" class="logo-img">
+                        <span class="logo-text">AlphaKnow</span>
+                    </a>
+                </div>
+                
+                <div class="navbar-menu" id="navbar-menu">
+                    <nav class="navbar-nav">
+                        <div class="nav-item">
+                            <a href="index.html" class="nav-link">الرئيسية</a>
+                        </div>
+                        <div class="nav-item">
+                            <a href="articles.html" class="nav-link">المقالات</a>
+                        </div>
+                        <div class="nav-item">
+                            <a href="courses.html" class="nav-link">الدورات</a>
+                        </div>
+                        <div class="nav-item">
+                            <a href="tools.html" class="nav-link active">الأدوات</a>
+                        </div>
+                        <div class="nav-item">
+                            <a href="about.html" class="nav-link">من نحن</a>
+                        </div>
+                        <div class="nav-item">
+                            <a href="contact.html" class="nav-link">تواصل معنا</a>
+                        </div>
+                    </nav>
+                </div>
+                
+                <div class="navbar-actions">
+                    <button class="search-toggle" id="search-toggle" aria-label="البحث">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="M21 21l-4.35-4.35"></path>
+                        </svg>
+                    </button>
+                    <button class="theme-toggle" id="theme-toggle" aria-label="تبديل الوضع">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="القائمة">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <div class="page-header-content">
+                    <h1 class="page-title">الأدوات والموارد</h1>
+                    <p class="page-description">أفضل الأدوات والموارد لتطوير أعمالك الرقمية وتحقيق النجاح</p>
+                    <nav class="breadcrumb">
+                        <a href="index.html">الرئيسية</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-current">الأدوات والموارد</span>
+                    </nav>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tools Categories -->
+        <section class="tools-section">
+            <div class="container">
+                <div class="tools-intro">
+                    <h2 class="section-title">مجموعة شاملة من الأدوات المتخصصة</h2>
+                    <p class="section-description">اكتشف أفضل الأدوات المجربة والمختبرة من قبل خبراء ريادة الأعمال لتطوير مشروعك وزيادة أرباحك</p>
+                </div>
+                
+                <div class="tools-categories">
+                    <div class="tools-category">
+                        <div class="category-header">
+                            <div class="category-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3 class="category-title">أدوات التحليل والإحصائيات</h3>
+                            <p class="category-description">أدوات احترافية لتتبع وتحليل أداء موقعك وأعمالك بدقة</p>
+                        </div>
+                        <div class="tools-grid">
+                            <div class="tool-card featured">
+                                <div class="tool-header">
+                                    <div class="tool-logo">
+                                        <i class="fab fa-google"></i>
+                                    </div>
+                                    <div class="tool-badge">مجاني</div>
+                                </div>
+                                <div class="tool-info">
+                                    <h4 class="tool-name">Google Analytics</h4>
+                                    <p class="tool-description">تحليل شامل لزوار موقعك وسلوكهم مع تقارير مفصلة عن المصادر والتحويلات</p>
+                                    <div class="tool-features">
+                                        <span class="feature">تتبع الزوار</span>
+                                        <span class="feature">تحليل السلوك</span>
+                                        <span class="feature">تقارير مخصصة</span>
+                                    </div>
+                                    <div class="tool-meta">
+                                        <span class="tool-price">مجاني</span>
+                                        <span class="tool-rating">⭐ 4.8 (50K+ مراجعة)</span>
+                                    </div>
+                                </div>
+                                <a href="https://analytics.google.com" target="_blank" class="tool-link">ابدأ الآن مجاناً</a>
+                            </div>
+                            
+                            <div class="tool-card">
+                                <div class="tool-header">
+                                    <div class="tool-logo">
+                                        <i class="fas fa-fire"></i>
+                                    </div>
+                                    <div class="tool-badge premium">مدفوع</div>
+                                </div>
+                                <div class="tool-info">
+                                    <h4 class="tool-name">Hotjar</h4>
+                                    <p class="tool-description">خرائط حرارية وتسجيلات جلسات المستخدمين لفهم سلوك الزوار بصرياً</p>
+                                    <div class="tool-features">
+                                        <span class="feature">خرائط حرارية</span>
+                                        <span class="feature">تسجيل الجلسات</span>
+                                        <span class="feature">استطلاعات فورية</span>
+                                    </div>
+                                    <div class="tool-meta">
+                                        <span class="tool-price">من $32/شهر</span>
+                                        <span class="tool-rating">⭐ 4.6 (15K+ مراجعة)</span>
+                                    </div>
+                                </div>
+                                <a href="https://hotjar.com" target="_blank" class="tool-link">جرب مجاناً</a>
+                            </div>
+                            
+                            <div class="tool-card">
+                                <div class="tool-header">
+                                    <div class="tool-logo">
+                                        <i class="fas fa-search"></i>
+                                    </div>
+                                    <div class="tool-badge">مجاني</div>
+                                </div>
+                                <div class="tool-info">
+                                    <h4 class="tool-name">Google Search Console</h4>
+                                    <p class="tool-description">أداة مجانية من جوجل لمراقبة وتحسين ظهور موقعك في نتائج البحث</p>
+                                    <div class="tool-features">
+                                        <span class="feature">تحليل SEO</span>
+                                        <span class="feature">مراقبة الفهرسة</span>
+                                        <span class="feature">تقارير الأداء</span>
+                                    </div>
+                                    <div class="tool-meta">
+                                        <span class="tool-price">مجاني</span>
+                                        <span class="tool-rating">⭐ 4.7 (25K+ مراجعة)</span>
+                                    </div>
+                                </div>
+                                <a href="https://search.google.com/search-console" target="_blank" class="tool-link">ابدأ الآن</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tools-category">
+                        <div class="category-header">
+                            <div class="category-icon">
+                                <i class="fas fa-bullhorn"></i>
+                            </div>
+                            <h3 class="category-title">أدوات التسويق الرقمي</h3>
+                            <p class="category-description">أدوات قوية لتحسين حملاتك التسويقية وزيادة المبيعات والوصول</p>
+                        </div>
+                        <div class="tools-grid">
+                            <div class="tool-card featured">
+                                <div class="tool-header">
+                                    <div class="tool-logo">
+                                        <i class="fab fa-mailchimp"></i>
+                                    </div>
+                                    <div class="tool-badge premium">مدفوع</div>
+                                </div>
+                                <div class="tool-info">
+                                    <h4 class="tool-name">Mailchimp</h4>
+                                    <p class="tool-description">منصة التسويق عبر البريد الإلكتروني الأكثر شعبية مع أتمتة متقدمة</p>
+                                    <div class="tool-features">
+                                        <span class="feature">حملات البريد</span>
+                                        <span class="feature">أتمتة التسويق</span>
+                                        <span class="feature">تحليلات متقدمة</span>
+                                    </div>
+                                    <div class="tool-meta">
+                                        <span class="tool-price">من $10/شهر</span>
+                                        <span class="tool-rating">⭐ 4.5 (30K+ مراجعة)</span>
+                                    </div>
+                                </div>
+                                <a href="https://mailchimp.com" target="_blank" class="tool-link">ابدأ مجاناً</a>
+                            </div>
+                            
+                            <div class="tool-card">
+                                <div class="tool-header">
+                                    <div class="tool-logo">
+                                        <i class="fab fa-facebook"></i>
+                                    </div>
+                                    <div class="tool-badge">مجاني</div>
+                                </div>
+                                <div class="tool-info">
+                                    <h4 class="tool-name">Facebook Business Manager</h4>
+                                    <p class="tool-description">إدارة شاملة لحملاتك الإعلانية على فيسبوك وإنستغرام</p>
+                                    <div class="tool-features">
+                                        <span class="feature">إعلانات مستهدفة</span>
+                                        <span class="feature">تحليلات الجمهور</span>
+                                        <span class="feature">إدارة الصفحات</span>
+                                    </div>
+                                    <div class="tool-meta">
+                                        <span class="tool-price">مجاني</span>
+                                        <span class="tool-rating">⭐ 4.3 (100K+ مراجعة)</span>
+                                    </div>
+                                </div>
+                                <a href="https://business.facebook.com" target="_blank" class="tool-link">ابدأ الآن</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tools-category">
+                        <div class="category-header">
+                            <div class="category-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <h3 class="category-title">أدوات التجارة الإلكترونية</h3>
+                            <p class="category-description">منصات وأدوات متكاملة لبناء وإدارة متجرك الإلكتروني بنجاح</p>
+                        </div>
+                        <div class="tools-grid">
+                            <div class="tool-card featured">
+                                <div class="tool-header">
+                                    <div class="tool-logo">
+                                        <i class="fab fa-shopify"></i>
+                                    </div>
+                                    <div class="tool-badge premium">مدفوع</div>
+                                </div>
+                                <div class="tool-info">
+                                    <h4 class="tool-name">Shopify</h4>
+                                    <p class="tool-description">منصة شاملة لإنشاء المتاجر الإلكترونية مع آلاف القوالب والإضافات</p>
+                                    <div class="tool-features">
+                                        <span class="feature">قوالب احترافية</span>
+                                        <span class="feature">معالجة المدفوعات</span>
+                                        <span class="feature">إدارة المخزون</span>
+                                    </div>
+                                    <div class="tool-meta">
+                                        <span class="tool-price">من $29/شهر</span>
+                                        <span class="tool-rating">⭐ 4.6 (45K+ مراجعة)</span>
+                                    </div>
+                                </div>
+                                <a href="https://shopify.com" target="_blank" class="tool-link">جرب 14 يوم مجاناً</a>
+                            </div>
+                            
+                            <div class="tool-card">
+                                <div class="tool-header">
+                                    <div class="tool-logo">
+                                        <i class="fab fa-wordpress"></i>
+                                    </div>
+                                    <div class="tool-badge">مجاني</div>
+                                </div>
+                                <div class="tool-info">
+                                    <h4 class="tool-name">WooCommerce</h4>
+                                    <p class="tool-description">إضافة مجانية لووردبريس تحول موقعك إلى متجر إلكتروني متكامل</p>
+                                    <div class="tool-features">
+                                        <span class="feature">مفتوح المصدر</span>
+                                        <span class="feature">قابل للتخصيص</span>
+                                        <span class="feature">آلاف الإضافات</span>
+                                    </div>
+                                    <div class="tool-meta">
+                                        <span class="tool-price">مجاني</span>
+                                        <span class="tool-rating">⭐ 4.4 (60K+ مراجعة)</span>
+                                    </div>
+                                </div>
+                                <a href="https://woocommerce.com" target="_blank" class="tool-link">تحميل مجاني</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tools Comparison -->
+                <div class="tools-comparison">
+                    <h3 class="comparison-title">مقارنة سريعة بين أفضل الأدوات</h3>
+                    <div class="comparison-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>الأداة</th>
+                                    <th>التخصص</th>
+                                    <th>السعر</th>
+                                    <th>التقييم</th>
+                                    <th>الأفضل لـ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Google Analytics</strong></td>
+                                    <td>تحليل المواقع</td>
+                                    <td>مجاني</td>
+                                    <td>⭐ 4.8</td>
+                                    <td>المبتدئين والمحترفين</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Shopify</strong></td>
+                                    <td>التجارة الإلكترونية</td>
+                                    <td>$29/شهر</td>
+                                    <td>⭐ 4.6</td>
+                                    <td>المتاجر الكبيرة</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Mailchimp</strong></td>
+                                    <td>التسويق بالبريد</td>
+                                    <td>$10/شهر</td>
+                                    <td>⭐ 4.5</td>
+                                    <td>الشركات الناشئة</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>WooCommerce</strong></td>
+                                    <td>التجارة الإلكترونية</td>
+                                    <td>مجاني</td>
+                                    <td>⭐ 4.4</td>
+                                    <td>مستخدمي ووردبريس</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-content">
+                    <h2 class="cta-title">هل تحتاج مساعدة في اختيار الأدوات المناسبة؟</h2>
+                    <p class="cta-description">تواصل معنا للحصول على استشارة مجانية حول أفضل الأدوات لمشروعك</p>
+                    <a href="contact.html" class="btn btn-primary">تواصل معنا</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <img src="images/logo.png" alt="AlphaKnow" width="40" height="40">
+                        <span class="brand-text">AlphaKnow</span>
+                    </div>
+                    <p class="footer-description">
+                        المدونة الرائدة في ريادة الأعمال الرقمية. نقدم محتوى حصري واستراتيجيات مجربة لتحقيق النجاح في العالم الرقمي.
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">روابط سريعة</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="articles.html">المقالات</a></li>
+                        <li><a href="courses.html">الدورات</a></li>
+                        <li><a href="tools.html">الأدوات</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">تواصل معنا</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">من نحن</a></li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                        <li><a href="privacy.html">سياسة الخصوصية</a></li>
+                        <li><a href="terms.html">شروط الاستخدام</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 AlphaKnow. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
+

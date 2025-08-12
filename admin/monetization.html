@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة الربح والإعلانات - AlphaKnow</title>
+    <meta name="description" content="إدارة الربح والإعلانات - لوحة تحكم AlphaKnow">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/favicon.ico">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/performance.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="css/monetization.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-spinner"></div>
+        <p>جاري التحميل...</p>
+    </div>
+
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="admin-header-content">
+            <div class="admin-brand">
+                <a href="../index.html" class="admin-logo">
+                    <img src="../images/logo.png" alt="AlphaKnow" class="admin-logo-img">
+                    <span class="admin-logo-text">AlphaKnow</span>
+                </a>
+            </div>
+            
+            <div class="admin-header-nav">
+                <a href="index.html" class="admin-nav-btn">
+                    <i class="fas fa-arrow-right"></i>
+                    العودة للوحة التحكم
+                </a>
+            </div>
+            
+            <div class="admin-header-actions">
+                <div class="revenue-summary">
+                    <div class="revenue-item">
+                        <span class="revenue-label">الإيرادات الشهرية:</span>
+                        <span class="revenue-value" id="monthly-revenue">$0</span>
+                    </div>
+                    <div class="revenue-item">
+                        <span class="revenue-label">النمو:</span>
+                        <span class="revenue-growth" id="revenue-growth">+0%</span>
+                    </div>
+                </div>
+                
+                <div class="admin-user-menu">
+                    <button class="admin-user-btn" id="admin-user-btn">
+                        <img src="../images/default-avatar.png" alt="المستخدم" class="admin-user-avatar">
+                        <span class="admin-user-name" id="admin-user-name">المدير</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="admin-user-dropdown" id="admin-user-dropdown">
+                        <a href="#" class="admin-dropdown-item">
+                            <i class="fas fa-user"></i>
+                            الملف الشخصي
+                        </a>
+                        <a href="#" class="admin-dropdown-item">
+                            <i class="fas fa-cog"></i>
+                            الإعدادات
+                        </a>
+                        <div class="admin-dropdown-divider"></div>
+                        <a href="#" class="admin-dropdown-item" id="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i>
+                            تسجيل الخروج
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="monetization-main">
+        <div class="monetization-container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">
+                    <i class="fas fa-dollar-sign"></i>
+                    إدارة الربح والإعلانات
+                </h1>
+                <p class="page-description">
+                    إدارة مصادر الدخل، الإعلانات، والتسويق بالعمولة
+                </p>
+            </div>
+
+            <!-- Revenue Overview -->
+            <div class="revenue-overview">
+                <div class="overview-cards">
+                    <div class="overview-card">
+                        <div class="card-icon">
+                            <i class="fas fa-ad"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-value" id="adsense-revenue">$0</h3>
+                            <p class="card-label">إيرادات الإعلانات</p>
+                            <span class="card-change positive" id="ads-change">+12.5%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="overview-card">
+                        <div class="card-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-value" id="affiliate-revenue">$0</h3>
+                            <p class="card-label">التسويق بالعمولة</p>
+                            <span class="card-change positive" id="affiliate-change">+8.3%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="overview-card">
+                        <div class="card-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-value" id="premium-revenue">$0</h3>
+                            <p class="card-label">الاشتراكات المميزة</p>
+                            <span class="card-change positive" id="premium-change">+25.7%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="overview-card">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-value" id="total-revenue">$0</h3>
+                            <p class="card-label">إجمالي الإيرادات</p>
+                            <span class="card-change positive" id="total-change">+15.2%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Revenue Chart -->
+            <div class="revenue-chart-section">
+                <div class="section-header">
+                    <h2 class="section-title">تطور الإيرادات</h2>
+                    <div class="chart-controls">
+                        <select id="chart-period" class="chart-select">
+                            <option value="7">آخر 7 أيام</option>
+                            <option value="30" selected>آخر 30 يوم</option>
+                            <option value="90">آخر 3 أشهر</option>
+                            <option value="365">آخر سنة</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="revenue-chart"></canvas>
+                </div>
+            </div>
+
+            <!-- Monetization Tabs -->
+            <div class="monetization-tabs">
+                <div class="tab-nav">
+                    <button class="tab-btn active" data-tab="adsense">
+                        <i class="fas fa-ad"></i>
+                        Google AdSense
+                    </button>
+                    <button class="tab-btn" data-tab="affiliate">
+                        <i class="fas fa-handshake"></i>
+                        التسويق بالعمولة
+                    </button>
+                    <button class="tab-btn" data-tab="premium">
+                        <i class="fas fa-crown"></i>
+                        المحتوى المميز
+                    </button>
+                    <button class="tab-btn" data-tab="analytics">
+                        <i class="fas fa-chart-bar"></i>
+                        التحليلات
+                    </button>
+                </div>
+
+                <!-- AdSense Tab -->
+                <div class="tab-content active" id="adsense-tab">
+                    <div class="adsense-section">
+                        <div class="section-header">
+                            <h3 class="section-title">إعدادات Google AdSense</h3>
+                            <button class="btn btn-primary" id="save-adsense-btn">
+                                <i class="fas fa-save"></i>
+                                حفظ الإعدادات
+                            </button>
+                        </div>
+                        
+                        <div class="adsense-config">
+                            <div class="config-group">
+                                <label class="config-label">معرف AdSense</label>
+                                <input type="text" id="adsense-id" class="config-input" 
+                                       placeholder="ca-pub-XXXXXXXXXX" value="ca-pub-XXXXXXXXXX">
+                                <small class="config-help">معرف حساب AdSense الخاص بك</small>
+                            </div>
+                            
+                            <div class="config-group">
+                                <label class="config-label">حالة الإعلانات</label>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="ads-enabled" checked>
+                                    <label for="ads-enabled" class="toggle-label">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                    <span class="toggle-text">مفعل</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="ad-slots">
+                            <h4 class="slots-title">مواضع الإعلانات</h4>
+                            <div class="slots-grid">
+                                <div class="slot-card">
+                                    <div class="slot-header">
+                                        <h5 class="slot-name">إعلان الرأس</h5>
+                                        <div class="slot-toggle">
+                                            <input type="checkbox" id="header-ad-enabled" checked>
+                                            <label for="header-ad-enabled" class="toggle-label">
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="slot-config">
+                                        <input type="text" placeholder="معرف الوحدة الإعلانية" 
+                                               value="XXXXXXXXXX" class="slot-input">
+                                        <select class="slot-select">
+                                            <option>728x90 - Banner</option>
+                                            <option>320x50 - Mobile Banner</option>
+                                            <option>Responsive</option>
+                                        </select>
+                                    </div>
+                                    <div class="slot-stats">
+                                        <span class="stat">النقرات: 1,234</span>
+                                        <span class="stat">الإيرادات: $45.67</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="slot-card">
+                                    <div class="slot-header">
+                                        <h5 class="slot-name">إعلان الشريط الجانبي</h5>
+                                        <div class="slot-toggle">
+                                            <input type="checkbox" id="sidebar-ad-enabled" checked>
+                                            <label for="sidebar-ad-enabled" class="toggle-label">
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="slot-config">
+                                        <input type="text" placeholder="معرف الوحدة الإعلانية" 
+                                               value="XXXXXXXXXX" class="slot-input">
+                                        <select class="slot-select">
+                                            <option>300x250 - Medium Rectangle</option>
+                                            <option>336x280 - Large Rectangle</option>
+                                            <option>Responsive</option>
+                                        </select>
+                                    </div>
+                                    <div class="slot-stats">
+                                        <span class="stat">النقرات: 892</span>
+                                        <span class="stat">الإيرادات: $32.15</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="slot-card">
+                                    <div class="slot-header">
+                                        <h5 class="slot-name">إعلان داخل المقال</h5>
+                                        <div class="slot-toggle">
+                                            <input type="checkbox" id="article-ad-enabled" checked>
+                                            <label for="article-ad-enabled" class="toggle-label">
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="slot-config">
+                                        <input type="text" placeholder="معرف الوحدة الإعلانية" 
+                                               value="XXXXXXXXXX" class="slot-input">
+                                        <select class="slot-select">
+                                            <option>728x90 - Banner</option>
+                                            <option>300x250 - Medium Rectangle</option>
+                                            <option>Responsive</option>
+                                        </select>
+                                    </div>
+                                    <div class="slot-stats">
+                                        <span class="stat">النقرات: 567</span>
+                                        <span class="stat">الإيرادات: $28.93</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="slot-card">
+                                    <div class="slot-header">
+                                        <h5 class="slot-name">إعلان التذييل</h5>
+                                        <div class="slot-toggle">
+                                            <input type="checkbox" id="footer-ad-enabled">
+                                            <label for="footer-ad-enabled" class="toggle-label">
+                                                <span class="toggle-slider"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="slot-config">
+                                        <input type="text" placeholder="معرف الوحدة الإعلانية" 
+                                               value="" class="slot-input">
+                                        <select class="slot-select">
+                                            <option>728x90 - Banner</option>
+                                            <option>320x50 - Mobile Banner</option>
+                                            <option>Responsive</option>
+                                        </select>
+                                    </div>
+                                    <div class="slot-stats">
+                                        <span class="stat">النقرات: 0</span>
+                                        <span class="stat">الإيرادات: $0.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Affiliate Tab -->
+                <div class="tab-content" id="affiliate-tab">
+                    <div class="affiliate-section">
+                        <div class="section-header">
+                            <h3 class="section-title">إدارة التسويق بالعمولة</h3>
+                            <button class="btn btn-primary" id="add-affiliate-btn">
+                                <i class="fas fa-plus"></i>
+                                إضافة برنامج تابع
+                            </button>
+                        </div>
+                        
+                        <div class="affiliate-programs">
+                            <div class="program-card">
+                                <div class="program-header">
+                                    <div class="program-info">
+                                        <h4 class="program-name">Amazon Associates</h4>
+                                        <span class="program-status active">نشط</span>
+                                    </div>
+                                    <div class="program-actions">
+                                        <button class="btn btn-sm btn-outline">تعديل</button>
+                                        <button class="btn btn-sm btn-danger">حذف</button>
+                                    </div>
+                                </div>
+                                <div class="program-config">
+                                    <div class="config-item">
+                                        <label>معرف التابع:</label>
+                                        <span>alphaknow-20</span>
+                                    </div>
+                                    <div class="config-item">
+                                        <label>معدل العمولة:</label>
+                                        <span>4-8%</span>
+                                    </div>
+                                    <div class="config-item">
+                                        <label>النقرات هذا الشهر:</label>
+                                        <span>1,234</span>
+                                    </div>
+                                    <div class="config-item">
+                                        <label>الإيرادات المقدرة:</label>
+                                        <span>$156.78</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="program-card">
+                                <div class="program-header">
+                                    <div class="program-info">
+                                        <h4 class="program-name">ClickBank</h4>
+                                        <span class="program-status active">نشط</span>
+                                    </div>
+                                    <div class="program-actions">
+                                        <button class="btn btn-sm btn-outline">تعديل</button>
+                                        <button class="btn btn-sm btn-danger">حذف</button>
+                                    </div>
+                                </div>
+                                <div class="program-config">
+                                    <div class="config-item">
+                                        <label>معرف التابع:</label>
+                                        <span>alphaknow</span>
+                                    </div>
+                                    <div class="config-item">
+                                        <label>معدل العمولة:</label>
+                                        <span>50-75%</span>
+                                    </div>
+                                    <div class="config-item">
+                                        <label>النقرات هذا الشهر:</label>
+                                        <span>456</span>
+                                    </div>
+                                    <div class="config-item">
+                                        <label>الإيرادات المقدرة:</label>
+                                        <span>$89.32</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="affiliate-tools">
+                            <h4 class="tools-title">أدوات التسويق بالعمولة</h4>
+                            <div class="tools-grid">
+                                <div class="tool-card">
+                                    <i class="fas fa-link"></i>
+                                    <h5>مولد الروابط</h5>
+                                    <p>إنشاء روابط تابعة مخصصة</p>
+                                    <button class="btn btn-sm btn-primary">استخدام</button>
+                                </div>
+                                <div class="tool-card">
+                                    <i class="fas fa-chart-line"></i>
+                                    <h5>تتبع الأداء</h5>
+                                    <p>مراقبة النقرات والتحويلات</p>
+                                    <button class="btn btn-sm btn-primary">عرض</button>
+                                </div>
+                                <div class="tool-card">
+                                    <i class="fas fa-code"></i>
+                                    <h5>أكواد التتبع</h5>
+                                    <p>إدراج أكواد التتبع التلقائي</p>
+                                    <button class="btn btn-sm btn-primary">إعداد</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Premium Tab -->
+                <div class="tab-content" id="premium-tab">
+                    <div class="premium-section">
+                        <div class="section-header">
+                            <h3 class="section-title">إدارة المحتوى المميز</h3>
+                            <button class="btn btn-primary" id="premium-settings-btn">
+                                <i class="fas fa-cog"></i>
+                                إعدادات الاشتراك
+                            </button>
+                        </div>
+                        
+                        <div class="subscription-stats">
+                            <div class="stat-card">
+                                <h4 class="stat-number">127</h4>
+                                <p class="stat-label">المشتركون النشطون</p>
+                                <span class="stat-change positive">+15 هذا الشهر</span>
+                            </div>
+                            <div class="stat-card">
+                                <h4 class="stat-number">$3,810</h4>
+                                <p class="stat-label">إيرادات الاشتراكات</p>
+                                <span class="stat-change positive">+$450 هذا الشهر</span>
+                            </div>
+                            <div class="stat-card">
+                                <h4 class="stat-number">89%</h4>
+                                <p class="stat-label">معدل الاحتفاظ</p>
+                                <span class="stat-change positive">+2% هذا الشهر</span>
+                            </div>
+                        </div>
+                        
+                        <div class="premium-content">
+                            <h4 class="content-title">المحتوى المميز</h4>
+                            <div class="content-list">
+                                <div class="content-item">
+                                    <div class="content-info">
+                                        <h5>دورة التجارة الإلكترونية المتقدمة</h5>
+                                        <p>دورة شاملة لبناء متجر إلكتروني ناجح</p>
+                                        <span class="content-type">دورة تدريبية</span>
+                                    </div>
+                                    <div class="content-stats">
+                                        <span>89 مشترك</span>
+                                        <span>4.8 ⭐</span>
+                                    </div>
+                                    <div class="content-actions">
+                                        <button class="btn btn-sm btn-outline">تعديل</button>
+                                        <button class="btn btn-sm btn-primary">عرض</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="content-item">
+                                    <div class="content-info">
+                                        <h5>مجموعة قوالب التسويق</h5>
+                                        <p>قوالب جاهزة للحملات التسويقية</p>
+                                        <span class="content-type">قوالب</span>
+                                    </div>
+                                    <div class="content-stats">
+                                        <span>156 تحميل</span>
+                                        <span>4.6 ⭐</span>
+                                    </div>
+                                    <div class="content-actions">
+                                        <button class="btn btn-sm btn-outline">تعديل</button>
+                                        <button class="btn btn-sm btn-primary">عرض</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="content-item">
+                                    <div class="content-info">
+                                        <h5>استشارات شخصية</h5>
+                                        <p>جلسات استشارية مباشرة مع الخبراء</p>
+                                        <span class="content-type">استشارة</span>
+                                    </div>
+                                    <div class="content-stats">
+                                        <span>23 جلسة</span>
+                                        <span>5.0 ⭐</span>
+                                    </div>
+                                    <div class="content-actions">
+                                        <button class="btn btn-sm btn-outline">تعديل</button>
+                                        <button class="btn btn-sm btn-primary">عرض</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Analytics Tab -->
+                <div class="tab-content" id="analytics-tab">
+                    <div class="analytics-section">
+                        <div class="section-header">
+                            <h3 class="section-title">تحليلات الربح</h3>
+                            <div class="analytics-controls">
+                                <select id="analytics-period" class="analytics-select">
+                                    <option value="today">اليوم</option>
+                                    <option value="week">هذا الأسبوع</option>
+                                    <option value="month" selected>هذا الشهر</option>
+                                    <option value="quarter">هذا الربع</option>
+                                    <option value="year">هذا العام</option>
+                                </select>
+                                <button class="btn btn-outline" id="export-report-btn">
+                                    <i class="fas fa-download"></i>
+                                    تصدير التقرير
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-charts">
+                            <div class="chart-card">
+                                <h4 class="chart-title">توزيع الإيرادات</h4>
+                                <canvas id="revenue-distribution-chart"></canvas>
+                            </div>
+                            <div class="chart-card">
+                                <h4 class="chart-title">أداء الإعلانات</h4>
+                                <canvas id="ads-performance-chart"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="analytics-table">
+                            <h4 class="table-title">تفاصيل الإيرادات</h4>
+                            <div class="table-container">
+                                <table class="revenue-table">
+                                    <thead>
+                                        <tr>
+                                            <th>المصدر</th>
+                                            <th>النقرات</th>
+                                            <th>التحويلات</th>
+                                            <th>معدل التحويل</th>
+                                            <th>الإيرادات</th>
+                                            <th>النمو</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="revenue-table-body">
+                                        <tr>
+                                            <td>Google AdSense</td>
+                                            <td>12,345</td>
+                                            <td>234</td>
+                                            <td>1.89%</td>
+                                            <td>$456.78</td>
+                                            <td class="positive">+12.5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Amazon Associates</td>
+                                            <td>1,234</td>
+                                            <td>45</td>
+                                            <td>3.65%</td>
+                                            <td>$156.78</td>
+                                            <td class="positive">+8.3%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Premium Subscriptions</td>
+                                            <td>-</td>
+                                            <td>15</td>
+                                            <td>-</td>
+                                            <td>$450.00</td>
+                                            <td class="positive">+25.7%</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Toast Messages -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <!-- App Scripts -->
+    <script src="../js/firebase-config.js"></script>
+    <script src="../js/firebase-service.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/monetization.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/monetization-admin.js"></script>
+</body>
+</html>
+

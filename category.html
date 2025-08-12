@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فئة المقالات - AlphaKnow</title>
+    <meta name="description" content="تصفح المقالات حسب الفئة - AlphaKnow">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/performance.css">
+    <link rel="stylesheet" href="css/navbar-fix.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <img src="images/logo.png" alt="AlphaKnow" width="60" height="60">
+            </div>
+            <div class="loading-spinner"></div>
+            <p class="loading-text">جاري التحميل...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-brand">
+                    <a href="index.html" class="logo">
+                        <img src="images/logo.png" alt="AlphaKnow Logo" class="logo-img">
+                        <span class="logo-text">AlphaKnow</span>
+                    </a>
+                </div>
+                
+                <div class="navbar-menu" id="navbar-menu">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="index.html" class="nav-link">الرئيسية</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle">المقالات</a>
+                            <div class="dropdown-menu">
+                                <a href="category.html?cat=entrepreneurship" class="dropdown-item">ريادة الأعمال</a>
+                                <a href="category.html?cat=ecommerce" class="dropdown-item">التجارة الإلكترونية</a>
+                                <a href="category.html?cat=marketing" class="dropdown-item">التسويق الرقمي</a>
+                                <a href="category.html?cat=freelancing" class="dropdown-item">العمل الحر</a>
+                                <a href="category.html?cat=investment" class="dropdown-item">الاستثمار الرقمي</a>
+                        </div>
+                        </li>
+                        <li class="nav-item">
+                            <a href="courses.html" class="nav-link">الدورات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="tools.html" class="nav-link">الأدوات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="about.html" class="nav-link">من نحن</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="contact.html" class="nav-link">تواصل معنا</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle">المزيد</a>
+                            <div class="dropdown-menu">
+                                <a href="privacy.html" class="dropdown-item">سياسة الخصوصية</a>
+                                <a href="terms.html" class="dropdown-item">شروط الاستخدام</a>
+                                <a href="faq.html" class="dropdown-item">الأسئلة الشائعة</a>
+                                <a href="sitemap.html" class="dropdown-item">خريطة الموقع</a>
+                        </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="navbar-actions">
+                    <button class="search-toggle" id="search-toggle" aria-label="البحث">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.35-4.35"></path>
+                        </svg>
+                    </button>
+                    <button class="theme-toggle" id="theme-toggle" aria-label="تبديل الوضع">
+                        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                        </svg>
+                    </button>
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="القائمة">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <div class="page-header-content">
+                    <h1 class="page-title" id="category-title">مقالات الفئة</h1>
+                    <p class="page-description" id="category-description">تصفح أحدث المقالات في هذه الفئة</p>
+                    <nav class="breadcrumb">
+                        <a href="index.html">الرئيسية</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span class="breadcrumb-current" id="breadcrumb-category">الفئة</span>
+                    </nav>
+                </div>
+            </div>
+        </section>
+
+        <!-- Articles Grid -->
+        <section class="articles-section">
+            <div class="container">
+                <div class="articles-grid" id="articles-grid">
+                    <!-- Articles will be loaded here -->
+                </div>
+                
+                <div class="no-articles" id="no-articles" style="display: none;">
+                    <div class="no-articles-content">
+                        <i class="fas fa-newspaper"></i>
+                        <h3>لا توجد مقالات في هذه الفئة حالياً</h3>
+                        <p>نعمل على إضافة محتوى جديد قريباً. تابعنا للحصول على أحدث المقالات.</p>
+                        <a href="index.html" class="btn btn-primary">العودة للرئيسية</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="search-overlay">
+        <div class="search-overlay-content">
+            <div class="search-overlay-header">
+                <h3>البحث في الموقع</h3>
+                <button class="search-close" id="search-close" aria-label="إغلاق البحث">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="search-overlay-body">
+                <form class="search-form" role="search">
+                    <div class="search-input-group">
+                        <input type="search" id="search-input" class="search-input" placeholder="ابحث في المقالات والمواضيع..." aria-label="البحث">
+                        <button type="submit" class="search-submit" aria-label="البحث">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+                <div class="search-results" id="search-results">
+                    <!-- Search results will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-brand">
+                        <img src="images/logo.png" alt="AlphaKnow" width="40" height="40">
+                        <span class="brand-text">AlphaKnow</span>
+                    </div>
+                    <p class="footer-description">
+                        المدونة الرائدة في ريادة الأعمال الرقمية. نقدم محتوى حصري واستراتيجيات مجربة لتحقيق النجاح في العالم الرقمي.
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">روابط سريعة</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="articles.html">المقالات</a></li>
+                        <li><a href="courses.html">الدورات</a></li>
+                        <li><a href="tools.html">الأدوات</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4 class="footer-title">تواصل معنا</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">من نحن</a></li>
+                        <li><a href="contact.html">تواصل معنا</a></li>
+                        <li><a href="privacy.html">سياسة الخصوصية</a></li>
+                        <li><a href="terms.html">شروط الاستخدام</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 AlphaKnow. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    
+    <!-- Firebase Configuration -->
+    <script src="js/firebase-config.js"></script>
+    <script src="js/firebase-service.js"></script>
+
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Initialize navbar functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔧 Initializing navbar functionality...');
+            
+            // Mobile menu toggle
+            const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+            const navbarMenu = document.getElementById('navbar-menu');
+            
+            console.log('📱 Mobile menu elements:', { mobileMenuToggle, navbarMenu });
+            
+            if (mobileMenuToggle && navbarMenu) {
+                mobileMenuToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('📱 Mobile menu clicked');
+                    navbarMenu.classList.toggle('active');
+                    mobileMenuToggle.classList.toggle('active');
+                    document.body.classList.toggle('menu-open');
+                });
+            }
+            
+            // Search functionality
+            const searchToggle = document.getElementById('search-toggle');
+            const searchOverlay = document.getElementById('search-overlay');
+            const searchClose = document.getElementById('search-close');
+            
+            console.log('🔍 Search elements:', { searchToggle, searchOverlay, searchClose });
+            
+            if (searchToggle) {
+                searchToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🔍 Search clicked');
+                    if (searchOverlay) {
+                        searchOverlay.classList.add('active');
+                        document.getElementById('search-input')?.focus();
+                    }
+                });
+            }
+            
+            if (searchClose) {
+                searchClose.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('❌ Search close clicked');
+                    if (searchOverlay) {
+                        searchOverlay.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Dropdown functionality
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            console.log('📋 Dropdown toggles found:', dropdownToggles.length);
+            
+            dropdownToggles.forEach((toggle, index) => {
+                toggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log(`📋 Dropdown ${index + 1} clicked`);
+                    
+                    const dropdown = this.closest('.dropdown');
+                    const isOpen = dropdown.classList.contains('open');
+                    
+                    // Close all other dropdowns
+                    document.querySelectorAll('.dropdown.open').forEach(d => {
+                        if (d !== dropdown) {
+                            d.classList.remove('open');
+                        }
+                    });
+                    
+                    // Toggle current dropdown
+                    dropdown.classList.toggle('open');
+                    
+                    // Update aria-expanded
+                    this.setAttribute('aria-expanded', !isOpen);
+                });
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('.dropdown')) {
+                    document.querySelectorAll('.dropdown.open').forEach(dropdown => {
+                        dropdown.classList.remove('open');
+                    });
+                }
+            });
+            
+            // Theme toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            console.log('🌙 Theme toggle element:', themeToggle);
+            
+            if (themeToggle) {
+                themeToggle.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🌙 Theme toggle clicked');
+                    document.body.classList.toggle('dark-theme');
+                    const isDark = document.body.classList.contains('dark-theme');
+                    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                });
+                
+                // Load saved theme
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark') {
+                    document.body.classList.add('dark-theme');
+                }
+            }
+            
+            console.log('✅ Navbar functionality initialized successfully');
+        });
+    </script>
+    <script>
+        // Category page specific JavaScript
+        document.addEventListener('DOMContentLoaded', async function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get('cat') || urlParams.get('category');
+            
+            const categoryInfo = {
+                'entrepreneurship': {
+                    title: 'ريادة الأعمال',
+                    description: 'تعلم كيفية بناء وإدارة مشروعك الناجح من الصفر'
+                },
+                'ecommerce': {
+                    title: 'التجارة الإلكترونية',
+                    description: 'دليلك الشامل لبناء متجر إلكتروني ناجح ومربح'
+                },
+                'marketing': {
+                    title: 'التسويق الرقمي',
+                    description: 'استراتيجيات التسويق الحديثة لنمو أعمالك الرقمية'
+                },
+                'tools': {
+                    title: 'الأدوات والموارد',
+                    description: 'أفضل الأدوات والموارد لتنمية أعمالك الرقمية'
+                },
+                'technology': {
+                    title: 'التكنولوجيا',
+                    description: 'أحدث التطورات التكنولوجية وتأثيرها على الأعمال'
+                },
+                'investment': {
+                    title: 'الاستثمار الرقمي',
+                    description: 'استراتيجيات الاستثمار في العصر الرقمي'
+                }
+            };
+            
+            if (category && categoryInfo[category]) {
+                const info = categoryInfo[category];
+                document.getElementById('category-title').textContent = info.title;
+                document.getElementById('category-description').textContent = info.description;
+                document.getElementById('breadcrumb-category').textContent = info.title;
+                document.title = `${info.title} - AlphaKnow`;
+                
+                // Load articles from Firebase
+                await loadCategoryArticles(category);
+            } else {
+                document.getElementById('no-articles').style.display = 'block';
+            }
+        });
+        
+        async function loadCategoryArticles(categoryId) {
+            try {
+                console.log('📚 Loading articles for category:', categoryId);
+                
+                if (!window.firebaseService) {
+                    console.warn('⚠️ Firebase service not available');
+                    document.getElementById('no-articles').style.display = 'block';
+                    return;
+                }
+                
+                // Get all articles from Firebase
+                const result = await window.firebaseService.getArticles();
+                
+                if (result.success && result.data) {
+                    // Filter articles by category and published status
+                    const categoryArticles = result.data.filter(article => 
+                        article.category === categoryId && 
+                        article.status === 'published'
+                    );
+                    
+                    console.log(`📄 Found ${categoryArticles.length} articles for category: ${categoryId}`);
+                    
+                    if (categoryArticles.length > 0) {
+                        displayCategoryArticles(categoryArticles);
+                    } else {
+                        document.getElementById('no-articles').style.display = 'block';
+                    }
+                } else {
+                    console.warn('⚠️ Failed to load articles from Firebase');
+                    document.getElementById('no-articles').style.display = 'block';
+                }
+                
+            } catch (error) {
+                console.error('❌ Error loading category articles:', error);
+                document.getElementById('no-articles').style.display = 'block';
+            }
+        }
+        
+        function displayCategoryArticles(articles) {
+            const articlesGrid = document.getElementById('articles-grid');
+            
+            const articlesHTML = articles.map(article => {
+                const imageUrl = article.image || 'images/articles/default-article.jpg';
+                const readTime = calculateReadTime(article.content);
+                const views = formatNumber(article.views || 0);
+                const date = formatDate(article.createdAt || article.date);
+                
+                return `
+                    <article class="article-card">
+                        <div class="article-image">
+                            <img src="${imageUrl}" alt="${article.title}" loading="lazy">
+                        </div>
+                        <div class="article-content">
+                            <h3 class="article-title">
+                                <a href="article.html?id=${article.id}">${article.title}</a>
+                            </h3>
+                            <p class="article-excerpt">${article.excerpt || getExcerpt(article.content)}</p>
+                            <div class="article-meta">
+                                <span class="author">${article.author || 'المدير'}</span>
+                                <span class="date">${date}</span>
+                                <span class="read-time">${readTime} دقائق قراءة</span>
+                                <span class="views">${views} مشاهدة</span>
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+            
+            articlesGrid.innerHTML = articlesHTML;
+        }
+        
+        function calculateReadTime(content) {
+            if (!content) return 3;
+            const wordsPerMinute = 200;
+            const wordCount = content.replace(/<[^>]*>/g, '').split(/\s+/).length;
+            return Math.max(1, Math.ceil(wordCount / wordsPerMinute));
+        }
+        
+        function getExcerpt(content, maxLength = 150) {
+            if (!content) return '';
+            const textContent = content.replace(/<[^>]*>/g, '');
+            return textContent.length > maxLength 
+                ? textContent.substring(0, maxLength) + '...' 
+                : textContent;
+        }
+        
+        function formatNumber(num) {
+            if (num === undefined || num === null || isNaN(num)) {
+                return '0';
+            }
+            const number = Number(num);
+            if (number >= 1000000) {
+                return (number / 1000000).toFixed(1) + 'M';
+            }
+            if (number >= 1000) {
+                return (number / 1000).toFixed(1) + 'K';
+            }
+            return number.toString();
+        }
+        
+        function formatDate(dateString) {
+            if (!dateString) return 'غير محدد';
+            try {
+                if (dateString && typeof dateString === 'object' && dateString.toDate) {
+                    const date = dateString.toDate();
+                    return date.toLocaleDateString('ar-SA');
+                }
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) {
+                    return 'غير محدد';
+                }
+                return date.toLocaleDateString('ar-SA');
+            } catch (error) {
+                return 'غير محدد';
+            }
+        }
+    </script>
+</body>
+</html>
+
